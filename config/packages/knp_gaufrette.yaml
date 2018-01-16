@@ -1,0 +1,12 @@
+knp_gaufrette:
+    adapters:
+        woodcard_aws_s3:
+            aws_s3:
+                service_id: "vendor.aws.s3_client"
+                bucket_name: "%env(AWS_BUCKET_NAME)%"
+                options:
+                    acl: "public-read"
+    filesystems:
+        woodcard_storage:
+            adapter: "woodcard_aws_s3"
+    stream_wrapper: ~

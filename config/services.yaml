@@ -1,0 +1,85 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    crm.base.uri: 'http://woodcard.lp-crm.biz/'
+    vendor.aws.credentials.access_key: '%env(AWS_ACCESS_KEY)%'
+    vendor.aws.credentials.secret_key: '%env(AWS_SECRET_KEY)%'
+    vendor.aws.region: 'eu-central-1'
+    vendor.aws.version: 'latest'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Repository,Tests}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    ### App Services ###
+    app.client.crm_client:
+        class: App\Client\CRMClient
+        arguments:
+            - '@vendor.guzzle.client'
+            - '%env(CRM_API_KEY)%'
+
+    app.manager.crm_manager:
+        class: App\Manager\CRMManager
+        arguments:
+            - '@app.client.crm_client'
+
+    app.manager.order_manager:
+        class: App\Manager\OrderManager
+        public: true
+        arguments:
+            - '@app.manager.crm_manager'
+            - '@doctrine.orm.entity_manager'
+
+    app.storage.file_storage:
+        class: App\Storage\FileStorage
+        arguments:
+            - '@gaufrette.woodcard_storage_filesystem'
+
+    app.manager.file_manager:
+        class: App\Manager\FileManager
+        public: true
+        arguments:
+        - '@app.storage.file_storage'
+
+    ### Vendor Services ###
+    vendor.guzzle.client:
+        class: GuzzleHttp\Client
+        arguments:
+            - base_uri: '%crm.base.uri%'
+
+    #AWS
+    vendor.aws.credentials:
+        class: Aws\Credentials\Credentials
+        arguments:
+            - '%vendor.aws.credentials.access_key%'
+            - '%vendor.aws.credentials.secret_key%'
+
+    vendor.aws.s3_client:
+        class: Aws\S3\S3Client
+        factory: [Aws\S3\S3Client, factory]
+        arguments:
+            -
+                credentials: '@vendor.aws.credentials'
+                region: '%vendor.aws.region%'
+                version: '%vendor.aws.version%'

@@ -1,0 +1,49 @@
+### App Routes ###
+
+#Список замовленнь
+app_order_index:
+    path: admin/orders
+    methods: [GET]
+    controller: App\Controller\OrderController::index
+
+#Сторити замовлення - не для адмінки
+app_order_create:
+    path: admin/orders
+    methods: [POST]
+    controller: App\Controller\OrderController::create
+
+#Вибране замовлення
+app_order_item_index:
+    path: admin/orders/{order}
+    methods: [GET]
+    controller: App\Controller\OrderItemController::index
+
+#Добавити фото + комент
+app_order_item_create:
+    path: admin/orders/{order}
+    methods: [POST]
+    controller: App\Controller\OrderItemController::create
+
+#Активувати (status=true) фото в замовлені або деактивувати (не передавати нічого)
+app_order_item_active:
+    path: admin/order_item/{orderItem}/active
+    methods: [POST]
+    controller: App\Controller\OrderItemController::active
+
+#Добавити коммент
+app_order_item_comment:
+    path: admin/order_item/{orderItem}/comment
+    methods: [POST]
+    controller: App\Controller\OrderItemController::comment
+
+#Завантажити макет
+app_order_item_upload_model:
+    path: admin/order_item/{orderItem}/upload/model
+    methods: [POST]
+    controller: App\Controller\OrderItemController::uploadModel
+
+#Завантажити PSD
+app_order_item_upload_psd:
+    path: admin/order_item/{orderItem}/upload/psd
+    methods: [POST]
+    controller: App\Controller\OrderItemController::uploadPsd
