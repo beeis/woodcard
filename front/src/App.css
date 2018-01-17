@@ -53,3 +53,33 @@
 .orders-table tbody tr:hover {
   cursor: pointer;
 }
+
+.btn-add-sm {
+  height: 27px;
+  width: 27px;
+  padding: 0;
+}
+
+.order-id {
+  font-size: 20px;
+}
+
+.order-name {
+  font-size: 20px;
+}
+
+.orders-link {
+  margin-bottom: 10px;
+}
+
+.order-add-row {
+  margin-top: 40px;
+}
+
+.o-comment-add {
+  margin-top: 10px;
+}
+
+
+
+
