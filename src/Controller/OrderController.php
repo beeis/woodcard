@@ -41,13 +41,7 @@ class OrderController extends Controller
     {
         $orders = $this->orderManager->list();
 
-        // replace this line with your own code!
-        return $this->render(
-            'order/index.html.twig',
-            [
-                'orders' => $orders,
-            ]
-        );
+        return new JsonResponse($orders);
     }
 
     /**
@@ -75,7 +69,6 @@ class OrderController extends Controller
      */
     public function create(Request $request): Response
     {
-//        var_dump($request->request->get('products', []));exit;
         return new JsonResponse(
             $this->orderManager->create(
                 [

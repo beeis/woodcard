@@ -32,8 +32,7 @@ class OrderItemController extends Controller
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
         $items = $orderItemRepository->findBy(['orderId' => $order['data']['order_id']]);
 
-        return $this->render(
-            'orderItem/index.html.twig',
+        return new JsonResponse(
             [
                 'order' => $order,
                 'items' => $items,
