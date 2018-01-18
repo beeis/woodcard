@@ -54,6 +54,10 @@
   cursor: pointer;
 }
 
+.orders-table td {
+  vertical-align: middle;
+}
+
 .btn-add-sm {
   height: 27px;
   width: 27px;
@@ -78,6 +82,23 @@
 
 .o-comment-add {
   margin-top: 10px;
+}
+
+.img-preview {
+  height: 50px;
+  max-width: 150px;
+}
+
+.order-items-table tbody tr:hover {
+  cursor: default;
+}
+
+.order-items-row {
+  margin-top: 25px;
+}
+
+.add-order-item-label {
+  font-size: 20px;
 }
 
 

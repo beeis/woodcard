@@ -17,8 +17,8 @@ doctrine:
         dbname: woodcard
         host: 127.0.0.1
         port: ~
-        user: dbuser
-        password: 123
+        user: root
+        password:
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

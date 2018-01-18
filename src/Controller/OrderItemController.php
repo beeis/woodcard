@@ -34,6 +34,7 @@ class OrderItemController extends Controller
         $itemsResult = [];
         foreach ($items as $item) {
             $itemsResult[] = [
+                'id' => $item->getId(),
                 'photo' => $item->getPhoto(),
                 'model' => $item->getModel(),
                 'psd' => $item->getPSD(),
@@ -83,6 +84,7 @@ class OrderItemController extends Controller
 
         return new JsonResponse(
             [
+                'id' => $orderItem->getId(),
                 'order_id' => $orderItem->getOrderId(),
                 'comment' => $orderItem->getComment(),
                 'active' => $orderItem->isActive(),

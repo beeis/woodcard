@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import {apiPoint, rootFolder} from '../constants/server';
 
 export default class Orders extends Component {
   constructor() {
     super();
     this.state = {
-      orders: [
-        {id: 1, status: 1, name: 'Василий'},
-        {id: 2, status: 0, name: 'Олександр'},
-        {id: 3, status: 1, name: 'Андрей'}
-      ]
+      orders: {}
     }
   }
 
   _openOrder = (id) => {
-    this.props.history.push('/order/'+id);
+    this.props.history.push(rootFolder+'/order/'+id);
+  };
+
+  componentDidMount() {
+    axios.get(`${apiPoint}/admin/orders`).then((data) => {
+      this.setState({
+        orders: data.data.data
+      });
+      console.log(data.data.data);
+    })
   };
 
   render () {
@@ -34,7 +41,7 @@ export default class Orders extends Component {
             </div>
             <div className={"row"}>
               <div className={"col-md"}>
-                <table className={"table orders-table table-hover"}>
+                <table className={"table orders-table table-hover table-striped"}>
                   <thead>
                     <tr>
                       <th>#</th>
@@ -43,11 +50,11 @@ export default class Orders extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {this.state.orders.map((order) =>
-                    <tr className={ order.status && 'table-success'} onClick={() => {this._openOrder(order.id)}}>
-                      <td>{order.id}</td>
-                      <td>{order.status ? 'Готово' : 'Ожидается'}</td>
-                      <td>{order.name}</td>
+                  {Object.values(this.state.orders).map((order) =>
+                    <tr key={order.order_id} onClick={() => {this._openOrder(order.order_id)}}>
+                      <td>{order.order_id}</td>
+                      <td>{order.ttn_status}</td>
+                      <td>{order.bayer_name}</td>
                     </tr>
                   )}
                   </tbody>
