@@ -31,11 +31,23 @@ class OrderItemController extends Controller
 
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
         $items = $orderItemRepository->findBy(['orderId' => $order['data']['order_id']]);
+        $itemsResult = [];
+        foreach ($items as $item) {
+            $itemsResult[] = [
+                'photo' => $item->getPhoto(),
+                'model' => $item->getModel(),
+                'psd' => $item->getPSD(),
+                'comment' => $item->getComment(),
+                'is_active' => $item->isActive(),
+                'created_at' => $item->getCreatedAt(),
+                'updated_at' => $item->getUpdatedAt(),
+            ];
+        }
 
         return new JsonResponse(
             [
                 'order' => $order,
-                'items' => $items,
+                'items' => $itemsResult,
             ]
         );
     }
