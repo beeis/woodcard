@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Orders from './Orders';
 import NotFound from './NotFound';
-import Order from './Order';
+import Order from '../containers/OrderContainer';
 import { rootFolder } from '../constants/server';
 
 export default class MainScreen extends Component {

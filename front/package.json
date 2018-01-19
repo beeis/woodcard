@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
-    "axios-fileupload": "0.0.1",
     "bootstrap": "4.0.0-beta.3",
     "material-ui": "^0.20.0",
     "react": "^16.1.1",

@@ -101,6 +101,47 @@
   font-size: 20px;
 }
 
+.img-preview {
+  cursor: pointer;
+}
+
+.img-preview-popup {
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-top: -40px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(100,100,100,0.3);
+  z-index: 5;
+}
+
+.img-preview-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-preview-content img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.preview-close {
+  position: absolute;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
 
 
 

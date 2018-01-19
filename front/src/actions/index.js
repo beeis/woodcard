@@ -1,4 +1,4 @@
-import { CHANGE_TEST } from '../constants/actions';
+import { CHANGE_TEST, TOGGLE_PREVIEW } from '../constants/actions';
 
 export function changeTestValue(value) {
     return {
@@ -6,6 +6,12 @@ export function changeTestValue(value) {
         payload: {
             testValue: value
         }
+    }
+}
+
+export function togglePreview(){
+    return {
+        type: TOGGLE_PREVIEW
     }
 }
 

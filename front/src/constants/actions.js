@@ -1,1 +1,2 @@
-export const CHANGE_TEST = 'CHANGE_TEST';
+export const TOGGLE_PREVIEW = 'TOGGLE_PREVIEW',
+  CHANGE_TEST = 'CHANGE_TEST';
