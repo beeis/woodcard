@@ -47,3 +47,8 @@ app_order_item_upload_psd:
     path: admin/order_item/{orderItem}/upload/psd
     methods: [POST]
     controller: App\Controller\OrderItemController::uploadPsd
+
+app_admin_index:
+    path: admin
+    methods: [GET]
+    controller: App\Controller\OrderController::admin

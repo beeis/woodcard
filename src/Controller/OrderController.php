@@ -44,6 +44,13 @@ class OrderController extends Controller
         return new JsonResponse($orders);
     }
 
+    public function admin(): Response
+    {
+        return $this->render(
+            'order/index.html.twig'
+        );
+    }
+
     /**
      * @param Request $request
      *
