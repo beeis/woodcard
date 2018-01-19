@@ -140,13 +140,13 @@ class OrderItemController extends Controller
      */
     public function comment(Request $request, int $orderItem): Response
     {
-        $comment = $request->request->get('comment');
+        $bodyParams = json_decode($request->getContent(), true);
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
         $orderItem = $orderItemRepository->find($orderItem);
         if (null === $orderItem) {
             throw $this->createNotFoundException();
         }
-        $orderItem->setComment($comment);
+        $orderItem->setComment($bodyParams['comment']);
         $orderItem->setUpdatedAt(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
