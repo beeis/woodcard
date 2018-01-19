@@ -6,6 +6,6 @@ export const server = {
 
 export const apiPoint = server.local;
 
-export const rootFolder = '/admin/orders';
+export const rootFolder = '/admin';
 
 export const amazon = 'https://s3.eu-central-1.amazonaws.com/woodcard/';
