@@ -12,3 +12,8 @@
 ###< symfony/web-server-bundle ###
 /front/build/
 composer.phar
+/public/asset-manifest.json
+/public/static/
+/public/favicon.ico
+/public/service-worker.js
+/public/manifest.json

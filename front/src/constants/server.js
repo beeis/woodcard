@@ -1,5 +1,5 @@
 export const server = {
-  local: 'http://localhost:8000',
+  local: '',
   test: '',
   prod: ''
 };
