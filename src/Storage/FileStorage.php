@@ -53,7 +53,6 @@ class FileStorage implements FileStorageInterface
         return (bool) $this->adapter->write($filename, file_get_contents($file->getPathname()));
     }
 
-
     /**
      * {@inheritdoc}
      */

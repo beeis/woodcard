@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Manager\OrderManagerInterface;
-use Google_Service_Drive;
-use Google_Service_Drive_DriveFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,13 +40,6 @@ class OrderController extends Controller
         $orders = $this->orderManager->list();
 
         return new JsonResponse($orders);
-    }
-
-    public function admin(): Response
-    {
-        return $this->render(
-            'order/index.html.twig'
-        );
     }
 
     /**

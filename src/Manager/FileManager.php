@@ -74,7 +74,7 @@ class FileManager implements FileManagerInterface
      */
     protected function upload(UploadedFile $file, int $orderId, string $dir): ?string
     {
-        $filename = sprintf('%s/%s/%s.%s', $orderId, $dir, md5(uniqid().time()), $file->guessExtension());
+        $filename = sprintf('%s/%s/%s.%s', $orderId, $dir, md5(uniqid().time()), $file->getClientOriginalExtension());
 
         if (true === $this->fileStorage->upload($file, $filename)) {
             return $filename;

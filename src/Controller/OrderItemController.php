@@ -72,8 +72,6 @@ class OrderItemController extends Controller
         $orderItem = new OrderItem();
         $orderItem->setOrderId($order['data']['order_id']);
         $orderItem->setComment($request->request->get('comment'));
-        $orderItem->setCreatedAt(new \DateTime());
-        $orderItem->setUpdatedAt(new \DateTime());
         $filename = $this->get('app.manager.file_manager')
             ->uploadPhoto($request->files->get('file'), (int) $order['data']['order_id']);
         $orderItem->setPhoto($filename);
@@ -112,7 +110,6 @@ class OrderItemController extends Controller
             throw $this->createNotFoundException();
         }
         $orderItem->setActive($active);
-        $orderItem->setUpdatedAt(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($orderItem);
@@ -147,7 +144,6 @@ class OrderItemController extends Controller
             throw $this->createNotFoundException();
         }
         $orderItem->setComment($bodyParams['comment']);
-        $orderItem->setUpdatedAt(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($orderItem);
@@ -180,7 +176,6 @@ class OrderItemController extends Controller
         if (null === $orderItem) {
             throw $this->createNotFoundException();
         }
-        $orderItem->setUpdatedAt(new \DateTime());
 
         $filename = $this->get('app.manager.file_manager')
             ->uploadPhoto($request->files->get('file'), (int) $orderItem->getOrderId());
@@ -217,7 +212,6 @@ class OrderItemController extends Controller
         if (null === $orderItem) {
             throw $this->createNotFoundException();
         }
-        $orderItem->setUpdatedAt(new \DateTime());
 
         $filename = $this->get('app.manager.file_manager')
             ->uploadPsd($request->files->get('file'), (int) $orderItem->getOrderId());
