@@ -103,13 +103,13 @@ class OrderItemController extends Controller
      */
     public function active(Request $request, int $orderItem): Response
     {
-        $active = (bool) $request->request->get('active', false);
+        $bodyParams = json_decode($request->getContent(), true);
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
         $orderItem = $orderItemRepository->find($orderItem);
         if (null === $orderItem) {
             throw $this->createNotFoundException();
         }
-        $orderItem->setActive($active);
+        $orderItem->setActive((bool) $bodyParams['active']);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($orderItem);
