@@ -7,10 +7,10 @@ namespace App\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class OrderItemHistoryRepository
+ * Class ActivityRepository
  *
  * @package App\Repository
  */
-class OrderItemHistoryRepository extends EntityRepository
+class ActivityRepository extends EntityRepository
 {
 }

@@ -60,7 +60,19 @@ services:
         class: App\Manager\FileManager
         public: true
         arguments:
-        - '@app.storage.file_storage'
+            - '@app.storage.file_storage'
+
+    app.manager.activity_manager:
+        class: App\Manager\ActivityManager
+        arguments:
+            - '@security.token_storage'
+
+    app.event_listener.order_item_listener:
+        class: App\EventListener\OrderItemListener
+        arguments:
+            - '@app.manager.activity_manager'
+        tags:
+            - { name: doctrine.event_subscriber }
 
     ### Vendor Services ###
     vendor.guzzle.client:

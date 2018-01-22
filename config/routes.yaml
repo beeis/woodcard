@@ -1,16 +1,29 @@
-### App Routes ###
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+### Main Routes ###
+app_main_index:
+    path: /
+    methods: [GET, POST]
+    controller: App\Controller\MainController::index
+
+#Сторити замовлення - не для адмінки
+app_order_create:
+    path: orders
+    methods: [POST]
+    controller: App\Controller\OrderController::create
+
+### ADMIN Routes ###
+app_admin_index:
+    path: admin
+    methods: [GET]
+    controller: App\Controller\AdminController::index
 
 #Список замовленнь
 app_order_index:
     path: admin/orders
     methods: [GET]
     controller: App\Controller\OrderController::index
-
-#Сторити замовлення - не для адмінки
-app_order_create:
-    path: admin/orders
-    methods: [POST]
-    controller: App\Controller\OrderController::create
 
 #Вибране замовлення
 app_order_item_index:
@@ -47,8 +60,3 @@ app_order_item_upload_psd:
     path: admin/order_item/{orderItem}/upload/psd
     methods: [POST]
     controller: App\Controller\OrderItemController::uploadPsd
-
-app_admin_index:
-    path: admin
-    methods: [GET]
-    controller: App\Controller\OrderController::admin
