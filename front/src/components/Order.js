@@ -31,6 +31,7 @@ export default class Orders extends Component {
         orderInfo: data.data.order.data,
         items: data.data.items
       });
+      console.log(data.data.items);
     });
   };
 
@@ -101,6 +102,27 @@ export default class Orders extends Component {
     this.setState({preview: image});
   };
 
+  toggleActive = (e, id) => {
+    let passData = false;
+    if(e.target.checked) {
+      passData = true;
+      e.target.checked = false;
+    } else {
+      e.target.checked = "checked";
+    }
+    axios.post(`${apiPoint}/admin/order_item/${id}/active`, {
+      "active": passData
+    }, {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }).then((response) => {
+      this._refreshItems();
+    }).catch(() => {
+      alert('Возникла проблема при закачке файла.');
+    });
+  };
+
   render () {
     return (
       <div className="container-fluid orders-container">
@@ -122,36 +144,43 @@ export default class Orders extends Component {
           <div className="col-md-8 orders-border">
             <div className={"row"}>
               <div className={"col-md"}>
-                <table className={"table orders-table table-striped order-items-table"}>
+                <table className={"table orders-table order-items-table"}>
                   <thead>
-                  <tr>
+                  <tr style={{textAlign: 'center'}}>
                     <th>#</th>
                     <th>Фото</th>
                     <th>Макет</th>
                     <th>PSD</th>
                     <th>Комментарий</th>
+                    <th>Активный</th>
                   </tr>
                   </thead>
                   <tbody>
                   {this.state.items.map((item, index) =>
-                    <tr key={index}>
+                    <tr className={!item.is_active ? "item-no-active" : ""}style={{textAlign: 'center'}} key={index}>
                       <td>{index+1}</td>
-                      <td>{item.photo ? <img alt='макет' className = "img-preview" src={amazon+item.photo} onClick={(e) => this._showPreviewWith(e.target.src)}/> : 'no image found'}</td>
+                      <td>{item.photo ? <img alt='макет' className = "img-preview" src={amazon+item.photo}
+                         onClick={(e) => this._showPreviewWith(e.target.src)}/> : 'no image found'}</td>
                       <td>
-                        {item.model ? <img alt='psd' className = "img-preview" src={amazon+item.model} onClick={(e) => this._showPreviewWith(e.target.src)} /> :
-                          <Dropzone accept=".jpeg,.jpg,.png,.svg" style={{width: '27px', height: '27px'}} onDrop={(files) => this.onDropMock(files, item.id)}>
+                        {item.model ?
+                          <img alt='psd' className = "img-preview" src={amazon+item.model}
+                          onClick={(e) => this._showPreviewWith(e.target.src)} /> :
+                          <Dropzone accept=".jpeg,.jpg,.png,.svg" style={styles.dropZoneStyle} onDrop={(files) => this.onDropMock(files, item.id)}>
                             <button className={"btn btn-primary btn-sm btn-add-sm"}>+</button>
                           </Dropzone>
                         }
                       </td>
                       <td>
                         {item.psd ? <a href={amazon+item.psd} download>Скачать</a> :
-                          <Dropzone style={{width: '27px', height: '27px'}} onDrop={(files) => this.onDropPSD(files, item.id)}>
+                          <Dropzone style={styles.dropZoneStyle} onDrop={(files) => this.onDropPSD(files, item.id)}>
                             <button className={"btn btn-primary btn-sm btn-add-sm"}>+</button>
                           </Dropzone>
                         }
                       </td>
                       <td>{item.comment ? item.comment : '-'}</td>
+                      <td align={"center"}>
+                          <input type={"checkbox"} checked={item.is_active ? "checked" : false} onChange={(e) => this.toggleActive(e, item.id)} />
+                      </td>
                     </tr>
                   )}
                   </tbody>
@@ -177,3 +206,9 @@ export default class Orders extends Component {
     )
   }
 }
+
+const styles = {
+  dropZoneStyle: {
+    margin: 'auto', width: '27px', height: '27px'
+  }
+};

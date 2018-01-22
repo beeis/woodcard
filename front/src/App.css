@@ -142,6 +142,23 @@
   cursor: pointer;
 }
 
+.order-active {
+  align-self: center;
+}
 
+.item-no-active {
+  background-color: #ffe2e5;
+}
 
-
+.preview-download {
+  position: absolute;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  right: 50px;
+  top: 13px;
+  cursor: pointer;
+}
