@@ -27,7 +27,6 @@ export default class Orders extends Component {
 
   _refreshItems = () => {
     axios.get(`${apiPoint}/admin/orders/${this.props.match.params.id}`).then((data) => {
-      console.log(data.data);
       this.setState({
         orderInfo: data.data.order.data,
         items: data.data.items

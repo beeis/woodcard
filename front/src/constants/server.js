@@ -4,6 +4,6 @@ export const server = {
   prod: ''
 };
 
-export const apiPoint = server.local;
+export const apiPoint = server.prod;
 
 export const amazon = 'https://s3.eu-central-1.amazonaws.com/woodcard/';

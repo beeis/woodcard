@@ -21,7 +21,6 @@ export default class Orders extends Component {
       this.setState({
         orders: data.data.data
       });
-      console.log(data.data.data);
     })
   };
 
