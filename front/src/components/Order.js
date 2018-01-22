@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { rootFolder } from "../constants/server";
 import axios from 'axios';
 import { apiPoint } from "../constants/server";
 import Dropzone from 'react-dropzone';
@@ -108,7 +107,7 @@ export default class Orders extends Component {
       <div className="container-fluid orders-container">
         {this.props.preview && <Preview url={this.state.preview}/>}
         <div className="row">
-          <Link to={rootFolder} className={'btn btn-primary orders-link'}>Главная</Link>
+          <Link to={'/'} className={'btn btn-primary orders-link'}>Главная</Link>
         </div>
         <div className="row">
           <div className={"order-id"}>

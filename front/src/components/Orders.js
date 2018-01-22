@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {apiPoint, rootFolder} from '../constants/server';
+import { Link } from 'react-router-dom';
 
 export default class Orders extends Component {
   constructor() {
     super();
     this.state = {
-      orders: {}
+      orders: {},
+      goId: ''
     }
   }
 
   _openOrder = (id) => {
-    this.props.history.push(rootFolder+'/order/'+id);
+    this.props.history.push('/order/'+id);
   };
 
   componentDidMount() {
@@ -33,10 +35,13 @@ export default class Orders extends Component {
           <div className="col-md-8 orders-border">
             <div className="row">
               <div className={"col-md-3"}>
-                <input type="text" className={"form-control"} />
+                <input type="text" className={"form-control"}
+                       value={this.state.goId} onChange={(e) => {this.setState({goId: e.target.value})}}/>
               </div>
               <div className={"col-md"}>
-                <button type={"button"} className={"btn btn-primary"}>Перейти</button>
+                <Link to={`order/${this.state.goId}`}>
+                  <button type={"button"} className={"btn btn-primary"}>Перейти</button>
+                </Link>
               </div>
             </div>
             <div className={"row"}>
