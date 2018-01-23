@@ -23,4 +23,11 @@ class MainController extends Controller
             'main/index.html.twig'
         );
     }
+
+    public function heart(): Response
+    {
+        return $this->render(
+            'main/heart.html.twig'
+        );
+    }
 }

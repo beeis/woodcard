@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Manager;
 
+use App\Entity\OrderItem;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -31,15 +32,26 @@ class OrderManager implements OrderManagerInterface
     private $entityManager;
 
     /**
+     * @var FileManagerInterface
+     */
+    private $fileManager;
+
+    /**
      * OrderManager constructor.
      *
      * @param CRMManager $CRMManager
      * @param EntityManagerInterface $entityManager
+     * @param FileManagerInterface $fileManager
      */
-    public function __construct(CRMManager $CRMManager, EntityManagerInterface $entityManager)
+    public function __construct(
+        CRMManager $CRMManager,
+        EntityManagerInterface $entityManager,
+        FileManagerInterface $fileManager
+    )
     {
         $this->CRMManager = $CRMManager;
         $this->entityManager = $entityManager;
+        $this->fileManager = $fileManager;
     }
 
     /**
@@ -82,5 +94,27 @@ class OrderManager implements OrderManagerInterface
     public function get(int $id): array
     {
         return $this->CRMManager->getOrderByID($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createItems(int $orderId, array $files): array
+    {
+        $items = [];
+        foreach ($files as $file) {
+            $filename = $this->fileManager->uploadPhoto($file, $orderId);
+            if (null === $filename) {
+                continue;
+            }
+            $items[] = $filename;
+            $orderItem = new OrderItem();
+            $orderItem->setPhoto($filename);
+            $orderItem->setOrderId((string) $orderId);
+            $this->entityManager->persist($orderItem);
+        }
+        $this->entityManager->flush();
+
+        return $items;
     }
 }

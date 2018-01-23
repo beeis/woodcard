@@ -50,6 +50,7 @@ services:
         arguments:
             - '@app.manager.crm_manager'
             - '@doctrine.orm.entity_manager'
+            - '@app.manager.file_manager'
 
     app.storage.file_storage:
         class: App\Storage\FileStorage

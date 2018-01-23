@@ -4,14 +4,24 @@ fos_user:
 ### Main Routes ###
 app_main_index:
     path: /
-    methods: [GET, POST]
+    methods: [GET]
     controller: App\Controller\MainController::index
+
+app_main_heart:
+    path: /heart
+    methods: [GET]
+    controller: App\Controller\MainController::heart
 
 #Сторити замовлення - не для адмінки
 app_order_create:
-    path: orders
+    path: order
     methods: [POST]
     controller: App\Controller\OrderController::create
+
+app_order_create_items:
+    path: order/{order}/items
+    methods: [POST]
+    controller: App\Controller\OrderController::createItems
 
 ### ADMIN Routes ###
 app_admin_index:

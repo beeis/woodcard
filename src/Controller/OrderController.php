@@ -87,4 +87,17 @@ class OrderController extends Controller
             )
         );
     }
+
+    /**
+     * @param Request $request
+     * @param int $order
+     *
+     * @return Response
+     */
+    public function createItems(Request $request, int $order): Response
+    {
+        $files = $request->files->get('files');
+
+        return new JsonResponse($this->orderManager->createItems($order, $files));
+    }
 }

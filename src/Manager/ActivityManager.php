@@ -7,7 +7,6 @@ namespace App\Manager;
 use App\Entity\Activity;
 use App\Entity\OrderItem;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -38,7 +37,8 @@ class ActivityManager implements ActivityManagerInterface
      *
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(TokenStorageInterface $tokenStorage) {
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -63,6 +63,8 @@ class ActivityManager implements ActivityManagerInterface
 
             return $activity;
         }
+
+        return null;
     }
 
     /**
@@ -89,7 +91,7 @@ class ActivityManager implements ActivityManagerInterface
      */
     protected function generateComment(string $fieldName, string $newValue): string
     {
-        if ('is_active' === $fieldName) {
+        if ('active' === $fieldName) {
             $newValue = '1' === $newValue ? 'Активный' : 'Не активный';
         }
 

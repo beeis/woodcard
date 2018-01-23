@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Manager;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Interface OrderManagerInterface
  *
@@ -17,6 +19,14 @@ interface OrderManagerInterface
      * @return array
      */
     public function create(array $options): array;
+
+    /**
+     * @param int $orderId
+     * @param array|UploadedFile[] $files
+     *
+     * @return array
+     */
+    public function createItems(int $orderId, array $files): array;
 
     /**
      * @return array
