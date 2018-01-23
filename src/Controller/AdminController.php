@@ -19,6 +19,10 @@ class AdminController extends Controller
      */
     public function index(): Response
     {
+        if (null === $this->getUser()) {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
         return $this->render(
             'admin/index.html.twig'
         );

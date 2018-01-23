@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,10 +25,30 @@ class MainController extends Controller
         );
     }
 
-    public function heart(): Response
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function heart(Request $request): Response
     {
         return $this->render(
-            'main/heart.html.twig'
+            'main/heart.html.twig',
+            [
+                'utm_source' => $request->get('utm_source'),
+                'utm_medium' => $request->get('utm_medium'),
+                'utm_term' => $request->get('utm_term'),
+                'utm_content' => $request->get('utm_content'),
+                'utm_campaign' => $request->get('utm_campaign'),
+            ]
         );
+    }
+
+    /**
+     * @return Response
+     */
+    public function thankyoupage(): Response
+    {
+        return $this->render('main/thankyoupage.html.twig');
     }
 }
