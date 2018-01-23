@@ -54,7 +54,7 @@ export default class Orders extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {Object.values(this.state.orders).map((order) =>
+                  {this.state.orders && Object.values(this.state.orders).map((order) =>
                     <tr key={order.order_id} onClick={() => {this._openOrder(order.order_id)}}>
                       <td>{order.order_id}</td>
                       <td>{order.ttn_status}</td>
