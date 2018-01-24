@@ -211,6 +211,12 @@ $('.user-form').on('submit', function(e){
     price = $('.price.active').data("price"),
     name = form.find('[name="name"]')[0].value,
     phone = form.find('[name="phone"]')[0].value;
+    var utm_source = form.find('[name="utm_source"]')[0].value;
+    var utm_medium = form.find('[name="utm_medium"]')[0].value;
+    var utm_term = form.find('[name="utm_term"]')[0].value;
+    var utm_content = form.find('[name="utm_content"]')[0].value;
+    var utm_campaign = form.find('[name="utm_campaign"]')[0].value;
+
     $.ajax({
         url: '/order',
         method: 'POST',
@@ -223,7 +229,12 @@ $('.user-form').on('submit', function(e){
                     count: quantity
                 }
             },
-            phone: phone
+            phone: phone,
+            utm_source: utm_source,
+            utm_medium: utm_medium,
+            utm_term: utm_term,
+            utm_content: utm_content,
+            utm_campaign: utm_campaign
         }
     }).done(function(response){
         console.log(response);

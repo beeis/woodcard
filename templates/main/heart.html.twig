@@ -281,6 +281,13 @@
                         <span>1197 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 699 грн
                     </div>
                     <div class="client-info">
+
+                        <input name="utm_source" type="hidden" value="{{ utm_source }}">
+                        <input name="utm_medium" type="hidden" value="{{ utm_medium }}">
+                        <input name="utm_term" type="hidden" value="{{ utm_term }}">
+                        <input name="utm_content" type="hidden" value="{{ utm_content }}">
+                        <input name="utm_campaign" type="hidden" value="{{ utm_campaign }}">
+
                         <input name="name" required type="text" placeholder="Ім’я та прізвище*">
                         <input name="phone" required id="user-phone" type="text" placeholder="Номер телефону*">
                         <div class="client-info-photo"><i class="fa fa-paperclip" aria-hidden="true"></i> Завантажити фото
