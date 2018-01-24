@@ -11,6 +11,9 @@ function handleChangeOne(checkbox) {
         priceThree.style.display = "none";
         priceTwo.style.display = "none";
         priceOne.style.display = "block";
+        $(priceOne).addClass('active');
+        $(priceTwo).removeClass('active');
+        $(priceThree).removeClass('active');
     }
 }
 
@@ -19,6 +22,9 @@ function handleChangeTwo(checkbox) {
         priceOne.style.display = "none";
         priceThree.style.display = "none";
         priceTwo.style.display = "block";
+        $(priceTwo).addClass('active');
+        $(priceOne).removeClass('active');
+        $(priceThree).removeClass('active');
     }
 }
 
@@ -27,6 +33,9 @@ function handleChangeThree(checkbox) {
         priceOne.style.display = "none";
         priceTwo.style.display = "none";
         priceThree.style.display = "block";
+        $(priceThree).addClass('active');
+        $(priceTwo).removeClass('active');
+        $(priceOne).removeClass('active');
     }
 }
 
@@ -191,6 +200,55 @@ $('#user-phone').inputmask({"mask": "+38(999) 99-99-999"});
 // Count loaded images
 $('.user-images').on("change", function() {
     const files = $('.user-files-loaded');
-  $(this).get(0).files.length ? files.html($(this).get(0).files.length + ' файл(ів) завантажено').show() :
-    files.hide();
+    $(this).get(0).files ? files.html($(this).get(0).files.length + ' файл(ів) завантажено').show() : files.hide();
+});
+
+// Handle form submit
+$('.user-form').on('submit', function(e){
+    e.preventDefault();
+    const form = $('form.user-form'),
+    quantity = $('input[name="quantity"]:checked').val(),
+    price = $('.price.active').data("price"),
+    name = form.find('[name="name"]')[0].value,
+    phone = form.find('[name="phone"]')[0].value;
+    $.ajax({
+        url: '/order',
+        method: 'POST',
+        data: {
+            name: name,
+            products: {
+                product_id: 3,
+                price: price,
+                count: quantity
+            },
+            phone: phone
+        }
+    }).done(function(response){
+        console.log(response);
+        if(response.status === "error" && response.message[0] === "Дублирующая заявка") {
+            alert('Дані вже були відправлені');
+        } else if(response.status === "ok") {
+            const id = response.data[0].order_id;
+            const files = $('.user-images').get(0).files;
+            let formData = new FormData();
+            for(let i = 0; i < files.length; i++) {
+                formData.append('files[]', files[i]);
+            }
+          $.ajax({
+            url: '/order/'+id+'/items',
+            method: 'POST',
+            contentType: false,
+            data: formData,
+            processData: false
+          }).done(function(){
+             alert('Дані були успішно відправлені!');
+          });
+        }
+    }).fail(function(){
+        alert('Сталась помилка під час відправки даних');
+    });
+
+    // $.ajax({
+    //     url: '/order'
+    // });
 });
