@@ -200,7 +200,7 @@ $('#user-phone').inputmask({"mask": "+38(099) 99-99-999"});
 // Count loaded images
 $('.user-images').on("change", function() {
     const files = $('.user-files-loaded');
-    $(this).get(0).files ? files.html($(this).get(0).files.length + ' файл(ів) завантажено').show() : files.hide();
+    $(this).get(0).files ? files.html($(this).get(0).files.length + ' файл(ів) вибрано').show() : files.hide();
 });
 
 // Handle form submit
