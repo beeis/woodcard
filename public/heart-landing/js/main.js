@@ -234,21 +234,19 @@ $('.user-form').on('submit', function(e){
             for(let i = 0; i < files.length; i++) {
                 formData.append('files[]', files[i]);
             }
-          $.ajax({
-            url: '/order/'+id+'/items',
-            method: 'POST',
-            contentType: false,
-            data: formData,
-            processData: false
-          }).done(function(){
-             alert('Дані були успішно відправлені!');
-          });
+            $.ajax({
+                url: '/order/'+id+'/items',
+                method: 'POST',
+                contentType: false,
+                data: formData,
+                processData: false
+                }).done(function(){
+                  alert('Дані були успішно відправлені!');
+                }).fail(function(){
+                  alert('Сталась помилка під час відправки даних');
+            });
         }
     }).fail(function(){
         alert('Сталась помилка під час відправки даних');
     });
-
-    // $.ajax({
-    //     url: '/order'
-    // });
 });
