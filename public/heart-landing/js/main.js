@@ -219,7 +219,7 @@ $('.user-form').on('submit', function(e){
             products: {
                 "1": {
                     product_id: 3,
-                    price: price,
+                    price: price/quantity,
                     count: quantity
                 }
             },
