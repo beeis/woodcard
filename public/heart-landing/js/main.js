@@ -195,7 +195,7 @@ function timeBetweenDates(toDate) {
 }
 
 // Contact Form Phone Mask
-$('#user-phone').inputmask({"mask": "+38(999) 99-99-999"});
+$('#user-phone').inputmask({"mask": "+38(099) 99-99-999"});
 
 // Count loaded images
 $('.user-images').on("change", function() {
@@ -217,9 +217,11 @@ $('.user-form').on('submit', function(e){
         data: {
             name: name,
             products: {
-                product_id: 3,
-                price: price,
-                count: quantity
+                "1": {
+                    product_id: 3,
+                    price: price,
+                    count: quantity
+                }
             },
             phone: phone
         }
