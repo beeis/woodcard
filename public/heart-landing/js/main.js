@@ -205,48 +205,53 @@ $('.user-images').on("change", function() {
 
 // Handle form submit
 $('.user-form').on('submit', function(e){
-    e.preventDefault();
-    const form = $('form.user-form'),
+  $('.heart-spinner-wrap').show();
+  e.preventDefault();
+  const form = $('form.user-form'),
     quantity = $('input[name="quantity"]:checked').val(),
     price = $('.price.active').data("price"),
     name = form.find('[name="name"]')[0].value,
     phone = form.find('[name="phone"]')[0].value;
-    $.ajax({
-        url: '/order',
+  $.ajax({
+    url: '/order',
+    method: 'POST',
+    data: {
+      name: name,
+      products: {
+        product_id: 3,
+        price: price,
+        count: quantity
+      },
+      phone: phone
+    }
+  }).done(function(response){
+    if(response.status === "error" && response.message[0] === "Дублирующая заявка") {
+      alert('Дані вже були відправлені');
+      $('.heart-spinner-wrap').hide();
+    } else if(response.status === "ok") {
+      const id = response.data[0].order_id;
+      const files = $('.user-images').get(0).files;
+      let formData = new FormData();
+      for(let i = 0; i < files.length; i++) {
+        formData.append('files[]', files[i]);
+      }
+      $.ajax({
+        url: '/order/'+id+'/items',
         method: 'POST',
-        data: {
-            name: name,
-            products: {
-                product_id: 3,
-                price: price,
-                count: quantity
-            },
-            phone: phone
-        }
-    }).done(function(response){
-        console.log(response);
-        if(response.status === "error" && response.message[0] === "Дублирующая заявка") {
-            alert('Дані вже були відправлені');
-        } else if(response.status === "ok") {
-            const id = response.data[0].order_id;
-            const files = $('.user-images').get(0).files;
-            let formData = new FormData();
-            for(let i = 0; i < files.length; i++) {
-                formData.append('files[]', files[i]);
-            }
-            $.ajax({
-                url: '/order/'+id+'/items',
-                method: 'POST',
-                contentType: false,
-                data: formData,
-                processData: false
-                }).done(function(){
-                  alert('Дані були успішно відправлені!');
-                }).fail(function(){
-                  alert('Сталась помилка під час відправки даних');
-            });
-        }
-    }).fail(function(){
+        contentType: false,
+        data: formData,
+        processData: false
+      }).done(function(){
+        alert('Дані були успішно відправлені!');
+        window.location.href = '/thankyoupage';
+        $('.heart-spinner-wrap').hide();
+      }).fail(function(){
         alert('Сталась помилка під час відправки даних');
-    });
+        $('.heart-spinner-wrap').hide();
+      });
+    }
+  }).fail(function(){
+    $('.heart-spinner-wrap').hide();
+    alert('Сталась помилка під час відправки даних');
+  });
 });
