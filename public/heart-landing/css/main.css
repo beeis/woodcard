@@ -699,7 +699,7 @@ footer {
       top: 50%; }
   @media screen and (max-width: 425px) {
     .price {
-      font-size: 35px; }
+      font-size: 34px; }
       .price span::before {
         width: 150px;
         left: calc(50% - 75px); } }
@@ -750,7 +750,7 @@ section .title-white {
   section .title-white h2 {
     font-size: 45px; }
   section .title-white h3 {
-    font-size: 38px;
+    font-size: 33px;
     font-weight: 100; }
   @media screen and (max-width: 361px) {
     section .title-white h2 {
