@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\OrderItem;
+use Imagine\Image\Box;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -178,8 +180,11 @@ class OrderItemController extends Controller
         }
 
         $filename = $this->get('app.manager.file_manager')
-            ->uploadPhoto($request->files->get('file'), (int) $orderItem->getOrderId());
+            ->uploadModel($request->files->get('file'), (int) $orderItem->getOrderId());
         $orderItem->setModel($filename);
+        $filename = $this->get('app.manager.file_manager')
+            ->uploadPrint($request->files->get('file'), (int) $orderItem->getOrderId());
+        $orderItem->setPrint($filename);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($orderItem);
@@ -193,6 +198,7 @@ class OrderItemController extends Controller
                 'photo' => $orderItem->getPhoto(),
                 'psd' => $orderItem->getPsd(),
                 'model' => $orderItem->getModel(),
+                'print' => $orderItem->getPrint(),
                 'created_at' => $orderItem->getCreatedAt(),
                 'updated_at' => $orderItem->getUpdatedAt(),
             ]

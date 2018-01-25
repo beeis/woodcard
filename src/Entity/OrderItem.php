@@ -46,6 +46,13 @@ class OrderItem
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $print;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $psd;
 
     /**
@@ -187,5 +194,21 @@ class OrderItem
     public function setOrderId(?string $orderId): void
     {
         $this->orderId = $orderId;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPrint(): ?string
+    {
+        return $this->print;
+    }
+
+    /**
+     * @param null|string $print
+     */
+    public function setPrint(?string $print): void
+    {
+        $this->print = $print;
     }
 }

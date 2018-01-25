@@ -7,6 +7,7 @@ namespace App\Storage;
 use Gaufrette\Adapter;
 use Gaufrette\Adapter\AwsS3;
 use Gaufrette\Filesystem;
+use Imagine\Image\ImageInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -68,6 +69,14 @@ class FileStorage implements FileStorageInterface
         }
 
         return (bool) $this->adapter->write($filename, file_get_contents($file->getPathname()));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function uploadImage(ImageInterface $image, string $filename): bool
+    {
+        return (bool) $this->adapter->write($filename, $image->get('jpg'));
     }
 
     /**

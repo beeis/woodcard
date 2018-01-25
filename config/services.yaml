@@ -63,6 +63,7 @@ services:
         public: true
         arguments:
             - '@app.storage.file_storage'
+            - '@liip_imagine.imagick'
 
     app.manager.activity_manager:
         class: App\Manager\ActivityManager

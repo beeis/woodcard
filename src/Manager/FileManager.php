@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Manager;
 
 use App\Storage\FileStorageInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -17,20 +19,30 @@ class FileManager implements FileManagerInterface
     const DIR_ORIGINAL_PHOTO = 'original';
     const DIR_ORIGINAL_MODEL = 'model';
     const DIR_ORIGINAL_PSD = 'psd';
+    const DIR_ORIGINAL_PRINT = 'print';
 
     /**
      * @var FileStorageInterface
      */
     private $fileStorage;
+    /**
+     * @var ImagineInterface
+     */
+    private $imagine;
 
     /**
      * FileManager constructor.
      *
      * @param FileStorageInterface $fileStorage
+     * @param ImagineInterface $imagine
      */
-    public function __construct(FileStorageInterface $fileStorage)
+    public function __construct(
+        FileStorageInterface $fileStorage,
+        ImagineInterface $imagine
+    )
     {
         $this->fileStorage = $fileStorage;
+        $this->imagine = $imagine;
     }
 
     /**
@@ -47,6 +59,17 @@ class FileManager implements FileManagerInterface
     public function uploadModel(UploadedFile $file, int $orderId): ?string
     {
         return $this->upload($file, $orderId, self::DIR_ORIGINAL_MODEL);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function uploadPrint(UploadedFile $file, int $orderId): ?string
+    {
+        $image = $this->imagine->open($file->getPathname());
+        $image->flipHorizontally();
+
+        return $this->uploadImage($image, $orderId, self::DIR_ORIGINAL_PRINT);
     }
 
     /**
@@ -83,4 +106,21 @@ class FileManager implements FileManagerInterface
         return null;
     }
 
+    /**
+     * @param ImageInterface $image
+     * @param int $orderId
+     * @param string $dir
+     *
+     * @return null|string
+     */
+    protected function uploadImage(ImageInterface $image, int $orderId, string $dir): ?string
+    {
+        $filename = sprintf('%s/%s/%s.%s', $orderId, $dir, md5(uniqid().time()), 'jpg');
+
+        if (true === $this->fileStorage->uploadImage($image, $filename)) {
+            return $filename;
+        }
+
+        return null;
+    }
 }
