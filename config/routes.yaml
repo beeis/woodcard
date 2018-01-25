@@ -7,6 +7,11 @@ app_main_index:
     methods: [GET]
     controller: App\Controller\MainController::index
 
+app_main_order:
+    path: /o/{order}
+    methods: [GET]
+    controller: App\Controller\MainController::order
+
 app_main_heart:
     path: /heart
     methods: [GET]

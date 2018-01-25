@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\OrderItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,26 @@ class MainController extends Controller
     {
         return $this->render(
             'main/index.html.twig'
+        );
+    }
+
+    /**
+     * @param int $order
+     *
+     * @return Response
+     */
+    public function order(int $order): Response
+    {
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $items = $orderItemRepository->findActiveItems($order);
+        $order = $this->get('app.manager.order_manager')->get($order);
+
+        return $this->render(
+            'main/order.html.twig',
+            [
+                'items' => $items,
+                'order' => $order['data']
+            ]
         );
     }
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WoodCard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/heart-landing/css/main.css">
+</head>
+
+<body>
+<div class="heart-spinner-wrap">
+    <div class="heart-spinner">
+        <div class="loader"></div>
+    </div>
+</div>
+<header>
+    <div class="header-top" style="position: static">
+        <a href="#">
+            <img src="/heart-landing/img/logo.png" alt="Logo">
+        </a>
+    </div>
+</header>
+<section class="slider">
+    <h2 class="title-red">WoodCard - оригінальний<br>подарунок з душею</h2>
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+        <ol class="carousel-indicators">
+            {% set i = 0 %}
+            {% for item in items %}
+                <li data-target="#carousel-example-generic"
+                    data-slide-to="{{ i }}" {% if not i %} class="active" {% endif %}></li>
+                {% set i = i + 1 %}
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            {% set i = 0 %}
+            {% for item in items %}
+                <div class="item{% if not i %} active{% endif %}">
+                    <img src="https://s3.eu-central-1.amazonaws.com/woodcard/{{ item.model }}">
+                </div>
+                {% set i = i + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<section class="help">
+    <h2 class="title-red">Що робити далі?</h2>
+    <div class="comment-one-description-text">
+        <p>Для затвердження оплатіть на карту ПБ: 4149497841528146 (Артюх Д.А.)</br>
+            Сума: {{ order.total }} грн</br> Коментар: {{ order.bayer_name }}</br>
+            Писля оплати повідомте нам за номером <a href="tel:+380990633919">(099)063-39-19</a></p>
+    </div>
+</section>
+<footer>
+    <div class="left">
+        <img src="/heart-landing/img/logo.png" alt="woodcard">
+        <p>Ми робимо унікальні іграшки з дерева для того, щоб Ваш подарунок був особливим</p>
+        <div class="social">
+            <a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/thewoodcard/"><i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+    <div class="rigth">
+        <p>Є питання? Телефонуйте нам:</p>
+        <a href="tel:+380990633919">(099)063-39-19</a>
+        <p>Пишіть у Viber або на пошту</p>
+        <a href="mailto:mywoodcard@gmail.com">mywoodcard@gmail.com</a>
+        <h2>Працюємо з 10:00 до 18:00</h2>
+    </div>
+</footer>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+<script src="/heart-landing/plugins/inputmask/jquery.inputmask.bundle.min.js"></script>
+<script src="/heart-landing/js/main.js"></script>
+</html>
