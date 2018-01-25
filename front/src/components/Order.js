@@ -153,6 +153,9 @@ export default class Orders extends Component {
                     <th>PSD</th>
                     <th>Комментарий</th>
                     <th>Активный</th>
+                    <th>Print</th>
+                    <th>Создано</th>
+                    <th>Обновлено</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -177,9 +180,18 @@ export default class Orders extends Component {
                           </Dropzone>
                         }
                       </td>
-                      <td>{item.comment ? item.comment : '-'}</td>
+                      <td>
+                        {item.comment ? item.comment : '-'}
+                      </td>
                       <td align={"center"}>
                           <input type={"checkbox"} checked={item.is_active ? "checked" : false} onChange={(e) => this.toggleActive(e, item.id)} />
+                      </td>
+                      <td>{item.print ? <a href={amazon+item.print} download>Print</a> : '-'}</td>
+                      <td>
+                        {item.created_at.date.slice(0, -7)}
+                      </td>
+                      <td>
+                        {item.updated_at.date.slice(0, -7)}
                       </td>
                     </tr>
                   )}

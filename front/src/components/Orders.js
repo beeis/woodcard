@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {apiPoint, rootFolder} from '../constants/server';
+import {apiPoint} from '../constants/server';
 import { Link } from 'react-router-dom';
 
 export default class Orders extends Component {
