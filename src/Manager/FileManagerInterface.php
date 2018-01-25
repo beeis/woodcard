@@ -35,6 +35,14 @@ interface FileManagerInterface
      *
      * @return null|string
      */
+    public function uploadPrint(UploadedFile $file, int $orderId): ?string;
+
+    /**
+     * @param UploadedFile $file
+     * @param int $orderId
+     *
+     * @return null|string
+     */
     public function uploadPsd(UploadedFile $file, int $orderId): ?string;
 
     /**

@@ -1,5 +1,23 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=cyrillic");
+@font-face {
+  font-family: 'Roboto'; /* Имя шрифта */
+  src: url("../font/RobotoSlab-Regular.ttf"); /* Путь к файлу со шрифтом */
+}
+@font-face {
+  font-family: 'Roboto'; /* Имя шрифта */
+  src: url("../font/RobotoSlab-Bold.ttf"); /* Путь к файлу со шрифтом */
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Roboto'; /* Имя шрифта */
+  src: url("../font/RobotoSlab-Bold.ttf"); /* Путь к файлу со шрифтом */
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Roboto'; /* Имя шрифта */
+  src: url("../font/RobotoSlab-Light.ttf"); /* Путь к файлу со шрифтом */
+  font-weight: 100;
+}
 * {
   margin: 0;
   padding: 0;
@@ -114,7 +132,7 @@ header {
     flex-direction: column;
     margin-top: 90px;
     padding: 250px 0 300px 0;
-    background: url(../img/header.jpg) center center no-repeat;
+    background: url(../img/HeroImage.jpg) center center no-repeat;
     background-size: cover; }
     @media screen and (max-width: 425px) {
       header .valentine {
@@ -430,7 +448,7 @@ footer {
       margin: 10px 0 20px 0; }
       footer .left .social a {
         color: #db0000;
-        font-size: 20px; }
+        font-size: 40px; }
   footer .rigth {
     padding: 20px 0;
     -ms-flex-preferred-size: 50%;
@@ -543,7 +561,7 @@ footer {
             transition: 0.5s; }
           .form form .quantitys .quantity input[type='radio']:nth-child(1) {
             background-color: red; }
-            .form form .quantitys .quantity input[type='radio']:nth-child(1):checked .price-one {
+            .form form .quantitys .quantity input[type='radio']:nth-child(1):checked .price-three {
               color: red; }
         @media screen and (max-width: 425px) {
           .form form .quantitys .quantity {
@@ -562,7 +580,7 @@ footer {
         .form form .quantitys .quantity:nth-child(2) {
           margin: 0 20px; }
     .form form .price-two,
-    .form form .price-three {
+    .form form .price-one {
       display: none; }
     .form form .client-info {
       display: -webkit-box;
@@ -681,7 +699,7 @@ footer {
       top: 50%; }
   @media screen and (max-width: 425px) {
     .price {
-      font-size: 35px; }
+      font-size: 34px; }
       .price span::before {
         width: 150px;
         left: calc(50% - 75px); } }
@@ -732,7 +750,7 @@ section .title-white {
   section .title-white h2 {
     font-size: 45px; }
   section .title-white h3 {
-    font-size: 38px;
+    font-size: 33px;
     font-weight: 100; }
   @media screen and (max-width: 361px) {
     section .title-white h2 {
@@ -767,6 +785,22 @@ section .title-white {
   margin-bottom: 7px;
   display: none;
 }
+@media screen and (max-width: 330px) {
+  .price-2::before, .price-2::after {
+    font-size: 16px;
+    font-weight: normal;
+  }
+  .price {
+    font-size: 28px;
+  }
+  .price-2::before {
+    left: 0px;
+  }
+  .price-2::after {
+    right: 0px;
+  }
+}
+
 
 
 /* Preloader */

@@ -56,12 +56,14 @@ services:
         class: App\Storage\FileStorage
         arguments:
             - '@gaufrette.woodcard_storage_filesystem'
+            - '@monolog.logger'
 
     app.manager.file_manager:
         class: App\Manager\FileManager
         public: true
         arguments:
             - '@app.storage.file_storage'
+            - '@liip_imagine.imagick'
 
     app.manager.activity_manager:
         class: App\Manager\ActivityManager

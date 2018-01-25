@@ -195,12 +195,12 @@ function timeBetweenDates(toDate) {
 }
 
 // Contact Form Phone Mask
-$('#user-phone').inputmask({"mask": "+38(999) 99-99-999"});
+$('#user-phone').inputmask({"mask": "+38(099) 99-99-999"});
 
 // Count loaded images
 $('.user-images').on("change", function() {
     const files = $('.user-files-loaded');
-    $(this).get(0).files ? files.html($(this).get(0).files.length + ' файл(ів) завантажено').show() : files.hide();
+    $(this).get(0).files ? files.html($(this).get(0).files.length + ' файл(ів) вибрано').show() : files.hide();
 });
 
 // Handle form submit
@@ -212,46 +212,60 @@ $('.user-form').on('submit', function(e){
     price = $('.price.active').data("price"),
     name = form.find('[name="name"]')[0].value,
     phone = form.find('[name="phone"]')[0].value;
-  $.ajax({
-    url: '/order',
-    method: 'POST',
-    data: {
-      name: name,
-      products: {
-        product_id: 3,
-        price: price,
-        count: quantity
-      },
-      phone: phone
-    }
-  }).done(function(response){
-    if(response.status === "error" && response.message[0] === "Дублирующая заявка") {
-      alert('Дані вже були відправлені');
-      $('.heart-spinner-wrap').hide();
-    } else if(response.status === "ok") {
-      const id = response.data[0].order_id;
-      const files = $('.user-images').get(0).files;
-      let formData = new FormData();
-      for(let i = 0; i < files.length; i++) {
-        formData.append('files[]', files[i]);
-      }
-      $.ajax({
-        url: '/order/'+id+'/items',
+    var utm_source = form.find('[name="utm_source"]')[0].value;
+    var utm_medium = form.find('[name="utm_medium"]')[0].value;
+    var utm_term = form.find('[name="utm_term"]')[0].value;
+    var utm_content = form.find('[name="utm_content"]')[0].value;
+    var utm_campaign = form.find('[name="utm_campaign"]')[0].value;
+
+    $.ajax({
+        url: '/order',
         method: 'POST',
-        contentType: false,
-        data: formData,
-        processData: false
-      }).done(function(){
-        alert('Дані були успішно відправлені!');
-        window.location.href = '/thankyoupage';
+        data: {
+            name: name,
+            products: {
+                "1": {
+                    product_id: 3,
+                    price: price/quantity,
+                    count: quantity
+                }
+            },
+            phone: phone,
+            utm_source: utm_source,
+            utm_medium: utm_medium,
+            utm_term: utm_term,
+            utm_content: utm_content,
+            utm_campaign: utm_campaign
+        }
+    }).done(function(response){
+        console.log(response);
+        if(response.status === "error" && response.message[0] === "Дублирующая заявка") {
+            alert('Дані вже були відправлені');
+            $('.heart-spinner-wrap').hide();
+        } else if(response.status === "ok") {
+            const id = response.data[0].order_id;
+            const files = $('.user-images').get(0).files;
+            let formData = new FormData();
+            for(let i = 0; i < files.length; i++) {
+                formData.append('files[]', files[i]);
+            }
+            $.ajax({
+                url: '/order/'+id+'/items',
+                method: 'POST',
+                contentType: false,
+                data: formData,
+                processData: false
+                }).done(function(){
+                  $('.heart-spinner-wrap').hide();
+                  alert('Дані були успішно відправлені!');
+                  window.location.href = '/thankyoupage';
+                }).fail(function(){
+                  $('.heart-spinner-wrap').hide();
+                  alert('Сталась помилка під час відправки даних');
+            });
+        }
+    }).fail(function(){
         $('.heart-spinner-wrap').hide();
-      }).fail(function(){
         alert('Сталась помилка під час відправки даних');
-        $('.heart-spinner-wrap').hide();
-      });
-    }
-  }).fail(function(){
-    $('.heart-spinner-wrap').hide();
-    alert('Сталась помилка під час відправки даних');
-  });
+    });
 });
