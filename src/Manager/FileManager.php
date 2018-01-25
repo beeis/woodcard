@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Manager;
 
 use App\Storage\FileStorageInterface;
+use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -58,7 +59,10 @@ class FileManager implements FileManagerInterface
      */
     public function uploadModel(UploadedFile $file, int $orderId): ?string
     {
-        return $this->upload($file, $orderId, self::DIR_ORIGINAL_MODEL);
+        $image = $this->imagine->open($file->getPathname());
+        $image->resize($image->getSize()->widen(600));
+
+        return $this->uploadImage($image, $orderId, self::DIR_ORIGINAL_MODEL);
     }
 
     /**
