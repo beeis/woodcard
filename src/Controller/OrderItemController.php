@@ -40,6 +40,7 @@ class OrderItemController extends Controller
                 'photo' => $item->getPhoto(),
                 'model' => $item->getModel(),
                 'psd' => $item->getPSD(),
+                'print' => $item->getPrint(),
                 'comment' => $item->getComment(),
                 'is_active' => $item->isActive(),
                 'created_at' => $item->getCreatedAt(),
@@ -91,6 +92,7 @@ class OrderItemController extends Controller
                 'photo' => $orderItem->getPhoto(),
                 'psd' => $orderItem->getPsd(),
                 'model' => $orderItem->getModel(),
+                'print' => $orderItem->getPrint(),
                 'created_at' => $orderItem->getCreatedAt(),
                 'updated_at' => $orderItem->getUpdatedAt(),
             ]
@@ -125,6 +127,7 @@ class OrderItemController extends Controller
                 'photo' => $orderItem->getPhoto(),
                 'psd' => $orderItem->getPsd(),
                 'model' => $orderItem->getModel(),
+                'print' => $orderItem->getPrint(),
                 'created_at' => $orderItem->getCreatedAt(),
                 'updated_at' => $orderItem->getUpdatedAt(),
             ]
@@ -159,6 +162,7 @@ class OrderItemController extends Controller
                 'photo' => $orderItem->getPhoto(),
                 'psd' => $orderItem->getPsd(),
                 'model' => $orderItem->getModel(),
+                'print' => $orderItem->getPrint(),
                 'created_at' => $orderItem->getCreatedAt(),
                 'updated_at' => $orderItem->getUpdatedAt(),
             ]
@@ -235,6 +239,7 @@ class OrderItemController extends Controller
                 'photo' => $orderItem->getPhoto(),
                 'psd' => $orderItem->getPsd(),
                 'model' => $orderItem->getModel(),
+                'print' => $orderItem->getPrint(),
                 'created_at' => $orderItem->getCreatedAt(),
                 'updated_at' => $orderItem->getUpdatedAt(),
             ]
