@@ -223,7 +223,8 @@ header .valentine::before {
     }
 }
 
-.slider {
+.slider,
+.slider-2 {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
