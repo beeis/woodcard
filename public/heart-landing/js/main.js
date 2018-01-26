@@ -160,7 +160,9 @@ const slideNumbers = () => {
         k1 = maxSlidesOne;
     }
     let sliderOneNumbers = document.querySelector('.slider .slide-number');
-    sliderOneNumbers.textContent = `${k1}/${maxSlidesOne}`;
+    if (null !== sliderOneNumbers) {
+        sliderOneNumbers.textContent = `${k1}/${maxSlidesOne}`;
+    }
     // 2й слайдер
     let allSlidesTwo = document.querySelectorAll('.product .item');
     let maxSlidesTwo = allSlidesTwo.length;
@@ -170,7 +172,9 @@ const slideNumbers = () => {
         k2 = maxSlidesTwo;
     }
     let sliderTwoNumbers = document.querySelector('.product .slide-number');
-    sliderTwoNumbers.textContent = `${k2}/${maxSlidesTwo}`;
+    if (null !== sliderTwoNumbers) {
+        sliderTwoNumbers.textContent = `${k2}/${maxSlidesTwo}`;
+    }
     // 3й слайдер
     let allSlidesThree = document.querySelectorAll('.comment .item');
     let maxSlidesThree = allSlidesThree.length;
@@ -180,19 +184,23 @@ const slideNumbers = () => {
         k3 = maxSlidesThree;
     }
     let sliderThreeNumbers = document.querySelector('.comment .slide-number');
-    sliderThreeNumbers.textContent = `${k3}/${maxSlidesThree}`;
-    // 4й слайдер
-    // let allSlidesFor = document.querySelectorAll('.comment .item');
-    // let maxSlidesFor = allSlidesFor.length;
-    // if (k4 > maxSlidesFor) {
-    //     k4 = 1;
-    // } else if (k4 < 1) {
-    //     k4 = maxSlidesFor;
-    // }
-    // let sliderForNumbers = document.querySelector('.slider-2 .slide-number');
-    // sliderForNumbers.textContent = `${k4}/${maxSlidesFor}`;
+    if (null !== sliderThreeNumbers) {
+        sliderThreeNumbers.textContent = `${k3}/${maxSlidesThree}`;
+    }
+
+    let allSlidesFor = document.querySelectorAll('.slider-2 .item');
+    let maxSlidesFor = allSlidesFor.length;
+    if (k4 > maxSlidesFor) {
+        k4 = 1;
+    } else if (k4 < 1) {
+        k4 = maxSlidesFor;
+    }
+    let sliderForNumbers = document.querySelector('.slider-2 .slide-number');
+    if (null !== sliderForNumbers) {
+        sliderForNumbers.textContent = `${k4}/${maxSlidesFor}`;
+    }
 }
-slideNumbers()
+slideNumbers();
     // 1й слайдер
 $(".slider .carousel").swipe({
     swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
@@ -250,25 +258,23 @@ $(".comment .carousel").swipe({
     allowPageScroll: "vertical",
 
 });
-// 4й слайдер
-// $(".slider-2 .carousel").swipe({
-//     swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
 
+$(".slider-2 .carousel").swipe({
+    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
+        if (direction == 'left') {
+            $(this).carousel('next');
+            k4++;
+            slideNumbers(k4);
+        }
+        if (direction == 'right') {
+            $(this).carousel('prev');
+            k4--;
+            slideNumbers(k4);
+        }
+    },
+    allowPageScroll: "vertical",
 
-//         if (direction == 'left') {
-//             $(this).carousel('next');
-//             k4++;
-//             slideNumbers(k4);
-//         }
-//         if (direction == 'right') {
-//             $(this).carousel('prev');
-//             k4--;
-//             slideNumbers(k4);
-//         }
-//     },
-//     allowPageScroll: "vertical",
-
-// });
+});
 
 
 var timer;

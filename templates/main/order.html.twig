@@ -24,8 +24,8 @@
         </a>
     </div>
 </header>
-<section class="slider">
-    <h2 class="title-red">WoodCard - оригінальний<br>подарунок з душею</h2>
+<section class="slider-2">
+    <h2 class="title-red">Макети Ваших валентинок WoodCard</h2>
 
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
         <ol class="carousel-indicators">
@@ -48,11 +48,15 @@
     </div>
 </section>
 <section class="help">
-    <h2 class="title-red">Що робити далі?</h2>
+    <h2 class="title-red">Як затвердити макет?</h2>
     <div class="comment-one-description-text">
-        <p>Для затвердження оплатіть на карту ПБ: 4149497841528146 (Артюх Д.А.)</br>
-            Сума: {{ order.total }} грн</br> Коментар: {{ order.bayer_name }}</br>
-            Писля оплати повідомте нам за номером <a href="tel:+380990633919">(099)063-39-19</a></p>
+            Для затвердження макету здійсніть, будь ласка, оплату на нашу карту Приват Банку: <u>4149497841528146</u>
+            Артюх Д.А.</br>
+            Сума до сплати: {{ order.total }} грн</br>
+            Коментар: {{ order.order_id }} {{ order.bayer_name }}</br>
+            <b>Обов’язково</b> повідомте нам про сплату за номером  <a href="tel:+380990633919">(099)063-39-19</a> (дзвінок, Viber, SMS)</br>
+            З любов’ю, WoodCard.</br>
+        </p>
     </div>
 </section>
 <footer>
