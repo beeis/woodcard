@@ -195,7 +195,7 @@ function timeBetweenDates(toDate) {
 }
 
 // Contact Form Phone Mask
-$('#user-phone').inputmask({"mask": "+38(099) 99-99-999"});
+$('#user-phone').inputmask({"mask": "+38(099) 9999999"});
 
 // Count loaded images
 $('.user-images').on("change", function() {
