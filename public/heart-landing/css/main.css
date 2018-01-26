@@ -92,7 +92,7 @@ header {
   background-color: #dcd9d7; }
   header .header-top {
     height: 90px;
-    background-color: #dcd9d7;
+    background-color: rgb(255, 204, 210);
     text-align: center;
     display: -webkit-box;
     display: -ms-flexbox;
