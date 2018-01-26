@@ -143,9 +143,9 @@
         </div>
         <div class="product-description">
             {#<h3>Одна валентинка</h3>#}
-            <div class="price">
+            {# <div class="price"> #}
                 {#<span>399 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 299 грн#}
-            </div>
+            {# </div> #}
             <button data-target="anchor" href="#form" class="btn">Замовити</button>
         </div>
         <div class="product-timer">
@@ -332,11 +332,22 @@
                     <div class="client-info">
                         <input name="name" required type="text" placeholder="Ім’я та прізвище*">
                         <input name="phone" required id="user-phone" type="text" placeholder="Номер телефону*">
-                        <div class="client-info-photo"><i class="fa fa-paperclip" aria-hidden="true"></i> Завантажити фото
-                            <input class="user-images" required type="file" multiple>
-                        </div>
-                        <div class="user-files-loaded">
-                            файлів вибрано
+                        <h2 class="client-info-photo-title">Завантажити фото:</h2>
+                        <div class="client-info-photo-container">
+                            
+                            <div class="client-info-photo photo-one active">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <input class="user-images user-image-one" required type="file" accept="image/*">
+                            </div>
+                            <div class="client-info-photo photo-two active">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <img>
+                                <input class="user-images user-image-two" required type="file" accept="image/*">
+                            </div>
+                            <div class="client-info-photo photo-three active">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <input class="user-images user-image-three" required type="file" accept="image/*">
+                            </div>
                         </div>
                     </div>
 
