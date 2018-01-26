@@ -10,6 +10,10 @@ let photoOne = document.querySelector('.photo-one');
 let photoTwo = document.querySelector('.photo-two');
 let photoThree = document.querySelector('.photo-three');
 
+let fileOne = document.querySelector('.photo-one input[type="file"]');
+let fileTwo = document.querySelector('.photo-two input[type="file"]');
+let fileThree = document.querySelector('.photo-three input[type="file"]');
+
 function handleChangeOne(checkbox) {
     if (radioOne.checked == true) {
         priceThree.style.display = "none";
@@ -23,6 +27,10 @@ function handleChangeOne(checkbox) {
         $(priceOne).addClass('active');
         $(priceTwo).removeClass('active');
         $(priceThree).removeClass('active');
+
+        $(fileOne).attr('required', true);
+        $(fileTwo).attr('required', false);
+        $(fileThree).attr('required', false);
     }
 }
 
@@ -39,6 +47,10 @@ function handleChangeTwo(checkbox) {
         $(priceTwo).addClass('active');
         $(priceOne).removeClass('active');
         $(priceThree).removeClass('active');
+
+        $(fileOne).attr('required', true);
+        $(fileTwo).attr('required', true);
+        $(fileThree).attr('required', false);
     }
 }
 
@@ -55,6 +67,10 @@ function handleChangeThree(checkbox) {
         $(priceThree).addClass('active');
         $(priceTwo).removeClass('active');
         $(priceOne).removeClass('active');
+
+        $(fileOne).attr('required', true);
+        $(fileTwo).attr('required', true);
+        $(fileThree).attr('required', true);
     }
 }
 // 1й інпут
@@ -340,10 +356,10 @@ $('.user-form').on('submit', function(e) {
             $('.heart-spinner-wrap').hide();
         } else if (response.status === "ok") {
             const id = response.data[0].order_id;
-            const files = $('.user-images').get(0).files;
+
             let formData = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                formData.append('files[]', files[i]);
+            for (let i = 0; i < $('.active .user-images').length; i++) {
+                formData.append('files[]', $('.user-images').get(i).files[0]);
             }
             $.ajax({
                 url: '/order/' + id + '/items',
