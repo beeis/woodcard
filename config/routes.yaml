@@ -80,3 +80,15 @@ app_order_item_upload_psd:
     path: admin/order_item/{orderItem}/upload/psd
     methods: [POST]
     controller: App\Controller\OrderItemController::uploadPsd
+
+#Зробити дубль фото
+app_order_item_duplicate:
+    path: admin/order_item/{orderItem}/duplicate
+    methods: [POST]
+    controller: App\Controller\OrderItemController::duplicate
+
+#Зробити дубль фото
+app_activity_index:
+    path: admin/activity/{orderItem}
+    methods: [GET]
+    controller: App\Controller\ActivityController::index
