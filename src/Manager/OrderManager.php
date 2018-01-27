@@ -67,7 +67,7 @@ class OrderManager implements OrderManagerInterface
      */
     public function list(): array
     {
-        $newOrders = $this->CRMManager->getOrdersIdByStatus(self::ORDER_STATUS_NEW);
+        $newOrders = $this->CRMManager->getOrdersIdByStatus(self::ORDER_STATUS_MODEL_IN_PROGRESS);
         $editsOrders = $this->CRMManager->getOrdersIdByStatus(self::ORDER_STATUS_EDITS);
 
         if (self::RESPONSE_ERROR === $newOrders['status']) {
