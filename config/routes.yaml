@@ -63,11 +63,17 @@ app_order_item_active:
     methods: [POST]
     controller: App\Controller\OrderItemController::active
 
-#Добавити коммент
+#Добавити|Редагувати коммент
 app_order_item_comment:
     path: admin/order_item/{orderItem}/comment
     methods: [POST]
     controller: App\Controller\OrderItemController::comment
+
+#Добавити|Редагувати надпис
+app_order_item_inscription:
+    path: admin/order_item/{orderItem}/inscription
+    methods: [POST]
+    controller: App\Controller\OrderItemController::inscription
 
 #Завантажити макет
 app_order_item_upload_model:

@@ -63,6 +63,13 @@ class OrderItem
     private $comment;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $inscription;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", options={"default":true})
@@ -225,5 +232,21 @@ class OrderItem
     public function setPrint(?string $print): void
     {
         $this->print = $print;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getInscription(): ?string
+    {
+        return $this->inscription;
+    }
+
+    /**
+     * @param null|string $inscription
+     */
+    public function setInscription(?string $inscription): void
+    {
+        $this->inscription = $inscription;
     }
 }

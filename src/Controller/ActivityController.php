@@ -38,7 +38,19 @@ class ActivityController extends Controller
             $result[] = [
                 'user' => null === $activity->getUser() ? null : $activity->getUser()->getUsername(),
                 'changed' => $activity->getChanged(),
-                'changed_comment' => $activity->getChangedComment(),
+                'changed_comment' => preg_replace(
+                    '/{image_base}/',
+                    'https://s3.eu-central-1.amazonaws.com/woodcard',
+                    $activity->getChangedComment()
+                ),
+                'created_at' => $activity
+                    ->getCreatedAt()
+                    ->setTimezone(new \DateTimeZone('Europe/Kiev'))
+                    ->format('H:i:s d-m-Y'),
+                'updated_at' => $activity
+                    ->getUpdatedAt()
+                    ->setTimezone(new \DateTimeZone('Europe/Kiev'))
+                    ->format('H:i:s d-m-Y'),
             ];
         }
 
