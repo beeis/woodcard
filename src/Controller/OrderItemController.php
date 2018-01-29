@@ -33,17 +33,7 @@ class OrderItemController extends Controller
         $items = $orderItemRepository->findBy(['orderId' => $order['data']['order_id']]);
         $itemsResult = [];
         foreach ($items as $item) {
-            $itemsResult[] = [
-                'id' => $item->getId(),
-                'photo' => $item->getPhoto(),
-                'model' => $item->getModel(),
-                'psd' => $item->getPSD(),
-                'print' => $item->getPrint(),
-                'comment' => $item->getComment(),
-                'is_active' => $item->isActive(),
-                'created_at' => $item->getCreatedAt(),
-                'updated_at' => $item->getUpdatedAt(),
-            ];
+            $itemsResult[] = $this->viewOrderItem($item);
         }
 
         return new JsonResponse(
@@ -81,20 +71,7 @@ class OrderItemController extends Controller
         $em->persist($orderItem);
         $em->flush();
 
-        return new JsonResponse(
-            [
-                'id' => $orderItem->getId(),
-                'order_id' => $orderItem->getOrderId(),
-                'comment' => $orderItem->getComment(),
-                'active' => $orderItem->isActive(),
-                'photo' => $orderItem->getPhoto(),
-                'psd' => $orderItem->getPsd(),
-                'model' => $orderItem->getModel(),
-                'print' => $orderItem->getPrint(),
-                'created_at' => $orderItem->getCreatedAt(),
-                'updated_at' => $orderItem->getUpdatedAt(),
-            ]
-        );
+        return new JsonResponse($this->viewOrderItem($orderItem));
     }
 
     /**
@@ -117,20 +94,7 @@ class OrderItemController extends Controller
         $em->persist($orderItem);
         $em->flush();
 
-        return new JsonResponse(
-            [
-                'id' => $orderItem->getId(),
-                'order_id' => $orderItem->getOrderId(),
-                'comment' => $orderItem->getComment(),
-                'active' => $orderItem->isActive(),
-                'photo' => $orderItem->getPhoto(),
-                'psd' => $orderItem->getPsd(),
-                'model' => $orderItem->getModel(),
-                'print' => $orderItem->getPrint(),
-                'created_at' => $orderItem->getCreatedAt(),
-                'updated_at' => $orderItem->getUpdatedAt(),
-            ]
-        );
+        return new JsonResponse($this->viewOrderItem($orderItem));
     }
 
     /**
@@ -153,20 +117,30 @@ class OrderItemController extends Controller
         $em->persist($orderItem);
         $em->flush();
 
-        return new JsonResponse(
-            [
-                'id' => $orderItem->getId(),
-                'order_id' => $orderItem->getOrderId(),
-                'comment' => $orderItem->getComment(),
-                'active' => $orderItem->isActive(),
-                'photo' => $orderItem->getPhoto(),
-                'psd' => $orderItem->getPsd(),
-                'model' => $orderItem->getModel(),
-                'print' => $orderItem->getPrint(),
-                'created_at' => $orderItem->getCreatedAt(),
-                'updated_at' => $orderItem->getUpdatedAt(),
-            ]
-        );
+        return new JsonResponse($this->viewOrderItem($orderItem));
+    }
+
+    /**
+     * @param Request $request
+     * @param int $orderItem
+     *
+     * @return Response
+     */
+    public function inscription(Request $request, int $orderItem): Response
+    {
+        $bodyParams = json_decode($request->getContent(), true);
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $orderItem = $orderItemRepository->find($orderItem);
+        if (null === $orderItem) {
+            throw $this->createNotFoundException();
+        }
+        $orderItem->setInscription($bodyParams['inscription']);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($orderItem);
+        $em->flush();
+
+        return new JsonResponse($this->viewOrderItem($orderItem));
     }
 
     /**
@@ -194,20 +168,7 @@ class OrderItemController extends Controller
         $em->persist($orderItem);
         $em->flush();
 
-        return new JsonResponse(
-            [
-                'id' => $orderItem->getId(),
-                'order_id' => $orderItem->getOrderId(),
-                'comment' => $orderItem->getComment(),
-                'active' => $orderItem->isActive(),
-                'photo' => $orderItem->getPhoto(),
-                'psd' => $orderItem->getPsd(),
-                'model' => $orderItem->getModel(),
-                'print' => $orderItem->getPrint(),
-                'created_at' => $orderItem->getCreatedAt(),
-                'updated_at' => $orderItem->getUpdatedAt(),
-            ]
-        );
+        return new JsonResponse($this->viewOrderItem($orderItem));
     }
 
     /**
@@ -232,20 +193,7 @@ class OrderItemController extends Controller
         $em->persist($orderItem);
         $em->flush();
 
-        return new JsonResponse(
-            [
-                'id' => $orderItem->getId(),
-                'order_id' => $orderItem->getOrderId(),
-                'comment' => $orderItem->getComment(),
-                'active' => $orderItem->isActive(),
-                'photo' => $orderItem->getPhoto(),
-                'psd' => $orderItem->getPsd(),
-                'model' => $orderItem->getModel(),
-                'print' => $orderItem->getPrint(),
-                'created_at' => $orderItem->getCreatedAt(),
-                'updated_at' => $orderItem->getUpdatedAt(),
-            ]
-        );
+        return new JsonResponse($this->viewOrderItem($orderItem));
     }
 
     /**
@@ -266,19 +214,34 @@ class OrderItemController extends Controller
         $em->persist($newOrderItem);
         $em->flush();
 
-        return new JsonResponse(
-            [
-                'id' => $orderItem->getId(),
-                'order_id' => $orderItem->getOrderId(),
-                'comment' => $orderItem->getComment(),
-                'active' => $orderItem->isActive(),
-                'photo' => $orderItem->getPhoto(),
-                'psd' => $orderItem->getPsd(),
-                'model' => $orderItem->getModel(),
-                'print' => $orderItem->getPrint(),
-                'created_at' => $orderItem->getCreatedAt(),
-                'updated_at' => $orderItem->getUpdatedAt(),
-            ]
-        );
+        return new JsonResponse($this->viewOrderItem($orderItem));
+    }
+
+    /**
+     * @param OrderItem $orderItem
+     *
+     * @return array
+     */
+    private function viewOrderItem(OrderItem $orderItem): array
+    {
+        return [
+            'id' => $orderItem->getId(),
+            'order_id' => $orderItem->getOrderId(),
+            'comment' => $orderItem->getComment(),
+            'inscription' => $orderItem->getInscription(),
+            'active' => $orderItem->isActive(),
+            'photo' => $orderItem->getPhoto(),
+            'psd' => $orderItem->getPsd(),
+            'model' => $orderItem->getModel(),
+            'print' => $orderItem->getPrint(),
+            'created_at' => $orderItem
+                ->getCreatedAt()
+                ->setTimezone(new \DateTimeZone('Europe/Kiev'))
+                ->format('H:i:s d-m-Y'),
+            'updated_at' => $orderItem
+                ->getUpdatedAt()
+                ->setTimezone(new \DateTimeZone('Europe/Kiev'))
+                ->format('H:i:s d-m-Y'),
+        ];
     }
 }
