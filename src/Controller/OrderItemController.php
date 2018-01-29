@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\OrderItem;
-use Imagine\Image\Box;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -121,6 +119,7 @@ class OrderItemController extends Controller
 
         return new JsonResponse(
             [
+                'id' => $orderItem->getId(),
                 'order_id' => $orderItem->getOrderId(),
                 'comment' => $orderItem->getComment(),
                 'active' => $orderItem->isActive(),
@@ -156,6 +155,7 @@ class OrderItemController extends Controller
 
         return new JsonResponse(
             [
+                'id' => $orderItem->getId(),
                 'order_id' => $orderItem->getOrderId(),
                 'comment' => $orderItem->getComment(),
                 'active' => $orderItem->isActive(),
@@ -196,6 +196,7 @@ class OrderItemController extends Controller
 
         return new JsonResponse(
             [
+                'id' => $orderItem->getId(),
                 'order_id' => $orderItem->getOrderId(),
                 'comment' => $orderItem->getComment(),
                 'active' => $orderItem->isActive(),
@@ -233,6 +234,41 @@ class OrderItemController extends Controller
 
         return new JsonResponse(
             [
+                'id' => $orderItem->getId(),
+                'order_id' => $orderItem->getOrderId(),
+                'comment' => $orderItem->getComment(),
+                'active' => $orderItem->isActive(),
+                'photo' => $orderItem->getPhoto(),
+                'psd' => $orderItem->getPsd(),
+                'model' => $orderItem->getModel(),
+                'print' => $orderItem->getPrint(),
+                'created_at' => $orderItem->getCreatedAt(),
+                'updated_at' => $orderItem->getUpdatedAt(),
+            ]
+        );
+    }
+
+    /**
+     * @param int $orderItem
+     *
+     * @return Response
+     */
+    public function duplicate(int $orderItem): Response
+    {
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $orderItem = $orderItemRepository->find($orderItem);
+        if (null === $orderItem) {
+            throw $this->createNotFoundException();
+        }
+
+        $newOrderItem = clone $orderItem;
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newOrderItem);
+        $em->flush();
+
+        return new JsonResponse(
+            [
+                'id' => $orderItem->getId(),
                 'order_id' => $orderItem->getOrderId(),
                 'comment' => $orderItem->getComment(),
                 'active' => $orderItem->isActive(),

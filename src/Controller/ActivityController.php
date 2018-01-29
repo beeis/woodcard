@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Entity\Activity;
+use App\Entity\OrderItem;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * Class ActivityController
+ *
+ * @package App\Controller
+ */
+class ActivityController extends Controller
+{
+    /**
+     * @param int $orderItem
+     *
+     * @return Response
+     */
+    public function index(int $orderItem): Response
+    {
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $orderItem = $orderItemRepository->find($orderItem);
+        if (null === $orderItem) {
+            throw $this->createNotFoundException();
+        }
+
+        $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
+        $activities = $activityRepository->findBy(['orderItem' => $orderItem]);
+        $result = [];
+        /** @var Activity $activity */
+        foreach ($activities as $activity) {
+            $result[] = [
+                'user' => null === $activity->getUser() ? null : $activity->getUser()->getUsername(),
+                'changed' => $activity->getChanged(),
+                'changed_comment' => $activity->getChangedComment(),
+            ];
+        }
+
+        return new JsonResponse($result);
+    }
+}

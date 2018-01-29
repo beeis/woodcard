@@ -77,6 +77,21 @@ class OrderItem
     private $orderId;
 
     /**
+     * duplicate order item
+     */
+    public function __clone()
+    {
+        $this->id = null;
+        $this->createdAt = null;
+        $this->updatedAt = null;
+        $this->model = null;
+        $this->psd = null;
+        $this->print = null;
+        $this->active = true;
+        $this->comment = null;
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
