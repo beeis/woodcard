@@ -23,6 +23,7 @@ class ActivityManager implements ActivityManagerInterface
         'new' => 'Загружено <a href="{image_base}/%s">новое Фото</a> и комментарий - %s',
         'psd' => 'Загружено <a href="{image_base}/%s">новое PSD</a>',
         'model' => 'Загружен <a href="{image_base}/%s">новый Макет</a>',
+        'inscription' => 'Добавлено надпись: %s',
         'comment' => 'Добавлен комментарий: %s',
         'active' => 'Статус изменен на %s',
     ];
