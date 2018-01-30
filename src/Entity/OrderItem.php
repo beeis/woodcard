@@ -63,6 +63,13 @@ class OrderItem
     private $comment;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $inscription;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", options={"default":true})
@@ -75,6 +82,21 @@ class OrderItem
      * @ORM\Column(type="bigint")
      */
     private $orderId;
+
+    /**
+     * duplicate order item
+     */
+    public function __clone()
+    {
+        $this->id = null;
+        $this->createdAt = null;
+        $this->updatedAt = null;
+        $this->model = null;
+        $this->psd = null;
+        $this->print = null;
+        $this->active = true;
+        $this->comment = null;
+    }
 
     /**
      * @return mixed
@@ -210,5 +232,21 @@ class OrderItem
     public function setPrint(?string $print): void
     {
         $this->print = $print;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getInscription(): ?string
+    {
+        return $this->inscription;
+    }
+
+    /**
+     * @param null|string $inscription
+     */
+    public function setInscription(?string $inscription): void
+    {
+        $this->inscription = $inscription;
     }
 }

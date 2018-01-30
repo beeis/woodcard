@@ -63,11 +63,17 @@ app_order_item_active:
     methods: [POST]
     controller: App\Controller\OrderItemController::active
 
-#Добавити коммент
+#Добавити|Редагувати коммент
 app_order_item_comment:
     path: admin/order_item/{orderItem}/comment
     methods: [POST]
     controller: App\Controller\OrderItemController::comment
+
+#Добавити|Редагувати надпис
+app_order_item_inscription:
+    path: admin/order_item/{orderItem}/inscription
+    methods: [POST]
+    controller: App\Controller\OrderItemController::inscription
 
 #Завантажити макет
 app_order_item_upload_model:
@@ -80,3 +86,15 @@ app_order_item_upload_psd:
     path: admin/order_item/{orderItem}/upload/psd
     methods: [POST]
     controller: App\Controller\OrderItemController::uploadPsd
+
+#Зробити дубль фото
+app_order_item_duplicate:
+    path: admin/order_item/{orderItem}/duplicate
+    methods: [POST]
+    controller: App\Controller\OrderItemController::duplicate
+
+#Зробити дубль фото
+app_activity_index:
+    path: admin/activity/{orderItem}
+    methods: [GET]
+    controller: App\Controller\ActivityController::index

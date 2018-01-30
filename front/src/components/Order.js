@@ -5,6 +5,8 @@ import { apiPoint } from "../constants/server";
 import Dropzone from 'react-dropzone';
 import { amazon } from '../constants/server';
 import Preview from '../containers/PreviewContainer';
+import Comment from './OrderItem/Comment';
+import Inscription from "./OrderItem/Inscription";
 
 export default class Orders extends Component {
   constructor() {
@@ -116,10 +118,18 @@ export default class Orders extends Component {
       headers: {
         'content-type': 'multipart/form-data'
       }
-    }).then((response) => {
+    }).then(() => {
       this._refreshItems();
     }).catch(() => {
       alert('Возникла проблема при закачке файла.');
+    });
+  };
+
+  _duplicate = (id) => {
+    axios.post(`${apiPoint}/admin/order_item/${id}/duplicate`).then(() => {
+      this._refreshItems();
+    }).catch(() => {
+      console.log('Something went wrong!');
     });
   };
 
@@ -141,7 +151,7 @@ export default class Orders extends Component {
           </div>
         </div>
         <div className="row order-items-row">
-          <div className="col-md-8 orders-border">
+          <div className="col-md-12 orders-border">
             <div className={"row"}>
               <div className={"col-md"}>
                 <table className={"table orders-table order-items-table"}>
@@ -152,15 +162,17 @@ export default class Orders extends Component {
                     <th>Макет</th>
                     <th>PSD</th>
                     <th>Комментарий</th>
+                    <th>Надпись</th>
                     <th>Активный</th>
                     <th>Print</th>
                     <th>Создано</th>
                     <th>Обновлено</th>
+                    <th>Дублировать</th>
                   </tr>
                   </thead>
                   <tbody>
                   {this.state.items.map((item, index) =>
-                    <tr className={!item.is_active ? "item-no-active" : ""}style={{textAlign: 'center'}} key={index}>
+                    <tr className={!item.active ? "item-no-active" : ""} style={{textAlign: 'center'}} key={index}>
                       <td>{index+1}</td>
                       <td>{item.photo ? <img alt='макет' className = "img-preview" src={amazon+item.photo}
                          onClick={(e) => this._showPreviewWith(e.target.src)}/> : 'no image found'}</td>
@@ -180,18 +192,20 @@ export default class Orders extends Component {
                           </Dropzone>
                         }
                       </td>
-                      <td>
-                        {item.comment ? item.comment : '-'}
-                      </td>
+                      <Comment comment={item.comment} id={item.id} />
+                      <Inscription inscription={item.inscription} id={item.id} />
                       <td align={"center"}>
-                          <input type={"checkbox"} checked={item.is_active ? "checked" : false} onChange={(e) => this.toggleActive(e, item.id)} />
+                          <input type={"checkbox"} checked={item.active ? "checked" : false} onChange={(e) => this.toggleActive(e, item.id)} />
                       </td>
                       <td>{item.print ? <a href={amazon+item.print} download>Print</a> : '-'}</td>
                       <td>
-                        {item.created_at.date.slice(0, -7)}
+                        {item.created_at}
                       </td>
                       <td>
-                        {item.updated_at.date.slice(0, -7)}
+                        {item.updated_at}
+                      </td>
+                      <td>
+                        <button className={"btn btn-warning btn-sm btn-add-sm"} onClick={() => {this._duplicate(item.id)}}>C</button>
                       </td>
                     </tr>
                   )}
