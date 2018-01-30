@@ -208,7 +208,7 @@ export default class Orders extends Component {
                         <button className={"btn btn-warning btn-sm btn-add-sm"} onClick={() => {this._duplicate(item.id)}}>C</button>
                       </td>
                       <td>
-                        <Link to={"/activity/"+item.id}><button className={"btn btn-warning btn-sm btn-add-sm"}>A</button></Link>
+                        <Link to={"/activity/"+item.id}><button className={"btn btn-success btn-sm btn-add-sm"}>A</button></Link>
                       </td>
                     </tr>
                   )}
