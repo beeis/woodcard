@@ -16,6 +16,7 @@ export default class Activity extends Component {
         this.setState({
           activities: response.data
         });
+        console.log(response.data);
       }
     }).catch(() => {
       alert('The server is temporarily unavailable');
@@ -33,6 +34,7 @@ export default class Activity extends Component {
               <tr style={{textAlign: 'left'}}>
                 <th>Дата создания</th>
                 <th>Изменения</th>
+                <th>Юзер</th>
               </tr>
               </thead>
               <tbody>
@@ -40,6 +42,7 @@ export default class Activity extends Component {
                   <tr key={index}>
                     <td>{item.created_at}</td>
                     <td dangerouslySetInnerHTML={{__html: item.changed_comment}} />
+                    <td>{item.user ? item.user : '-'}</td>
                   </tr>
                 )}
               </tbody>

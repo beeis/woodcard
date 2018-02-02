@@ -94,6 +94,12 @@ app_order_item_duplicate:
     controller: App\Controller\OrderItemController::duplicate
 
 #Зробити дубль фото
+app_order_item_download_print:
+    path: admin/order_item/{orderItem}/download/print
+    methods: [GET]
+    controller: App\Controller\OrderItemController::downloadPrint
+
+#Зробити дубль фото
 app_activity_index:
     path: admin/activity/{orderItem}
     methods: [GET]

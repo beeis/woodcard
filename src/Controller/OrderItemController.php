@@ -6,9 +6,13 @@ namespace App\Controller;
 
 use App\Entity\OrderItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Class OrderItemController
@@ -215,6 +219,47 @@ class OrderItemController extends Controller
         $em->flush();
 
         return new JsonResponse($this->viewOrderItem($orderItem));
+    }
+
+    /**
+     * @param int $orderItem
+     *
+     * @return Response
+     */
+    public function downloadPrint(int $orderItem): Response
+    {
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $orderItem = $orderItemRepository->find($orderItem);
+        if (null === $orderItem) {
+            throw $this->createNotFoundException();
+        }
+
+        $order = $this->get('app.manager.order_manager')->get((int) $orderItem->getOrderId());
+        if (false === isset($order['data']['order_id'])) {
+            throw $this->createNotFoundException();
+        }
+
+        if (false === $this->get('app.storage.file_storage')->exist($orderItem->getPrint())) {
+            throw $this->createNotFoundException();
+        }
+        $file = $this->get('app.storage.file_storage')->get($orderItem->getPrint());
+
+        $filename = sprintf(
+            '%s-%s-%s.%s',
+            $orderItem->getOrderId(),
+            $orderItem->getId(),
+            $order['data']['bayer_name'],
+            substr($orderItem->getPhoto(), -3)
+        );
+
+        $headers = [
+            'Content-Type' => 'your_content_type',
+            'Content-Description' => 'File Transfer',
+            'Content-Disposition' => 'attachment; filename='.$filename,
+            'filename' => $filename,
+        ];
+
+        return new Response($file, 200, $headers);
     }
 
     /**
