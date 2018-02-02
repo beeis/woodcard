@@ -197,7 +197,7 @@ export default class Orders extends Component {
                       <td align={"center"}>
                           <input type={"checkbox"} checked={item.active ? "checked" : false} onChange={(e) => this.toggleActive(e, item.id)} />
                       </td>
-                      <td>{item.print ? <a href={amazon+item.print} download>Print</a> : '-'}</td>
+                      <td>{item.print ? <a href={"/admin/order_item/"+item.id+"/download/print"} download>Print</a> : '-'}</td>
                       <td>
                         {item.created_at}
                       </td>

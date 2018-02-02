@@ -54,6 +54,7 @@ services:
 
     app.storage.file_storage:
         class: App\Storage\FileStorage
+        public: true
         arguments:
             - '@gaufrette.woodcard_storage_filesystem'
             - '@monolog.logger'

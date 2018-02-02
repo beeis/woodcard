@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Manager;
 
 use App\Storage\FileStorageInterface;
-use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -44,6 +44,12 @@ class FileManager implements FileManagerInterface
     {
         $this->fileStorage = $fileStorage;
         $this->imagine = $imagine;
+    }
+
+    public function getFile(string $filename)
+    {
+        $file = file_get_contents('https://s3.eu-central-1.amazonaws.com/woodcard/'.$filename);
+        return new File($file);
     }
 
     /**

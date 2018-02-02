@@ -52,6 +52,22 @@ class FileStorage implements FileStorageInterface
     /**
      * {@inheritdoc}
      */
+    public function get(string $prefix = ''): string
+    {
+        return $this->adapter->read($prefix);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exist(string $prefix = ''): bool
+    {
+        return $this->adapter->exists($prefix);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function listKeys(string $prefix = ''): array
     {
         return $this->adapter->listKeys($prefix);
