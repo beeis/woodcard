@@ -1,0 +1,193 @@
+body {
+  max-width: 100%; }
+
+.thankyou-header {
+  background: url(../img/thankyou-bg.jpg) center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 80vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  color: #fff; }
+  .thankyou-header::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.4;
+    background-color: #000;
+    z-index: 0; }
+  .thankyou-header-container {
+    width: 100%;
+    z-index: 10; }
+    .thankyou-header-container-text {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      text-align: center;
+      width: 70%;
+      padding: 80px 40px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.78);
+      z-index: 10;
+      -webkit-box-sizing: content-box;
+      box-sizing: content-box; }
+      .thankyou-header-container-text h2,
+      .thankyou-header-container-text p {
+        z-index: 10;
+        font-family: "Roboto Slab"; }
+      .thankyou-header-container-text h2 {
+        color: #ee1d24;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 10px; }
+      .thankyou-header-container-text p {
+        font-size: 20px;
+        color: #333;
+        margin: 5px 0; }
+    @media screen and (max-width: 800px) {
+      .thankyou-header-container-text {
+        padding: 40px; }
+        .thankyou-header-container-text h2 {
+          font-size: 24px; }
+        .thankyou-header-container-text p {
+          font-size: 18px; } }
+    @media screen and (max-width: 550px) {
+      .thankyou-header-container-text {
+        padding: 40px; }
+        .thankyou-header-container-text h2 {
+          font-size: 20px; }
+        .thankyou-header-container-text p {
+          font-size: 16px; } }
+
+.thankyou-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%; }
+
+.thankyou-footer {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: auto;
+  background-color: #db0000;
+  width: 100%;
+  color: #fff;
+  padding: 30px 0; }
+  .thankyou-footer .thankyou-footer-logo,
+  .thankyou-footer .thankyou-footer-social,
+  .thankyou-footer .thankyou-footer-question {
+    -ms-flex-preferred-size: 25%;
+    flex-basis: 25%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 20px 0; }
+  .thankyou-footer .thankyou-footer-logo img {
+    width: 250px; }
+  .thankyou-footer .thankyou-footer-logo p {
+    font-size: 16px;
+    padding: 20px 0;
+    font-weight: 500;
+    max-width: 250px;
+    font-family: "Roboto Slab"; }
+  .thankyou-footer .thankyou-footer-social {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%; }
+    .thankyou-footer .thankyou-footer-social h3 {
+      font-size: 16px;
+      padding: 30px 0 50px 0;
+      font-family: "Roboto Slab"; }
+    .thankyou-footer .thankyou-footer-social-list {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .thankyou-footer .thankyou-footer-social-list-item {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #fff;
+        color: #365a8a;
+        font-size: 25px;
+        text-align: center;
+        line-height: 50px;
+        margin: 0 5px; }
+  .thankyou-footer .thankyou-footer-question p {
+    font-size: 16px;
+    margin: 10px 0;
+    font-family: "Roboto Slab"; }
+    .thankyou-footer .thankyou-footer-question p:last-child {
+      font-size: 18px; }
+  .thankyou-footer .thankyou-footer-question a {
+    font-size: 20px;
+    color: #fff;
+    font-family: "Roboto Slab"; }
+  @media screen and (max-width: 800px) {
+    .thankyou-footer .thankyou-footer-logo,
+    .thankyou-footer .thankyou-footer-social,
+    .thankyou-footer .thankyou-footer-question {
+      padding: 0; }
+    .thankyou-footer .thankyou-footer-logo,
+    .thankyou-footer .thankyou-footer-question {
+      -ms-flex-preferred-size: 50%;
+      flex-basis: 50%; }
+    .thankyou-footer .thankyou-footer-social {
+      margin: 0 auto;
+      -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+      order: 3; }
+      .thankyou-footer .thankyou-footer-social h3 {
+        padding: 20px 0; } }
+  @media screen and (max-width: 550px) {
+    .thankyou-footer .thankyou-footer-logo,
+    .thankyou-footer .thankyou-footer-social,
+    .thankyou-footer .thankyou-footer-question {
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%; } }
+
+.footer-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto; }
+  @media screen and (max-width: 800px) {
+    .footer-container {
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap; } }
