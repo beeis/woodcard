@@ -33,8 +33,8 @@ export default class Comment extends Component {
 
   render(){
     return (
-      <td>
-        {!this.state.show && <span onClick={() => this.setState({show: true})}>{this.state.comment ? this.state.comment : '-'}</span>}
+      <td className={"c-pointer"} onClick={() => this.setState({show: true})}>
+        {!this.state.show && <span>{this.state.comment ? this.state.comment : '-'}</span>}
         {
           this.state.show &&
           <input type={"text"} value={this.state.comment || ''} onChange={(e) => this.setState({comment: e.target.value})}

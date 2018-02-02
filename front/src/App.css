@@ -162,3 +162,7 @@
   top: 13px;
   cursor: pointer;
 }
+
+.c-pointer {
+  cursor: pointer;
+}

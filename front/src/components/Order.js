@@ -33,7 +33,6 @@ export default class Orders extends Component {
         orderInfo: data.data.order.data,
         items: data.data.items
       });
-      console.log(data.data.items);
     });
   };
 
@@ -168,6 +167,7 @@ export default class Orders extends Component {
                     <th>Создано</th>
                     <th>Обновлено</th>
                     <th>Дублировать</th>
+                    <th>Activity</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -206,6 +206,9 @@ export default class Orders extends Component {
                       </td>
                       <td>
                         <button className={"btn btn-warning btn-sm btn-add-sm"} onClick={() => {this._duplicate(item.id)}}>C</button>
+                      </td>
+                      <td>
+                        <Link to={"/activity/"+item.id}><button className={"btn btn-success btn-sm btn-add-sm"}>A</button></Link>
                       </td>
                     </tr>
                   )}

@@ -33,8 +33,8 @@ export default class Inscription extends Component {
 
   render(){
     return (
-      <td>
-        {!this.state.show && <span onClick={() => this.setState({show: true})}>{this.state.inscription ? this.state.inscription : '-'}</span>}
+      <td className={"c-pointer"} onClick={() => this.setState({show: true})}>
+        {!this.state.show && <span>{this.state.inscription ? this.state.inscription : '-'}</span>}
         {
           this.state.show &&
           <input type={"text"} value={this.state.inscription || ''} onChange={(e) => this.setState({inscription: e.target.value})}
