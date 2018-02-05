@@ -249,7 +249,7 @@ class OrderItemController extends Controller
             $orderItem->getOrderId(),
             $orderItem->getId(),
             $order['data']['bayer_name'],
-            substr($orderItem->getPhoto(), -3)
+            'jpg'
         );
 
         $headers = [
