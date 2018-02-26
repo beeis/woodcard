@@ -1,86 +1,86 @@
-let radioOne = document.querySelector('.radio-one');
-let radioTwo = document.querySelector('.radio-two');
-let radioThree = document.querySelector('.radio-three');
-
-let priceOne = document.querySelector('.price-one');
-let priceTwo = document.querySelector('.price-two');
-let priceThree = document.querySelector('.price-three');
-
-let photoOne = document.querySelector('.photo-one');
-let photoTwo = document.querySelector('.photo-two');
-let photoThree = document.querySelector('.photo-three');
-
-let fileOne = document.querySelector('.photo-one input[type="file"]');
-let fileTwo = document.querySelector('.photo-two input[type="file"]');
-let fileThree = document.querySelector('.photo-three input[type="file"]');
-
-function handleChangeOne(checkbox) {
-    if (radioOne.checked == true) {
+$('.burger').click(function() {
+    $(this).toggleClass('open');
+    $('body').toggleClass('block-skroll');
+    $('.header-top').toggleClass('mobile-active');
+});
+// ------------------------
+function handleChange(value) {
+    var priceOne = document.querySelector('.price-one');
+    var priceTwo = document.querySelector('.price-two');
+    var priceThree = document.querySelector('.price-three');
+    var fileOne = document.querySelector('.photo-one input[type="file"]');
+    var fileTwo = document.querySelector('.photo-two input[type="file"]');
+    var fileThree = document.querySelector('.photo-three input[type="file"]');
+    if (value == 1) {
         priceThree.style.display = "none";
         priceTwo.style.display = "none";
         priceOne.style.display = "block";
 
-        $(photoOne).addClass('active');
-        $(photoTwo).removeClass('active');
-        $(photoThree).removeClass('active');
-
-        $(priceOne).addClass('active');
-        $(priceTwo).removeClass('active');
-        $(priceThree).removeClass('active');
+        $('.photo-one').addClass('active');
+        $('.photo-two').removeClass('active');
+        $('.photo-three').removeClass('active');
 
         $(fileOne).attr('required', true);
         $(fileTwo).attr('required', false);
         $(fileThree).attr('required', false);
-    }
-}
-
-function handleChangeTwo(checkbox) {
-    if (radioTwo.checked == true) {
+    } else if (value == 2) {
         priceOne.style.display = "none";
         priceThree.style.display = "none";
         priceTwo.style.display = "block";
 
-        $(photoOne).addClass('active');
-        $(photoTwo).addClass('active');
-        $(photoThree).removeClass('active');
-
-        $(priceTwo).addClass('active');
-        $(priceOne).removeClass('active');
-        $(priceThree).removeClass('active');
+        $('.photo-one').addClass('active');
+        $('.photo-two').addClass('active');
+        $('.photo-three').removeClass('active');
 
         $(fileOne).attr('required', true);
         $(fileTwo).attr('required', true);
         $(fileThree).attr('required', false);
-    }
-}
-
-function handleChangeThree(checkbox) {
-    if (radioThree.checked == true) {
+    } else if (value == 3) {
         priceOne.style.display = "none";
         priceTwo.style.display = "none";
         priceThree.style.display = "block";
 
-        $(photoOne).addClass('active');
-        $(photoTwo).addClass('active');
-        $(photoThree).addClass('active');
-
-        $(priceThree).addClass('active');
-        $(priceTwo).removeClass('active');
-        $(priceOne).removeClass('active');
+        $('.photo-one').addClass('active');
+        $('.photo-two').addClass('active');
+        $('.photo-three').addClass('active');
 
         $(fileOne).attr('required', true);
         $(fileTwo).attr('required', true);
         $(fileThree).attr('required', true);
     }
 }
-// 1й інпут
-function readURLOne(input) {
+
+// Слайдери
+var mySwiper = new Swiper('.slider-1', {
+    loop: false,
+    pagination: {
+        el: '.swiper-pagination',
+        dynamicBullets: true,
+    }
+});
+var mySwiper2 = new Swiper('.product-slide', {
+    loop: false,
+    pagination: {
+        el: '.swiper-pagination',
+        dynamicBullets: false,
+    }
+});
+var mySwiper3 = new Swiper('.comment-slide', {
+    loop: false,
+    pagination: {
+        el: '.swiper-pagination',
+        dynamicBullets: true,
+    }
+});
+// -------------------------
+// Інпути для загрузки фоток з прев`ю
+function readURL(input, photo) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            $(photoOne).addClass('active-with-photo');
-            $(photoOne).css('background-image', 'url(' + e.target.result + ')');
+            $(photo).addClass('active-with-photo');
+            $(photo).css('background-image', 'url(' + e.target.result + ')');
         }
 
         reader.readAsDataURL(input.files[0]);
@@ -88,43 +88,18 @@ function readURLOne(input) {
 }
 
 $(".user-image-one").change(function() {
-    readURLOne(this);
+    readURL(this, $('.photo-one'));
 });
-// 2й інпут
-function readURLTwo(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            $(photoTwo).addClass('active-with-photo');
-            $(photoTwo).css('background-image', 'url(' + e.target.result + ')');
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
 
 $(".user-image-two").change(function() {
-    readURLTwo(this);
+    readURL(this, $('.photo-two'));
 });
-// 3й інпут
-function readURLThree(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-            $(photoThree).addClass('active-with-photo');
-            $(photoThree).css('background-image', 'url(' + e.target.result + ')');
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
 
 $(".user-image-three").change(function() {
-    readURLThree(this);
+    readURL(this, $('.photo-three'));
 });
-
+// -------------------------
+// Плавний якорь
 $(function() {
     $('button[data-target^="anchor"]').bind('click.smoothscroll', function() {
         var target = $(this).attr('href'),
@@ -136,147 +111,8 @@ $(function() {
         return false;
     });
 });
-
-let carouselInner = document.querySelectorAll('.carousel-inner');
-
-for (let i = 0; i < carouselInner.length; i++) {
-    let span = document.createElement('span');
-    span.classList.add('slide-number');
-    carouselInner[i].appendChild(span);
-}
-
-let k = 1;
-let k1 = 1;
-let k2 = 1;
-let k3 = 1;
-let k4 = 1;
-const slideNumbers = () => {
-    // 1й слайдер
-    let allSlidesOne = document.querySelectorAll('.slider .item');
-    let maxSlidesOne = allSlidesOne.length;
-    if (k1 > maxSlidesOne) {
-        k1 = 1;
-    } else if (k1 < 1) {
-        k1 = maxSlidesOne;
-    }
-    let sliderOneNumbers = document.querySelector('.slider .slide-number');
-    if (null !== sliderOneNumbers) {
-        sliderOneNumbers.textContent = `${k1}/${maxSlidesOne}`;
-    }
-    // 2й слайдер
-    let allSlidesTwo = document.querySelectorAll('.product .item');
-    let maxSlidesTwo = allSlidesTwo.length;
-    if (k2 > maxSlidesTwo) {
-        k2 = 1;
-    } else if (k2 < 1) {
-        k2 = maxSlidesTwo;
-    }
-    let sliderTwoNumbers = document.querySelector('.product .slide-number');
-    if (null !== sliderTwoNumbers) {
-        sliderTwoNumbers.textContent = `${k2}/${maxSlidesTwo}`;
-    }
-    // 3й слайдер
-    let allSlidesThree = document.querySelectorAll('.comment .item');
-    let maxSlidesThree = allSlidesThree.length;
-    if (k3 > maxSlidesThree) {
-        k3 = 1;
-    } else if (k3 < 1) {
-        k3 = maxSlidesThree;
-    }
-    let sliderThreeNumbers = document.querySelector('.comment .slide-number');
-    if (null !== sliderThreeNumbers) {
-        sliderThreeNumbers.textContent = `${k3}/${maxSlidesThree}`;
-    }
-
-    let allSlidesFor = document.querySelectorAll('.slider-2 .item');
-    let maxSlidesFor = allSlidesFor.length;
-    if (k4 > maxSlidesFor) {
-        k4 = 1;
-    } else if (k4 < 1) {
-        k4 = maxSlidesFor;
-    }
-    let sliderForNumbers = document.querySelector('.slider-2 .slide-number');
-    if (null !== sliderForNumbers) {
-        sliderForNumbers.textContent = `${k4}/${maxSlidesFor}`;
-    }
-}
-slideNumbers();
-    // 1й слайдер
-$(".slider .carousel").swipe({
-    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
-
-
-        if (direction == 'left') {
-            $(this).carousel('next');
-            k1++;
-            slideNumbers();
-        }
-        if (direction == 'right') {
-            $(this).carousel('prev');
-            k1--;
-            slideNumbers();
-        }
-    },
-    allowPageScroll: "vertical",
-
-});
-// 2й слайдер
-$(".product .carousel").swipe({
-    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
-
-
-        if (direction == 'left') {
-            $(this).carousel('next');
-            k2++;
-            slideNumbers(k2);
-        }
-        if (direction == 'right') {
-            $(this).carousel('prev');
-            k2--;
-            slideNumbers(k2);
-        }
-    },
-    allowPageScroll: "vertical",
-
-});
-// 3й слайдер
-$(".comment .carousel").swipe({
-    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
-
-
-        if (direction == 'left') {
-            $(this).carousel('next');
-            k3++;
-            slideNumbers(k3);
-        }
-        if (direction == 'right') {
-            $(this).carousel('prev');
-            k3--;
-            slideNumbers(k3);
-        }
-    },
-    allowPageScroll: "vertical",
-
-});
-
-$(".slider-2 .carousel").swipe({
-    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
-        if (direction == 'left') {
-            $(this).carousel('next');
-            k4++;
-            slideNumbers(k4);
-        }
-        if (direction == 'right') {
-            $(this).carousel('prev');
-            k4--;
-            slideNumbers(k4);
-        }
-    },
-    allowPageScroll: "vertical",
-
-});
-
-
+// ---------------------------
+// Таймер
 var timer;
 
 var compareDate = new Date();
@@ -311,15 +147,9 @@ function timeBetweenDates(toDate) {
         $(".product-timer-time-seconds").text(seconds);
     }
 }
-
+// -----------------------
 // Contact Form Phone Mask
 $('#user-phone').inputmask({ "mask": "+38(099) 9999999" });
-
-// Count loaded images
-$('.user-images').on("change", function() {
-    const files = $('.user-files-loaded');
-    $(this).get(0).files ? files.html($(this).get(0).files.length + ' файл(ів) вибрано').show() : files.hide();
-});
 
 // Handle form submit
 $('.user-form').on('submit', function(e) {
