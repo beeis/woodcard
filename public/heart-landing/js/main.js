@@ -180,6 +180,7 @@ $('.user-form').on('submit', function(e) {
     var utm_term = form.find('[name="utm_term"]')[0].value;
     var utm_content = form.find('[name="utm_content"]')[0].value;
     var utm_campaign = form.find('[name="utm_campaign"]')[0].value;
+    var product_id = form.find('[name="product_id"]')[0].value;
 
     $.ajax({
         url: '/order',
@@ -188,7 +189,7 @@ $('.user-form').on('submit', function(e) {
             name: name,
             products: {
                 "1": {
-                    product_id: 3,
+                    product_id: product_id,
                     price: price / quantity,
                     count: quantity
                 }

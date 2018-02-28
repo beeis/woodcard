@@ -159,7 +159,8 @@ header .header-top {
     }
 }
 
-header .valentine {
+header .valentine,
+header .flower {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -174,35 +175,48 @@ header .valentine {
     flex-direction: column;
     margin-top: 90px;
     padding: 250px 0 300px 0;
-    background: url(../img/HeroImage.jpg) center center no-repeat;
     background-size: cover;
 }
 
+header .valentine {
+    background: url(../img/HeroImage.jpg) center center no-repeat;
+}
+
+header .flower {
+    background: url(../img/1-Hero-Image/HeroImage.jpg) center center no-repeat;
+}
+
 @media screen and (max-width: 425px) {
-    header .valentine {
+    header .valentine,
+    header .flower {
         margin-top: 70px;
     }
 }
 
 header .valentine h1,
-header .valentine h2 {
+header .valentine h2,
+header .flower h1,
+header .flower h2 {
     color: #fff;
     text-transform: uppercase;
     z-index: 10;
 }
 
-header .valentine h1 {
+header .valentine h1,
+header .flower h1 {
     font-size: 38px;
     margin-bottom: 10px;
 }
 
-header .valentine h2 {
+header .valentine h2,
+header .flower h2 {
     font-size: 28px;
     font-weight: 100;
     letter-spacing: 1px;
 }
 
-header .valentine::before {
+header .valentine::before,
+header .flower::before {
     content: '';
     position: absolute;
     height: 100%;
@@ -215,10 +229,12 @@ header .valentine::before {
 }
 
 @media screen and (max-width: 350px) {
-    header .valentine h1 {
+    header .valentine h1,
+    header .flower h1 {
         font-size: 30px;
     }
-    header .valentine h2 {
+    header .valentine h2,
+    header .flower h2 {
         font-size: 20px;
     }
 }

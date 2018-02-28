@@ -17,6 +17,11 @@ app_main_heart:
     methods: [GET]
     controller: App\Controller\MainController::heart
 
+app_main_flower:
+    path: /flower
+    methods: [GET]
+    controller: App\Controller\MainController::flower
+
 app_main_thankyoupage:
     path: thankyoupage
     methods: [GET]
