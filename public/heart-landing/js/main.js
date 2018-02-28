@@ -1,8 +1,8 @@
-$('.burger').click(function() {
-    $(this).toggleClass('open');
-    $('body').toggleClass('block-skroll');
-    $('.header-top').toggleClass('mobile-active');
-});
+// $('.burger').click(function() {
+//     $(this).toggleClass('open');
+//     $('body').toggleClass('block-skroll');
+//     $('.menu').toggleClass('mobile-active');
+// });
 // ------------------------
 function handleChange(value) {
     var priceOne = document.querySelector('.price-one');
@@ -11,14 +11,21 @@ function handleChange(value) {
     var fileOne = document.querySelector('.photo-one input[type="file"]');
     var fileTwo = document.querySelector('.photo-two input[type="file"]');
     var fileThree = document.querySelector('.photo-three input[type="file"]');
+    var photoOne = document.querySelector('.photo-one');
+    var photoTwo = document.querySelector('.photo-two');
+    var photoThree = document.querySelector('.photo-three');
     if (value == 1) {
         priceThree.style.display = "none";
         priceTwo.style.display = "none";
         priceOne.style.display = "block";
 
-        $('.photo-one').addClass('active');
-        $('.photo-two').removeClass('active');
-        $('.photo-three').removeClass('active');
+        $(photoOne).addClass('active');
+        $(photoTwo).removeClass('active');
+        $(photoThree).removeClass('active');
+
+        $(priceOne).addClass('active');
+        $(priceTwo).removeClass('active');
+        $(priceThree).removeClass('active');
 
         $(fileOne).attr('required', true);
         $(fileTwo).attr('required', false);
@@ -28,9 +35,13 @@ function handleChange(value) {
         priceThree.style.display = "none";
         priceTwo.style.display = "block";
 
-        $('.photo-one').addClass('active');
-        $('.photo-two').addClass('active');
-        $('.photo-three').removeClass('active');
+        $(photoOne).addClass('active');
+        $(photoTwo).addClass('active');
+        $(photoThree).removeClass('active');
+
+        $(priceOne).removeClass('active');
+        $(priceTwo).addClass('active');
+        $(priceThree).removeClass('active');
 
         $(fileOne).attr('required', true);
         $(fileTwo).attr('required', true);
@@ -40,9 +51,13 @@ function handleChange(value) {
         priceTwo.style.display = "none";
         priceThree.style.display = "block";
 
-        $('.photo-one').addClass('active');
-        $('.photo-two').addClass('active');
-        $('.photo-three').addClass('active');
+        $(photoOne).addClass('active');
+        $(photoTwo).addClass('active');
+        $(photoThree).addClass('active');
+
+        $(priceOne).removeClass('active');
+        $(priceTwo).removeClass('active');
+        $(priceThree).addClass('active');
 
         $(fileOne).attr('required', true);
         $(fileTwo).attr('required', true);

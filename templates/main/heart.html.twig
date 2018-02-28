@@ -13,13 +13,23 @@
 
     <!-- Facebook Pixel Code -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '176975496398514');
         fbq('track', 'PageView');
@@ -33,7 +43,10 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110410745-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
 
         gtag('config', 'UA-110410745-2');
@@ -53,12 +66,14 @@
                 <img src="./heart-landing/img/logo.png" alt="Logo">
             </a>
             <button data-target="anchor" href="#form" class="btn">Замовити</button>
+        </div>
+        <div class="menu">
             <nav class="navbar-nav">
-                <a href="#" class="navbar-nav-item navbar-nav-item__active">Пункт 1</a>
-                <a href="#" class="navbar-nav-item">Пункт 2</a>
-                <a href="#" class="navbar-nav-item">Пункт 3</a>
-                <a href="#" class="navbar-nav-item">Пункт 4</a>
-                <a href="#" class="navbar-nav-item">Пункт 5</a>
+                <a href="#" class="navbar-nav-item navbar-nav-item__active">Lorem</a>
+                <a href="#" class="navbar-nav-item">Lorem, ipsum dolor</a>
+                <a href="#" class="navbar-nav-item">Lorem, ipsum</a>
+                <a href="#" class="navbar-nav-item">Lorem</a>
+                <a href="#" class="navbar-nav-item">Lorem, ipsum</a>
             </nav>
             <button class="burger"></button>
         </div>
@@ -141,10 +156,10 @@
             <div class="swiper-pagination"></div>
         </div>
         <div class="product-description">
-            {#<h3>Одна валентинка</h3>#}
-            {# <div class="price"> #}
-                {#<span>399 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 299 грн#}
-            {# </div> #}
+            {#
+            <h3>Одна валентинка</h3>#} {#
+            <div class="price"> #} {#
+                <span>399 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 299 грн#} {# </div> #}
             <button data-target="anchor" href="#form" class="btn">Замовити</button>
         </div>
         <div class="product-timer">
@@ -295,7 +310,7 @@
                 </div>
             </div>
             <div class="swiper-pagination"></div>
-            </div>
+        </div>
         </div>
     </section>
     <hr>
@@ -329,15 +344,15 @@
                 <form class="user-form" action="/order" method="POST">
                     <div class="quantitys">
                         <div class="quantity">
-                            <input onchange = handleChange(value) class="radio-one" type="radio" value="1" name="quantity">
+                            <input onchange=handleChange(value) class="radio-one" type="radio" value="1" name="quantity">
                             <label>1 серце</label>
                         </div>
                         <div class="quantity">
-                            <input onchange = handleChange(value) class="radio-two" type="radio" value="2" name="quantity">
+                            <input onchange=handleChange(value) class="radio-two" type="radio" value="2" name="quantity">
                             <label>2 серця</label>
                         </div>
                         <div class="quantity">
-                            <input onchange = handleChange(value) class="radio-three" type="radio" value="3" name="quantity" checked>
+                            <input onchange=handleChange(value) class="radio-three" type="radio" value="3" name="quantity" checked>
                             <label>3 серця</label>
                         </div>
                     </div>
@@ -355,7 +370,7 @@
                         <input name="phone" required id="user-phone" type="text" placeholder="Номер телефону*">
                         <h2 class="client-info-photo-title">Завантажити фото:</h2>
                         <div class="client-info-photo-container">
-                            
+
                             <div class="client-info-photo photo-one active">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 <input class="user-images user-image-one" required type="file" accept="image/*">
@@ -410,4 +425,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.min.js"></script>
     <script src="./heart-landing/plugins/inputmask/jquery.inputmask.bundle.min.js"></script>
     <script src="./heart-landing/js/main.js"></script>
+
 </html>

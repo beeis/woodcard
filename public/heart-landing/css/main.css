@@ -84,7 +84,7 @@ ol {
 img {
     vertical-align: middle;
     height: auto;
-    display: block;
+    /* display: block; */
     max-width: 100%;
 }
 
@@ -136,7 +136,7 @@ header .header-top {
     -ms-flex-pack: distribute;
     justify-content: space-around;
     max-width: 600px;
-    z-index: 20;
+    z-index: 9999;
     width: 100%;
     margin: 0 auto;
     position: fixed;
@@ -510,6 +510,7 @@ header .valentine::before {
 .comment .carousel {
     margin: 0 auto 60px auto;
 }
+
 
 /*.comment .carousel .slide-number {
     top: 85px;
@@ -1289,6 +1290,7 @@ section .title-white h3 {
     display: none;
 }
 
+
 /* SWIPER SLIDE */
 
 .swiper-container {
@@ -1333,6 +1335,27 @@ section .title-white h3 {
     overflow: hidden;
 }
 
+.menu {
+    max-width: 600px;
+    position: fixed;
+    height: 40px;
+    width: 60px;
+    top: 90px;
+    right: 0px;
+    background-color: rgb(255, 204, 210);
+    z-index: 9999;
+    display: none;
+}
+
+@media screen and (max-width: 425px) {
+    .menu {
+        height: 40px;
+        width: 60px;
+        top: 70px;
+        right: 0px;
+    }
+}
+
 .burger {
     display: none;
     border: 0;
@@ -1345,9 +1368,10 @@ section .title-white h3 {
     -webkit-transition: border-bottom 1s ease-in-out;
     -o-transition: border-bottom 1s ease-in-out;
     transition: border-bottom 1s ease-in-out;
-    position: absolute;
-    top: 15px;
+    position: fixed;
+    top: 100px;
     right: 15px;
+    z-index: 9999;
 }
 
 .burger::before {
@@ -1381,7 +1405,7 @@ section .title-white h3 {
     -webkit-transition: border-bottom 0.8s ease-in-out;
     -o-transition: border-bottom 0.8s ease-in-out;
     transition: border-bottom 0.8s ease-in-out;
-    top: 30px;
+    top: 100px;
 }
 
 .burger.open::before {
@@ -1407,93 +1431,52 @@ section .title-white h3 {
 }
 
 .navbar-nav {
-    display: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    order: 4;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 50%;
     background-color: rgb(255, 204, 210);
-    height: 100vh;
-    position: absolute;
-    top: 70px;
+    height: auto;
+    position: fixed;
+    top: 90px;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+    display: none;
+}
+
+@media screen and (max-width: 425px) {
+    .navbar-nav {
+        top: 70px;
+    }
+    .burger {
+        top: 80px;
+    }
+    .burger.open {
+        top: 80px;
+    }
+}
+
+.mobile-active .navbar-nav {
+    opacity: 1;
+    z-index: 999;
+    display: flex;
 }
 
 .navbar-nav-item {
     color: #fff;
     text-transform: uppercase;
     margin: 15px 0;
-}
-
-.mobile-active {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    height: 100vh;
-    padding: 25px 0;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-}
-
-@media screen and (max-width: 425px) {
-    header .mobile-active {
-        height: 100vh;
-    }
-}
-
-.mobile-active a {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-}
-
-.mobile-active .btn {
-    position: absolute;
-    top: 15px;
-    left: 45%
-}
-
-.mobile-active .navbar-nav {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-}
-
-.mobile-active .navbar-nav-item {
-    margin: 15px 0;
-    opacity: 1;
-    -webkit-transform: translate(0, 0) scale(1);
-    -ms-transform: translate(0, 0) scale(1);
-    transform: translate(0, 0) scale(1);
-}
-
-.mobile-active .navbar-nav-item:nth-child(1) {
-    -webkit-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.mobile-active .navbar-nav-item:nth-child(2) {
-    -webkit-transition-delay: .2s;
-    -o-transition-delay: .2s;
-    transition-delay: .2s;
-}
-
-.mobile-active .navbar-nav-item:nth-child(3) {
-    -webkit-transition-delay: .4s;
-    -o-transition-delay: .4s;
-    transition-delay: .4s;
-}
-
-.mobile-active .navbar-nav-item:nth-child(4) {
-    -webkit-transition-delay: .6s;
-    -o-transition-delay: .6s;
-    transition-delay: .6s;
-}
-
-.mobile-active .navbar-nav-item:nth-child(5) {
-    -webkit-transition-delay: .8s;
-    -o-transition-delay: .8s;
-    transition-delay: .8s;
 }
