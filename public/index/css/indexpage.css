@@ -64,6 +64,9 @@ body {
         padding: 16px 35px;
         background-color: #db0000;
         font-family: "Roboto Slab"; }
+      .indexpage-header-container-text-btn:hover {
+        color: #fff;
+        text-decoration: none; }
     @media screen and (max-width: 800px) {
       .indexpage-header-container-text h1 {
         font-size: 40px; }
@@ -75,6 +78,7 @@ body {
       .indexpage-header-container-text h2 {
         font-size: 20px; }
       .indexpage-header-container-text-btn {
+        float: left;
         font-size: 16px;
         padding: 14px 25px; } }
     @media screen and (max-width: 400px) {
