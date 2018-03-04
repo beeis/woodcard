@@ -27,6 +27,11 @@ app_main_thankyoupage:
     methods: [GET]
     controller: App\Controller\MainController::thankyoupage
 
+app_main_policy:
+    path: policy
+    methods: [GET]
+    controller: App\Controller\MainController::policy
+
 #Сторити замовлення - не для адмінки
 app_order_create:
     path: order

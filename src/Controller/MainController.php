@@ -91,4 +91,12 @@ class MainController extends Controller
     {
         return $this->render('main/thankyoupage.html.twig');
     }
+
+    /**
+     * @return Response
+     */
+    public function policy(): Response
+    {
+        return $this->render('main/policy.html.twig');
+    }
 }
