@@ -22,6 +22,11 @@ app_main_flower:
     methods: [GET]
     controller: App\Controller\MainController::flower
 
+app_main_toy:
+    path: /toy
+    methods: [GET]
+    controller: App\Controller\MainController::toy
+
 app_main_thankyoupage:
     path: thankyoupage
     methods: [GET]
