@@ -17,3 +17,4 @@ composer.phar
 /public/favicon.ico
 /public/service-worker.js
 /public/manifest.json
+prepros-6.config
