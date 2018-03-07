@@ -5,15 +5,15 @@
 // });
 // ------------------------
 function handleChange(value) {
-    var priceOne = document.querySelector('.price-one');
-    var priceTwo = document.querySelector('.price-two');
-    var priceThree = document.querySelector('.price-three');
-    var fileOne = document.querySelector('.photo-one input[type="file"]');
-    var fileTwo = document.querySelector('.photo-two input[type="file"]');
-    var fileThree = document.querySelector('.photo-three input[type="file"]');
-    var photoOne = document.querySelector('.photo-one');
-    var photoTwo = document.querySelector('.photo-two');
-    var photoThree = document.querySelector('.photo-three');
+    var priceOne = document.querySelector('.active-form .price-one');
+    var priceTwo = document.querySelector('.active-form .price-two');
+    var priceThree = document.querySelector('.active-form .price-three');
+    var fileOne = document.querySelector('.active-form .photo-one input[type="file"]');
+    var fileTwo = document.querySelector('.active-form .photo-two input[type="file"]');
+    var fileThree = document.querySelector('.active-form .photo-three input[type="file"]');
+    var photoOne = document.querySelector('.active-form .photo-one');
+    var photoTwo = document.querySelector('.active-form .photo-two');
+    var photoThree = document.querySelector('.active-form .photo-three');
     if (value == 1) {
         priceThree.style.display = "none";
         priceTwo.style.display = "none";
@@ -114,6 +114,20 @@ $(".user-image-three").change(function() {
     readURL(this, $('.photo-three'));
 });
 // -------------------------
+$(".radio-with-photo").click(function() {
+    $('.form-with-photo').removeClass('d-n');
+    $('.form-without-photo').addClass('d-n');
+    $('.form-without-photo').removeClass('active-form');
+    $('.form-with-photo').addClass('active-form');
+
+});
+$(".radio-without-photo").click(function() {
+    $('.form-with-photo').addClass('d-n');
+    $('.form-without-photo').removeClass('d-n');
+    $('.form-with-photo').removeClass('active-form');
+    $('.form-without-photo').addClass('active-form');
+    $('.client-info-photo').removeClass('active');
+});
 // Плавний якорь
 $(function() {
     $('button[data-target^="anchor"]').bind('click.smoothscroll', function() {
@@ -165,9 +179,10 @@ function timeBetweenDates(toDate) {
 // -----------------------
 // Contact Form Phone Mask
 $('#user-phone').inputmask({ "mask": "+38(099) 9999999" });
+$('#user-phone-2').inputmask({ "mask": "+38(099) 9999999" });
 
 // Handle form submit
-$('.user-form').on('submit', function(e) {
+$('.active-form').on('submit', function(e) {
     $('.heart-spinner-wrap').show();
     e.preventDefault();
     const form = $('form.user-form'),

@@ -78,8 +78,8 @@
             <button class="burger"></button>
         </div>
         <div class="toy">
-            <h1>Унікальна іграшка</h1>
-            <h2>З нанесенням фото та метрики<br>вашої дитини</h2>
+            <h1>Унікальна метрика дитини</h1>
+            <h2>З фотографією на дереві</h2>
         </div>
     </header>
     <section class="slider">
@@ -123,14 +123,14 @@
             <div class="swiper-counter"></div>
         </div>
         <div class="slider-description">
-            <p class="slider-description-text"><b>thewoodcard</b> Іграшка WoodCard - це індивідуально виготовлений дерев’яний виріб на який ми наносимо фотографію Вашої дитини з однієї сторони, та метрику або вік з іншої. Діаметр іграшки - 15 см. У комплекті надається підставка та стрічка для підвішування. 
+            <p class="slider-description-text"><b>thewoodcard</b> Метрика WoodCard - це індивідуально виготовлений дерев’яний виріб на який ми наносимо метрику дитини з однієї сторони та фотографію з іншої. Діаметр метрики - 15 см. У комплекті надається підставка та стрічка для підвішування. 
 Виготовляємо з високоякісної деревини та доставляємо Новою поштою по Україні. Унікальний подарунок коханим та рідним.</p>
         </div>
 
     </section>
     <hr>
     <section class="video">
-        <h2 class="title-red">Короткий відео-огляд іграшки</h2>
+        <h2 class="title-red">Короткий відео-огляд метрики</h2>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/iN_G4SFSLhI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </section>
     <hr>
@@ -319,11 +319,11 @@
         <ul class="help-list">
             <li class="help-list-item">
                 <img src="./heart-landing/img/form.png" alt="">
-                <p>Заповнюйте форму на сайті та додавайте фото Вашої іграшки</p>
+                <p>Заповнюйте форму та додавайте фотографію</p>
             </li>
             <li class="help-list-item">
                 <img src="./heart-landing/img/love-letter.png" alt="">
-                <p>Очікуйте макет Вашої іграшки на затвердження</p>
+                <p>Очікуйте макет на затвердження</p>
             </li>
             <li class="help-list-item">
                 <img src="./heart-landing/img/money.png" alt="">
@@ -331,7 +331,7 @@
             </li>
             <li class="help-list-item">
                 <img src="./heart-landing/img/delivery.png" alt="">
-                <p>Отримуєте Вашу іграшку на своєму відділенні Нової Пошти</p>
+                <p>Отримуєте Вашу метрику на своєму відділенні Нової пошти</p>
             </li>
         </ul>
         <button data-target="anchor" href="#form" class="btn">Замовити</button>
@@ -339,21 +339,31 @@
     <section class="form gradient-bg" id="form">
         <div class="container">
             <div class="row">
-                <h2 class="title-white">Замовити іграшку з підставкою Woodcard</h2>
+                <h2 class="title-white">Замовити метрику Woodcard</h2>
+                <div class="metric-info">
+                    <div class="metric-info-btn">
+                        <input class="radio-with-photo" type="radio" value="1" name="metrika-foto" checked>
+                        <label>З фото</label>
+                    </div>
+                    <div class="metric-info-btn">
+                        <input class="radio-without-photo" type="radio" value="2" name="metrika-foto">
+                        <label>Без фото</label>
+                    </div>
+                </div>
                 <p class="form-instruction">Заповнюйте форму та додавайте фотографію - ми зробимо макет та відправимо Вам на затвердження</p>
-                <form class="user-form" action="/order" method="POST">
+                <form class="user-form form-with-photo active-form" action="/order" method="POST">
                     <div class="quantitys">
                         <div class="quantity">
                             <input onchange=handleChange(value) class="radio-one" type="radio" value="1" name="quantity">
-                            <label>1 іграшка</label>
+                            <label>1 метрика</label>
                         </div>
                         <div class="quantity">
                             <input onchange=handleChange(value) class="radio-two" type="radio" value="2" name="quantity">
-                            <label>2 іграшки</label>
+                            <label>2 метрики</label>
                         </div>
                         <div class="quantity">
                             <input onchange=handleChange(value) class="radio-three" type="radio" value="3" name="quantity" checked>
-                            <label>3 іграшки</label>
+                            <label>3 метрики</label>
                         </div>
                     </div>
                     <div class="price price-2 price-one" data-price="349">
@@ -400,9 +410,50 @@
                     </div>
                     <button class="btn btn__large">Замовити</button>
                 </form>
+                <form class="user-form form-without-photo d-n" action="/order" method="POST">
+                    <div class="quantitys">
+                        <div class="quantity">
+                            <input onchange=handleChange(value) class="radio-one" type="radio" value="1" name="quantity">
+                            <label>1 метрика</label>
+                        </div>
+                        <div class="quantity">
+                            <input onchange=handleChange(value) class="radio-two" type="radio" value="2" name="quantity">
+                            <label>2 метрики</label>
+                        </div>
+                        <div class="quantity">
+                            <input onchange=handleChange(value) class="radio-three" type="radio" value="3" name="quantity" checked>
+                            <label>3 метрики</label>
+                        </div>
+                    </div>
+                    <div class="price price-2 price-one" data-price="299">
+                        <span>399 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 299 грн
+                    </div>
+                    <div class="price price-2 price-two" data-price="549">
+                        <span>768 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 549 грн
+                    </div>
+                    <div class="price price-2 price-three active" data-price="699">
+                        <span>1197 грн</span> <i class="fa fa-angle-right" aria-hidden="true"></i> 699 грн
+                    </div>
+                    <div class="client-info">
+                        <input name="name" required type="text" placeholder="Ім’я та прізвище*">
+                        <input name="phone" required id="user-phone-2" type="text" placeholder="Номер телефону*">
+                    </div>
+
+                    <input name="product_id" type="hidden" value="9">
+                    <input name="utm_source" type="hidden" value="{{ utm_source }}">
+                    <input name="utm_medium" type="hidden" value="{{ utm_medium }}">
+                    <input name="utm_term" type="hidden" value="{{ utm_term }}">
+                    <input name="utm_content" type="hidden" value="{{ utm_content }}">
+                    <input name="utm_campaign" type="hidden" value="{{ utm_campaign }}">
+
+                    <div class="personal-info">
+                        <input type="checkbox" checked>
+                        <p class="personal-info-accept">Даю згоду на обробку моїх персональних даних</p>
+                    </div>
+                    <button class="btn btn__large">Замовити</button>
+                </form>
             </div>
         </div>
-
     </section>
     <footer>
         <div class="left">
