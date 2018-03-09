@@ -5,15 +5,15 @@
 // });
 // ------------------------
 function handleChange(value) {
-    var priceOne = document.querySelector('.price-one');
-    var priceTwo = document.querySelector('.price-two');
-    var priceThree = document.querySelector('.price-three');
-    var fileOne = document.querySelector('.photo-one input[type="file"]');
-    var fileTwo = document.querySelector('.photo-two input[type="file"]');
-    var fileThree = document.querySelector('.photo-three input[type="file"]');
-    var photoOne = document.querySelector('.photo-one');
-    var photoTwo = document.querySelector('.photo-two');
-    var photoThree = document.querySelector('.photo-three');
+    var priceOne = document.querySelector('.active-form .price-one');
+    var priceTwo = document.querySelector('.active-form .price-two');
+    var priceThree = document.querySelector('.active-form .price-three');
+    var fileOne = document.querySelector('.active-form .photo-one input[type="file"]');
+    var fileTwo = document.querySelector('.active-form .photo-two input[type="file"]');
+    var fileThree = document.querySelector('.active-form .photo-three input[type="file"]');
+    var photoOne = document.querySelector('.active-form .photo-one');
+    var photoTwo = document.querySelector('.active-form .photo-two');
+    var photoThree = document.querySelector('.active-form .photo-three');
     if (value == 1) {
         priceThree.style.display = "none";
         priceTwo.style.display = "none";
@@ -114,6 +114,13 @@ $(".user-image-three").change(function() {
     readURL(this, $('.photo-three'));
 });
 // -------------------------
+$('input[name="metrika-foto"]').change(function () {
+    var index = $(this).val();
+
+    $('form.user-form').prop('readonly', true).removeClass('active-form');
+    $('form.user-form').prop('readonly', false).eq(index).addClass('active-form');
+});
+
 // Плавний якорь
 $(function() {
     $('button[data-target^="anchor"]').bind('click.smoothscroll', function() {
@@ -165,14 +172,19 @@ function timeBetweenDates(toDate) {
 // -----------------------
 // Contact Form Phone Mask
 $('#user-phone').inputmask({ "mask": "+38(099) 9999999" });
+$('#user-phone-2').inputmask({ "mask": "+38(099) 9999999" });
 
 // Handle form submit
-$('.user-form').on('submit', function(e) {
+$('form.user-form').on('submit', function(e) {
+    if (false === $(this).hasClass('active-form')) {
+        return;
+    }
+
     $('.heart-spinner-wrap').show();
     e.preventDefault();
-    const form = $('form.user-form'),
-        quantity = $('input[name="quantity"]:checked').val(),
-        price = $('.price.active').data("price"),
+    const form = $(this),
+        quantity = form.find('input[name="quantity"]:checked').val(),
+        price = form.find('.price.active').data("price"),
         name = form.find('[name="name"]')[0].value,
         phone = form.find('[name="phone"]')[0].value;
     var utm_source = form.find('[name="utm_source"]')[0].value;
@@ -202,7 +214,6 @@ $('.user-form').on('submit', function(e) {
             utm_campaign: utm_campaign
         }
     }).done(function(response) {
-        console.log(response);
         if (response.status === "error" && response.message[0] === "Дублирующая заявка") {
             alert('Дані вже були відправлені');
             $('.heart-spinner-wrap').hide();
@@ -210,23 +221,31 @@ $('.user-form').on('submit', function(e) {
             const id = response.data[0].order_id;
 
             let formData = new FormData();
-            for (let i = 0; i < $('.active .user-images').length; i++) {
+            for (let i = 0; i < $(this).find('.active .user-images').length; i++) {
                 formData.append('files[]', $('.user-images').get(i).files[0]);
             }
-            $.ajax({
-                url: '/order/' + id + '/items',
-                method: 'POST',
-                contentType: false,
-                data: formData,
-                processData: false
-            }).done(function() {
+            console.log(formData.getAll('files[]'));
+            console.log(formData.getAll('files[]').length);
+            if (formData.getAll('files[]').length > 0) {
+                $.ajax({
+                    url: '/order/' + id + '/items',
+                    method: 'POST',
+                    contentType: false,
+                    data: formData,
+                    processData: false
+                }).done(function() {
+                    $('.heart-spinner-wrap').hide();
+                    alert('Дані були успішно відправлені!');
+                    window.location.href = '/thankyoupage';
+                }).fail(function() {
+                    $('.heart-spinner-wrap').hide();
+                    alert('Сталась помилка під час відправки даних');
+                });
+            } else {
                 $('.heart-spinner-wrap').hide();
                 alert('Дані були успішно відправлені!');
                 window.location.href = '/thankyoupage';
-            }).fail(function() {
-                $('.heart-spinner-wrap').hide();
-                alert('Сталась помилка під час відправки даних');
-            });
+            }
         }
     }).fail(function() {
         $('.heart-spinner-wrap').hide();
