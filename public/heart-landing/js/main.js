@@ -119,6 +119,7 @@ $(".radio-with-photo").click(function() {
     $('.form-without-photo').addClass('d-n');
     $('.form-without-photo').removeClass('active-form');
     $('.form-with-photo').addClass('active-form');
+    $('.client-info-photo').addClass('active');
 
 });
 $(".radio-without-photo").click(function() {
