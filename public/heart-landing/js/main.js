@@ -221,11 +221,10 @@ $('form.user-form').on('submit', function(e) {
             const id = response.data[0].order_id;
 
             let formData = new FormData();
-            for (let i = 0; i < $(this).find('.active .user-images').length; i++) {
+            for (let i = 0; i < form.find('.active .user-images').length; i++) {
                 formData.append('files[]', $('.user-images').get(i).files[0]);
             }
-            console.log(formData.getAll('files[]'));
-            console.log(formData.getAll('files[]').length);
+
             if (formData.getAll('files[]').length > 0) {
                 $.ajax({
                     url: '/order/' + id + '/items',
