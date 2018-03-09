@@ -828,7 +828,7 @@ footer .rigth h2 {
     }
     .form form .quantitys .quantity label {
         line-height: 33px;
-        font-size: 15px;
+        font-size: 13px;
     }
 }
 
@@ -1592,6 +1592,9 @@ section .title-white h3 {
     margin: 0 20px;
 }
 
-.d-n {
-    display: none !important;
+form.user-form {
+    display: none;
+}
+form.user-form.active-form {
+    display: flex;
 }

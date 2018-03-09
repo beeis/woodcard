@@ -342,16 +342,16 @@
                 <h2 class="title-white">Замовити метрику Woodcard</h2>
                 <div class="metric-info">
                     <div class="metric-info-btn">
-                        <input class="radio-with-photo" type="radio" value="1" name="metrika-foto" checked>
+                        <input type="radio" value="0" name="metrika-foto" checked>
                         <label>З фото</label>
                     </div>
                     <div class="metric-info-btn">
-                        <input class="radio-without-photo" type="radio" value="2" name="metrika-foto">
+                        <input type="radio" value="1" name="metrika-foto">
                         <label>Без фото</label>
                     </div>
                 </div>
                 <p class="form-instruction">Заповнюйте форму та додавайте фотографію - ми зробимо макет та відправимо Вам на затвердження</p>
-                <form class="user-form form-with-photo active-form" action="/order" method="POST">
+                <form class="user-form active-form" action="/order" method="POST">
                     <div class="quantitys">
                         <div class="quantity">
                             <input onchange=handleChange(value) class="radio-one" type="radio" value="1" name="quantity">
@@ -378,6 +378,9 @@
                     <div class="client-info">
                         <input name="name" required type="text" placeholder="Ім’я та прізвище*">
                         <input name="phone" required id="user-phone" type="text" placeholder="Номер телефону*">
+                        <p style="color:  #fff;text-decoration: underline;font-size: 0.85em;margin-bottom: 20px;">
+                            Дані для метрики уточнюються оператором
+                        </p>
                         <h2 class="client-info-photo-title">Завантажити фото:</h2>
                         <div class="client-info-photo-container">
 
@@ -410,7 +413,7 @@
                     </div>
                     <button class="btn btn__large">Замовити</button>
                 </form>
-                <form class="user-form form-without-photo d-n" action="/order" method="POST">
+                <form class="user-form" action="/order" method="POST">
                     <div class="quantitys">
                         <div class="quantity">
                             <input onchange=handleChange(value) class="radio-one" type="radio" value="1" name="quantity">
@@ -438,6 +441,9 @@
                         <input name="name" required type="text" placeholder="Ім’я та прізвище*">
                         <input name="phone" required id="user-phone-2" type="text" placeholder="Номер телефону*">
                     </div>
+                    <p style="color:  #fff;text-decoration: underline;font-size: 0.85em;margin-bottom: 20px;">
+                        Дані для метрики уточнюються оператором
+                    </p>
 
                     <input name="product_id" type="hidden" value="9">
                     <input name="utm_source" type="hidden" value="{{ utm_source }}">
