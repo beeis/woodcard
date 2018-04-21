@@ -25,4 +25,5 @@ RUN sed -i "/listen = .*/c\listen = [::]:9000" /etc/php/7.1/fpm/pool.d/www.conf 
 # The following runs FPM and removes all its extraneous log output on top of what your app outputs to stdout
 CMD /usr/sbin/php-fpm7.1 -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,"$,,' 1>&1
 
-WORKDIR /var/www/woodcard
+# Open up fcgi port
+EXPOSE 9000
