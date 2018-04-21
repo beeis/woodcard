@@ -4,7 +4,7 @@
     {
       "name": "web",
       "host": {
-        "sourcePath": "/home/ec2-user/ccg-app"
+        "sourcePath": "/home/ec2-user/woodcard-app"
       }
     }
   ],
@@ -13,7 +13,7 @@
       "name": "nginx",
       "image": "beeis/woodcard-nginx",
       "essential": true,
-      "memory": 128,
+      "memory": 256,
       "portMappings": [
         {
           "hostPort": 80,
@@ -35,9 +35,9 @@
     },
     {
       "name": "php",
-      "image": "beeis/php",
+      "image": "beeis/woodcard-php",
       "essential": true,
-      "memory": 512,
+      "memory": 768,
       "volumesFrom": [
         {
           "sourceContainer": "web"
@@ -48,7 +48,7 @@
       "name": "web",
       "image": "beeis/woodcard-app",
       "essential": true,
-      "memory": 128
+      "memory": 256
     }
   ]
 }

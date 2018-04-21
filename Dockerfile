@@ -1,15 +1,15 @@
-FROM ubuntu:16.04
+FROM beeis/woodcard-base
 
 RUN apt-get update
 
-WORKDIR /var/www/gts-app
+WORKDIR /var/www/woodcard
 
-COPY . /var/www/gts-app
+COPY . /var/www/woodcard
 
-#RUN chown -R sysccg:sysccg /var/www/ccg-app
+RUN chown -R syswood:syswood /var/www/woodcard
 
-RUN chmod -R 0777 /var/www/gts-app/var
+RUN chmod -R 0777 /var/www/woodcard/var
 
-VOLUME /var/www/gts-app
+VOLUME /var/www/woodcard
 
 ENTRYPOINT ["/usr/bin/tail", "-f", "/dev/null"]

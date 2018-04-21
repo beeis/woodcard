@@ -1,0 +1,20 @@
+version: '2'
+services:
+    web:
+        build: .
+        volumes:
+            - .:/var/www/woodcard
+        ports:
+            - '2222:22'
+    php:
+        build: docker/php-fpm
+        volumes:
+            - .:/var/www/woodcard
+        ports:
+            - '9002:9000'
+    nginx:
+        build: docker/nginx
+        ports:
+            - '8080:80'
+        volumes:
+            - .:/var/www/woodcard
