@@ -40,7 +40,7 @@ class ActivityController extends Controller
                 'changed' => $activity->getChanged(),
                 'changed_comment' => preg_replace(
                     '/{image_base}/',
-                    'https://s3.eu-central-1.amazonaws.com/woodcard',
+                    'https://s3.eu-central-1.amazonaws.com/woodcard2',
                     $activity->getChangedComment()
                 ),
                 'created_at' => $activity

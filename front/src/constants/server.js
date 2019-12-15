@@ -6,4 +6,4 @@ export const server = {
 
 export const apiPoint = server.prod;
 
-export const amazon = 'https://s3.eu-central-1.amazonaws.com/woodcard/';
+export const amazon = 'https://s3.eu-central-1.amazonaws.com/woodcard2/';

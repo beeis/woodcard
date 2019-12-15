@@ -48,7 +48,7 @@ class FileManager implements FileManagerInterface
 
     public function getFile(string $filename)
     {
-        $file = file_get_contents('https://s3.eu-central-1.amazonaws.com/woodcard/'.$filename);
+        $file = file_get_contents('https://s3.eu-central-1.amazonaws.com/woodcard2/'.$filename);
         return new File($file);
     }
 
