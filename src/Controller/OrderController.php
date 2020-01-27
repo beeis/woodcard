@@ -100,4 +100,41 @@ class OrderController extends Controller
 
         return new JsonResponse($this->orderManager->createItems($order, $files));
     }
+
+    public function createOrderWithItem(Request $request): Response
+    {
+        $files = $request->files->get('files', []);
+
+        $order = $this->orderManager->create(
+            [
+                'name' => $request->request->get('name'),
+                'products' => [
+                    '1' => [
+                        'product_id' => $request->request->get('product_id'),
+                        'price' => $request->request->get('product_price'),
+                        'count' => 1,
+                    ],
+                ],
+                'phone' => $request->request->get('phone'),
+                'email' => $request->request->get('email'),
+                'comment' => $request->request->get('comment'),
+                'site' => $request->getHost(),
+                'ip' => $request->getClientIp(),
+                'utm_source' => $request->request->get('utm_source'),
+                'utm_medium' => $request->request->get('utm_medium'),
+                'utm_term' => $request->request->get('utm_term'),
+                'utm_content' => $request->request->get('utm_content'),
+                'utm_campaign' => $request->request->get('utm_campaign'),
+            ]
+        );
+
+
+        if ("error" === $order['status']) {
+            return $this->redirectToRoute('app_main_heart2', ['error' => $order['message']]);
+        }
+
+        $this->orderManager->createItems((int) $order['data'][0]['order_id'], $files);
+
+        return $this->redirectToRoute('app_main_thankyoupage');
+    }
 }

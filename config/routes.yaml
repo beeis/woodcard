@@ -17,6 +17,11 @@ app_main_heart:
     methods: [GET]
     controller: App\Controller\MainController::heart
 
+app_main_heart2:
+    path: /heart2
+    methods: [GET]
+    controller: App\Controller\MainController::heart2
+
 app_main_flower:
     path: /flower
     methods: [GET]
@@ -42,6 +47,11 @@ app_order_create:
     path: order
     methods: [POST]
     controller: App\Controller\OrderController::create
+
+app_order_create_with_item:
+    path: /order-with-item
+    methods: [POST]
+    controller: App\Controller\OrderController::createOrderWithItem
 
 app_order_create_items:
     path: order/{order}/items
