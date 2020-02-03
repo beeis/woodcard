@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Manager;
 
+use App\Entity\Order;
 use App\Entity\OrderItem;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -111,6 +112,30 @@ class OrderManager implements OrderManagerInterface
             $orderItem = new OrderItem();
             $orderItem->setPhoto($filename);
             $orderItem->setOrderId((string) $orderId);
+            $this->entityManager->persist($orderItem);
+        }
+        $this->entityManager->flush();
+
+        return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createOrderItems(Order $order, array $files, string $product = null): array
+    {
+        $items = [];
+        foreach ($files as $file) {
+            $filename = $this->fileManager->uploadPhoto($file, (int) $order->getNumber());
+            if (null === $filename) {
+                continue;
+            }
+            $items[] = $filename;
+            $orderItem = new OrderItem();
+            $orderItem->setPhoto($filename);
+            $orderItem->setOrderId((string) $order->getNumber());
+            $orderItem->setOrder($order);
+            $orderItem->setComment($product);
             $this->entityManager->persist($orderItem);
         }
         $this->entityManager->flush();

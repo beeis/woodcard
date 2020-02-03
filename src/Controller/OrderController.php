@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Manager\OrderManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -134,6 +135,25 @@ class OrderController extends Controller
         }
 
         $this->orderManager->createItems((int) $order['data'][0]['order_id'], $files);
+
+        return $this->redirectToRoute('app_main_thankyoupage');
+    }
+
+    public function createOrder(Request $request): Response
+    {
+        $files = $request->files->get('files', []);
+
+        $order = new Order();
+        $number = number_format(round(microtime(true) * 10), 0, '.', '');
+        $order->setNumber($number);
+        $order->setName($request->request->get('name'));
+        $order->setPhone($request->request->get('phone'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($order);
+        $em->flush();
+
+        $this->orderManager->createOrderItems($order, $files, $request->request->get('product_id') == 5 ? 'Серце L 20 см' : 'Серце XXL 26 см');
 
         return $this->redirectToRoute('app_main_thankyoupage');
     }
