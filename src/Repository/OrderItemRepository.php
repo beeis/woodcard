@@ -30,4 +30,20 @@ class OrderItemRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findOrders(\DateTime $fromDate): array
+    {
+        $qb = $this->createQueryBuilder('orderItem');
+
+        $qb
+            ->select('orderItem')
+            ->orderBy('MIN(orderItem.createdAt)', 'DESC')
+            ->groupBy('orderItem.orderId')
+            ->having($qb->expr()->gt('MIN(orderItem.createdAt)', "'".$fromDate->format('Y-m-d')."'"));
+
+        return $qb->getQuery()->getResult();
+    }
 }

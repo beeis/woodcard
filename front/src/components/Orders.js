@@ -17,7 +17,7 @@ export default class Orders extends Component {
   };
 
   componentDidMount() {
-    axios.get(`${apiPoint}/admin/orders`).then((data) => {
+    axios.get(`${apiPoint}/admin/orders/new`).then((data) => {
       this.setState({
         orders: data.data.data
       });
@@ -51,6 +51,7 @@ export default class Orders extends Component {
                       <th>#</th>
                       <th>Статус</th>
                       <th>Имя Заказчика</th>
+                      <th>Телефон</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -59,6 +60,7 @@ export default class Orders extends Component {
                       <td>{order.order_id}</td>
                       <td>{order.ttn_status}</td>
                       <td>{order.bayer_name}</td>
+                      <td>{order.phone}</td>
                     </tr>
                   )}
                   </tbody>

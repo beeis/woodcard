@@ -74,6 +74,11 @@ app_order_index:
     methods: [GET]
     controller: App\Controller\OrderController::index
 
+app_order_index_new:
+    path: admin/orders/new
+    methods: [GET]
+    controller: App\Controller\OrderController::indexNew
+
 #Вибране замовлення
 app_order_item_index:
     path: admin/orders/{order}

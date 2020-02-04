@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Manager\OrderManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,6 +42,31 @@ class OrderController extends Controller
         $orders = $this->orderManager->list();
 
         return new JsonResponse($orders);
+    }
+
+    /**
+     * @return Response
+     */
+    public function indexNew(): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var OrderItem[] $orderItems */
+        $orderItems = $em->getRepository(OrderItem::class)->findOrders(new \DateTime('2020-01-17'));
+
+        $items = [];
+        foreach ($orderItems as $orderItem) {
+            $order = $orderItem->getOrder();
+            $items[] = [
+                'order_id' => $orderItem->getOrderId(),
+                'ttn_status' => '-',
+                'bayer_name' => $order ? $order->getName() : '-',
+                'phone' => $order ? $order->getPhone() : '-',
+            ];
+        }
+
+        return new JsonResponse([
+            'data' => $items,
+        ]);
     }
 
     /**
@@ -134,7 +160,7 @@ class OrderController extends Controller
             return $this->redirectToRoute('app_main_heart2', ['error' => $order['message']]);
         }
 
-        $this->orderManager->createItems((int) $order['data'][0]['order_id'], $files);
+        $this->orderManager->createItems((int)$order['data'][0]['order_id'], $files);
 
         return $this->redirectToRoute('app_main_thankyoupage');
     }
@@ -153,7 +179,8 @@ class OrderController extends Controller
         $em->persist($order);
         $em->flush();
 
-        $this->orderManager->createOrderItems($order, $files, $request->request->get('product_id') == 5 ? 'Серце L 20 см' : 'Серце XXL 26 см');
+        $this->orderManager->createOrderItems($order, $files,
+            $request->request->get('product_id') == 5 ? 'Серце L 20 см' : 'Серце XXL 26 см');
 
         return $this->redirectToRoute('app_main_thankyoupage');
     }
