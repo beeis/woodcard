@@ -55,7 +55,7 @@ class OrderController extends Controller
         $orderItems = $em->getRepository(OrderItem::class)->findOrders(new \DateTime('2020-01-17'));
 
         /** @var Order[] $orders */
-        $orders = $em->getRepository(Order::class)->findAll();
+        $orders = $em->getRepository(Order::class)->getAllAndOrderByDESC();
 
         $items = [];
 

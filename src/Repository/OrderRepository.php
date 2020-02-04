@@ -18,9 +18,20 @@ class OrderRepository extends EntityRepository
      */
     public function findOrdersWithoutItems(\DateTime $fromDate): array
     {
-        $qb = $this->createQueryBuilder('order');
+        $qb = $this->createQueryBuilder('o');
 
-        $qb->select('order');
+        $qb->select('o');
+
+        return $qb->getQuery()->getResult();
+    }
+    /**
+     * @return array
+     */
+    public function getAllAndOrderByDESC(): array
+    {
+        $qb = $this->createQueryBuilder('o');
+
+        $qb->orderBy('o.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
