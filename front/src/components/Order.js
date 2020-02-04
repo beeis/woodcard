@@ -78,7 +78,7 @@ export default class Orders extends Component {
     if (this.state.newItemFile) {
       let formData = new FormData();
       formData.append("file", this.state.newItemFile);
-      axios.post(`${apiPoint}/admin/orders/${this.props.match.params.id}`, formData).then((response) => {
+      axios.post(`${apiPoint}/admin/orders/${this.props.match.params.id}/new`, formData).then((response) => {
         if(this.state.newItemComment) {
           axios.post(`${apiPoint}/admin/order_item/${response.data.id}/comment`, {
             "comment": this.state.newItemComment

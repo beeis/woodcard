@@ -96,6 +96,11 @@ app_order_item_create:
     methods: [POST]
     controller: App\Controller\OrderItemController::create
 
+app_order_item_create_new:
+    path: admin/orders/{order}/new
+    methods: [POST]
+    controller: App\Controller\OrderItemController::createNew
+
 #Активувати (status=true) фото в замовлені або деактивувати (не передавати нічого)
 app_order_item_active:
     path: admin/order_item/{orderItem}/active

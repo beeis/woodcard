@@ -105,6 +105,27 @@ class OrderItemController extends Controller
         return new JsonResponse($this->viewOrderItem($orderItem));
     }
 
+    public function createNew(Request $request, int $order): Response
+    {
+        $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+        /** @var Order $orderEntity */
+        $orderEntity = $orderRepository->findOneBy(['number' => $order]);
+
+        $orderItem = new OrderItem();
+        $orderItem->setOrderId($orderEntity->getNumber());
+        $orderItem->setOrder($orderEntity);
+        $orderItem->setComment($request->request->get('comment'));
+        $filename = $this->get('app.manager.file_manager')
+            ->uploadPhoto($request->files->get('file'), (int) $order['data']['order_id']);
+        $orderItem->setPhoto($filename);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($orderItem);
+        $em->flush();
+
+        return new JsonResponse($this->viewOrderItem($orderItem));
+    }
+
     /**
      * @param Request $request
      * @param int $orderItem
@@ -261,21 +282,15 @@ class OrderItemController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $order = $this->get('app.manager.order_manager')->get((int) $orderItem->getOrderId());
-        if (false === isset($order['data']['order_id'])) {
-            throw $this->createNotFoundException();
-        }
-
         if (false === $this->get('app.storage.file_storage')->exist($orderItem->getPrint())) {
             throw $this->createNotFoundException();
         }
         $file = $this->get('app.storage.file_storage')->get($orderItem->getPrint());
 
         $filename = sprintf(
-            '%s-%s-%s.%s',
+            '%s-%s.%s',
             $orderItem->getOrderId(),
             $orderItem->getId(),
-            $order['data']['bayer_name'],
             'jpg'
         );
 
