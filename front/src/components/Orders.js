@@ -52,6 +52,8 @@ export default class Orders extends Component {
                       <th>Статус</th>
                       <th>Имя Заказчика</th>
                       <th>Телефон</th>
+                      <th>Добавлено</th>
+                      <th>Фото</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -61,6 +63,8 @@ export default class Orders extends Component {
                       <td>{order.ttn_status}</td>
                       <td>{order.bayer_name}</td>
                       <td>{order.phone}</td>
+                      <td>{order.created_at}</td>
+                      <td>{order.has_item}</td>
                     </tr>
                   )}
                   </tbody>

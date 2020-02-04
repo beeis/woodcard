@@ -86,7 +86,7 @@ class OrderItem
     /**
      * @var Order|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
      * @ORM\JoinColumn(name="order_fid", nullable=true)
      */
     private $order;

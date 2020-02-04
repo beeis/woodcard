@@ -50,10 +50,28 @@ class OrderController extends Controller
     public function indexNew(): Response
     {
         $em = $this->getDoctrine()->getManager();
+
         /** @var OrderItem[] $orderItems */
         $orderItems = $em->getRepository(OrderItem::class)->findOrders(new \DateTime('2020-01-17'));
 
+        /** @var Order[] $orders */
+        $orders = $em->getRepository(Order::class)->findAll();
+
         $items = [];
+
+        foreach ($orders as $order) {
+            if (true === $order->getItems()->isEmpty()) {
+                $items[] = [
+                    'order_id' => $order->getNumber(),
+                    'ttn_status' => '-',
+                    'bayer_name' => $order->getName(),
+                    'phone' => $order->getPhone(),
+                    'created_at' => $order->getCreatedAt()->format('d/m/Y H:i:s'),
+                    'has_item' => 'Нету',
+                ];
+            }
+        }
+
         foreach ($orderItems as $orderItem) {
             $order = $orderItem->getOrder();
             $items[] = [
@@ -61,6 +79,8 @@ class OrderController extends Controller
                 'ttn_status' => '-',
                 'bayer_name' => $order ? $order->getName() : '-',
                 'phone' => $order ? $order->getPhone() : '-',
+                'created_at' => null !== $order ? $order->getCreatedAt()->format('d/m/Y H:i:s') : $orderItem->getCreatedAt()->format('d/m/Y H:i:s'),
+                'has_item' => 'Есть',
             ];
         }
 

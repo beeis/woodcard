@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
  * @ORM\Table(name="f_order")
  */
 class Order
@@ -40,6 +41,13 @@ class Order
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
+
+    /**
+     * @var OrderItem[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
+     */
+    private $items;
 
     /**
      * @return mixed
@@ -95,5 +103,13 @@ class Order
     public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
+    }
+
+    /**
+     * @return OrderItem[]|Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }
