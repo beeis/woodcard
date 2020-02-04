@@ -204,4 +204,24 @@ class OrderController extends Controller
 
         return $this->redirectToRoute('app_main_thankyoupage');
     }
+
+    //todo: save order in admin panel
+    public function createOrderNew(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $order = new Order();
+        $order->setNumber($data['number']);
+        $order->setName($data['name']);
+        $order->setPhone($data['phone']);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($order);
+        $em->flush();
+
+        return new JsonResponse([
+            'order_id' =>  $order->getNumber(),
+            'bayer_name' => $order->getName(),
+            'phone' => $order->getPhone(),
+        ]);
+    }
 }

@@ -47,6 +47,7 @@ app_order_create:
     path: order
     methods: [POST]
     controller: App\Controller\OrderController::create
+
 app_order_create_new:
     path: /orders
     methods: [POST]
@@ -95,6 +96,11 @@ app_order_item_create:
     path: admin/orders/{order}
     methods: [POST]
     controller: App\Controller\OrderItemController::create
+
+app_admin_order_create_new:
+    path: admin/orders-create/new
+    methods: [POST]
+    controller: App\Controller\OrderController::createOrderNew
 
 app_order_item_create_new:
     path: admin/orders/{order}/new

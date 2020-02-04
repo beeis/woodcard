@@ -8,13 +8,34 @@ export default class Orders extends Component {
     super();
     this.state = {
       orders: {},
-      goId: ''
+      goId: '',
+      number: '',
+      name: '',
+      phone: ''
     }
   }
 
   _openOrder = (id) => {
     this.props.history.push('/order/'+id);
   };
+
+  _createOrder = () => {
+      let {number, name, phone} = this.state;
+
+      axios.post(`${apiPoint}/admin/orders-create/new`, {
+          "number": number,
+          "name": name,
+          "phone": phone,
+      }, {
+          headers: {
+              'content-type': 'multipart/form-data'
+          }
+      }).then((response) => {
+        this._openOrder(number)
+      }).catch(() => {
+          console.log('Something went wrong!');
+      });
+  }
 
   componentDidMount() {
     axios.get(`${apiPoint}/admin/orders/new`).then((data) => {
@@ -27,6 +48,23 @@ export default class Orders extends Component {
   render () {
     return (
       <div className="container-fluid orders-container">
+          <div className="row add-new-order">
+          <div className="col-md-8 orders-border">
+          <div className="row orders-header">
+          Создать Заказ
+      </div>
+          <div>Номер заказа</div>
+          <input type="text" className={"form-control"}
+      value={this.state.number} onChange={(e) => {this.setState({number: e.target.value})}}/>
+          <div>Имя</div>
+          <input type="text" className={"form-control"}
+      value={this.state.name} onChange={(e) => {this.setState({name: e.target.value})}}/>
+          <div>Телефон</div>
+          <input type="text" className={"form-control"}
+      value={this.state.phone} onChange={(e) => {this.setState({phone: e.target.value})}}/>
+          <button type={"button"} className={"btn btn-primary"} onClick={this._createOrder}>Создать</button>
+      </div>
+        </div>
         <div className="row orders-header">
           Список Заказов
         </div>
