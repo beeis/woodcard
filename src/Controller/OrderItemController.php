@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\OrderItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -43,6 +44,32 @@ class OrderItemController extends Controller
         return new JsonResponse(
             [
                 'order' => $order,
+                'items' => $itemsResult,
+            ]
+        );
+    }
+    /**
+     * @param int $order
+     *
+     * @return Response
+     */
+    public function indexNew(int $orderId): Response
+    {
+        $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+
+        /** @var Order $order */
+        $order = $orderRepository->findOneBy(['number' => $orderId]);
+
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $items = $orderItemRepository->findBy(['orderId' => $orderId]);
+        $itemsResult = [];
+        foreach ($items as $item) {
+            $itemsResult[] = $this->viewOrderItem($item);
+        }
+
+        return new JsonResponse(
+            [
+                'order' => $this->viewOrder($order, $orderId),
                 'items' => $itemsResult,
             ]
         );
@@ -287,6 +314,22 @@ class OrderItemController extends Controller
                 ->getUpdatedAt()
                 ->setTimezone(new \DateTimeZone('Europe/Kiev'))
                 ->format('H:i:s d-m-Y'),
+        ];
+    }
+
+    /**
+     * @param OrderItem $orderItem
+     *
+     * @return array
+     */
+    private function viewOrder(?Order $order, $orderId): array
+    {
+        return [
+            'data' => [
+                'order_id' =>  $order ? $order->getNumber() : $orderId,
+                'bayer_name' => $order ? $order->getName() : '- -',
+                'phone' => $order ? $order->getPhone() : '- -',
+            ]
         ];
     }
 }

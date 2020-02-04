@@ -28,7 +28,7 @@ export default class Orders extends Component {
   }
 
   _refreshItems = () => {
-    axios.get(`${apiPoint}/admin/orders/${this.props.match.params.id}`).then((data) => {
+    axios.get(`${apiPoint}/admin/orders/${this.props.match.params.id}/new`).then((data) => {
       this.setState({
         orderInfo: data.data.order.data,
         items: data.data.items
@@ -147,6 +147,11 @@ export default class Orders extends Component {
         <div className="row">
           <div className={"order-name"}>
             Имя Заказчика: {this.state.orderInfo.bayer_name}
+          </div>
+        </div>
+        <div className="row">
+          <div className={"order-name"}>
+            Номер телефона: {this.state.orderInfo.phone}
           </div>
         </div>
         <div className="row order-items-row">

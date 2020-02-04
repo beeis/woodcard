@@ -80,6 +80,11 @@ app_order_item_index:
     methods: [GET]
     controller: App\Controller\OrderItemController::index
 
+app_order_item_index_new:
+    path: admin/orders/{orderId}/new
+    methods: [GET]
+    controller: App\Controller\OrderItemController::indexNew
+
 #Добавити фото + комент
 app_order_item_create:
     path: admin/orders/{order}
