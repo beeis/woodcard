@@ -32,23 +32,32 @@ class MainController extends Controller
      *
      * @return Response
      */
-    public function order(int $order): Response
+    public function order(int $orderNumber): Response
     {
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
-        $orderRepository = $this->getDoctrine()->getRepository(Order::class);
-        $items = $orderItemRepository->findActiveItems($order);
-        /** @var Order $orderEntity */
-        $orderEntity = $orderRepository->findOneBy(['number' => $order]);
+
+        try {
+            $order = $this->get('app.manager.order_manager')->get($orderNumber);
+        } catch (\Exception $exception) {
+            $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+            /** @var Order $orderEntity */
+            $orderEntity = $orderRepository->findOneBy(['number' => $orderNumber]);
+            $order = [
+                'data' => [
+                    'total' => '-',
+                    'order_id' => $orderEntity ? $orderEntity->getNumber() : $orderNumber,
+                    'bayer_name' =>  $orderEntity ? $orderEntity->getName() : '-',
+                ]
+            ];
+        }
+
+        $items = $orderItemRepository->findActiveItems($orderNumber);
 
         return $this->render(
             'main/order.html.twig',
             [
                 'items' => $items,
-                'order' => [
-                    'total' => '-',
-                    'order_id' => $orderEntity ? $orderEntity->getNumber() : $order,
-                    'bayer_name' =>  $orderEntity ? $orderEntity->getName() : '-',
-                ]
+                'order' => $order['data']
             ]
         );
     }
