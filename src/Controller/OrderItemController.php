@@ -57,6 +57,17 @@ class OrderItemController extends Controller
 
         /** @var Order $order */
         $order = $orderRepository->findOneBy(['number' => $orderId]);
+
+
+
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $items = $orderItemRepository->findBy(['orderId' => $orderId]);
+        $itemsResult = [];
+
+        foreach ($items as $item) {
+            $itemsResult[] = $this->viewOrderItem($item);
+        }
+
         if (null === $order) {
             try {
                 $orderCrm = $this->get('app.manager.order_manager')->get($orderId);
@@ -71,14 +82,13 @@ class OrderItemController extends Controller
             $order->setName($orderCrm['data']['bayer_name']);
             $order->setPhone($orderCrm['data']['phone']);
             $this->getDoctrine()->getManager()->persist($order);
-            $this->getDoctrine()->getManager()->flush();
-        }
 
-        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
-        $items = $orderItemRepository->findBy(['orderId' => $orderId]);
-        $itemsResult = [];
-        foreach ($items as $item) {
-            $itemsResult[] = $this->viewOrderItem($item);
+            /** @var OrderItem $item */
+            foreach ($items as $item) {
+                $item->setOrder($order);
+                $this->getDoctrine()->getManager()->persist($item);
+            }
+            $this->getDoctrine()->getManager()->flush();
         }
 
         return new JsonResponse(
@@ -358,7 +368,7 @@ class OrderItemController extends Controller
                 'order_id' =>  $order ? $order->getNumber() : $orderId,
                 'bayer_name' => $order ? $order->getName() : '- -',
                 'phone' => $order ? $order->getPhone() : '- -',
-            ]
+            ],
         ];
     }
 }
