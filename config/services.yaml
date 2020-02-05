@@ -48,6 +48,7 @@ services:
         class: App\Manager\OrderManager
         public: true
         arguments:
+            - '@monolog.logger'
             - '@app.manager.crm_manager'
             - '@doctrine.orm.entity_manager'
             - '@app.manager.file_manager'

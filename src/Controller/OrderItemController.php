@@ -7,13 +7,9 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Class OrderItemController
@@ -26,6 +22,8 @@ class OrderItemController extends Controller
      * @param int $order
      *
      * @return Response
+     *
+     * @deprecated
      */
     public function index(int $order): Response
     {
@@ -59,6 +57,22 @@ class OrderItemController extends Controller
 
         /** @var Order $order */
         $order = $orderRepository->findOneBy(['number' => $orderId]);
+        if (null === $order) {
+            try {
+                $orderCrm = $this->get('app.manager.order_manager')->get($orderId);
+            } catch (\Exception $exception) {
+                throw $this->createNotFoundException();
+            }
+            if (false === isset($orderCrm['data']['order_id'])) {
+                throw $this->createNotFoundException();
+            }
+            $order = new Order();
+            $order->setNumber($orderCrm['data']['order_id']);
+            $order->setName($orderCrm['data']['bayer_name']);
+            $order->setPhone($orderCrm['data']['phone']);
+            $this->getDoctrine()->getManager()->persist($order);
+            $this->getDoctrine()->getManager()->flush();
+        }
 
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
         $items = $orderItemRepository->findBy(['orderId' => $orderId]);

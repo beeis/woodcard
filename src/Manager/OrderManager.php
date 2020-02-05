@@ -7,6 +7,7 @@ namespace App\Manager;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class OrderManager
@@ -38,6 +39,11 @@ class OrderManager implements OrderManagerInterface
     private $fileManager;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * OrderManager constructor.
      *
      * @param CRMManager $CRMManager
@@ -45,22 +51,39 @@ class OrderManager implements OrderManagerInterface
      * @param FileManagerInterface $fileManager
      */
     public function __construct(
+        LoggerInterface $logger,
         CRMManager $CRMManager,
         EntityManagerInterface $entityManager,
         FileManagerInterface $fileManager
-    )
-    {
+    ) {
         $this->CRMManager = $CRMManager;
         $this->entityManager = $entityManager;
         $this->fileManager = $fileManager;
+        $this->logger = $logger;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function create(array $options): array
+    public function create(array $options): Order
     {
-        return $this->CRMManager->addNewOrder($options);
+        $options = $this->getOrGenerateOrderId($options);
+
+        $order = $this->createOrderEntity($options);
+        try {
+            $crmOrder = $this->CRMManager->addNewOrder($options);
+        } catch (\Exception $exception) {
+            $this->logger->critical('lp.crm.create_order.failed');
+        }
+
+        if (true === isset($crmOrder['status']) && self::RESPONSE_ERROR === $crmOrder['status']) {
+            $this->logger->emergency('lp.crm.create_order.has_error', ['text' => $crmOrder['message']]);
+        }
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+
+        return $order;
     }
 
     /**
@@ -98,6 +121,7 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
+     * @deprecated
      * {@inheritdoc}
      */
     public function createItems(int $orderId, array $files): array
@@ -111,7 +135,7 @@ class OrderManager implements OrderManagerInterface
             $items[] = $filename;
             $orderItem = new OrderItem();
             $orderItem->setPhoto($filename);
-            $orderItem->setOrderId((string) $orderId);
+            $orderItem->setOrderId((string)$orderId);
             $this->entityManager->persist($orderItem);
         }
         $this->entityManager->flush();
@@ -122,24 +146,45 @@ class OrderManager implements OrderManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createOrderItems(Order $order, array $files, string $product = null): array
+    public function createOrderItems(Order $order, array $files, string $comment = null): array
     {
         $items = [];
         foreach ($files as $file) {
-            $filename = $this->fileManager->uploadPhoto($file, (int) $order->getNumber());
+            $filename = $this->fileManager->uploadPhoto($file, (int)$order->getNumber());
             if (null === $filename) {
                 continue;
             }
             $items[] = $filename;
             $orderItem = new OrderItem();
             $orderItem->setPhoto($filename);
-            $orderItem->setOrderId((string) $order->getNumber());
+            $orderItem->setOrderId((string)$order->getNumber());
             $orderItem->setOrder($order);
-            $orderItem->setComment($product);
+            $orderItem->setComment($comment);
             $this->entityManager->persist($orderItem);
         }
         $this->entityManager->flush();
 
         return $items;
+    }
+
+    private function getOrGenerateOrderId(array $options): array
+    {
+        $options['order_id'] = true === isset($options['order_id']) ? $options['order_id'] : number_format(round(microtime(true) * 10), 0, '.', '');
+
+        return $options;
+    }
+
+    private function createOrderEntity(array $data): Order
+    {
+        $order = new Order();
+
+        $number = false === empty($data['order_id']) ? $data['order_id'] : number_format(round(microtime(true) * 10), 0,
+            '.', '');
+
+        $order->setNumber($number);
+        $order->setName($data['name']);
+        $order->setPhone($data['phone']);
+
+        return $order;
     }
 }

@@ -9,7 +9,6 @@ export default class Orders extends Component {
     this.state = {
       orders: {},
       goId: '',
-      number: '',
       name: '',
       phone: ''
     }
@@ -20,18 +19,18 @@ export default class Orders extends Component {
   };
 
   _createOrder = () => {
-      let {number, name, phone} = this.state;
+      let {name, phone} = this.state;
+      let formData = new FormData();
+      formData.append("name", name);
+      formData.append("phone", phone);
 
-      axios.post(`${apiPoint}/admin/orders-create/new`, {
-          "number": number,
-          "name": name,
-          "phone": phone,
-      }, {
+      axios.post(`${apiPoint}/order`, formData, {
           headers: {
-              'content-type': 'multipart/form-data'
+              'content-type': 'multipart/form-data',
+              'X-Requested-With': 'XMLHttpRequest'
           }
       }).then((response) => {
-        this._openOrder(number)
+        this._openOrder(response.data.order_id)
       }).catch(() => {
           console.log('Something went wrong!');
       });
@@ -53,9 +52,6 @@ export default class Orders extends Component {
           <div className="row orders-header">
           Создать Заказ
       </div>
-          <div>Номер заказа</div>
-          <input type="text" className={"form-control"}
-      value={this.state.number} onChange={(e) => {this.setState({number: e.target.value})}}/>
           <div>Имя</div>
           <input type="text" className={"form-control"}
       value={this.state.name} onChange={(e) => {this.setState({name: e.target.value})}}/>

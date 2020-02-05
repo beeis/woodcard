@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Manager;
 
+use App\Entity\Order;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -16,9 +17,9 @@ interface OrderManagerInterface
     /**
      * @param array $options
      *
-     * @return array
+     * @return Order
      */
-    public function create(array $options): array;
+    public function create(array $options): Order;
 
     /**
      * @param int $orderId
