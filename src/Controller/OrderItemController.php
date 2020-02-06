@@ -301,6 +301,7 @@ class OrderItemController extends Controller
     public function downloadPrint(int $orderItem): Response
     {
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        /** @var OrderItem $orderItem */
         $orderItem = $orderItemRepository->find($orderItem);
         if (null === $orderItem) {
             throw $this->createNotFoundException();
@@ -311,10 +312,14 @@ class OrderItemController extends Controller
         }
         $file = $this->get('app.storage.file_storage')->get($orderItem->getPrint());
 
+        $order = $orderItem->getOrder();
+        $name = null === $order ? 'no name' : $order->getName();
+
         $filename = sprintf(
-            '%s-%s.%s',
+            '%s-%s-%s.%s',
             $orderItem->getOrderId(),
             $orderItem->getId(),
+            $name,
             'jpg'
         );
 
