@@ -4,6 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use AmoCRM\Collections\ContactsCollection;
+use AmoCRM\Collections\CustomFields\CustomFieldsCollection;
+use AmoCRM\Collections\CustomFieldsValuesCollection;
+use AmoCRM\Collections\LinksCollection;
+use AmoCRM\Exceptions\AmoCRMApiNoContentException;
+use AmoCRM\Filters\ContactsFilter;
+use AmoCRM\Models\ContactModel;
+use AmoCRM\Models\CustomFields\CustomFieldModel;
+use AmoCRM\Models\CustomFieldsValues\MultitextCustomFieldValuesModel;
+use AmoCRM\Models\CustomFieldsValues\ValueCollections\MultitextCustomFieldValueCollection;
+use AmoCRM\Models\CustomFieldsValues\ValueModels\MultitextCustomFieldValueModel;
+use AmoCRM\Models\LeadModel;
+use App\Manager\AmoCRM\AmoCRMManager;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Manager\OrderManagerInterface;
@@ -31,7 +44,7 @@ class OrderController extends Controller
     public function setContainer(ContainerInterface $container = null)
     {
         parent::setContainer($container);
-        $this->orderManager = $this->get('app.manager.order_manager');
+        $this->orderManager = $this->get('app.manager.amo_order_manager');
     }
 
     /**
@@ -213,11 +226,11 @@ class OrderController extends Controller
         }
 
 
-        if ("error" === $order['status']) {
+        if (true === isset($order['status']) && "error" === $order['status']) {
             return $this->redirectToRoute('app_main_heart2', ['error' => $order['message']]);
         }
 
-        $this->orderManager->createItems((int)$order['data'][0]['order_id'], $files);
+//        $this->orderManager->createItems((int) $order['data'][0]['order_id'], $files);
 
         return $this->redirectToRoute('app_main_thankyoupage');
     }

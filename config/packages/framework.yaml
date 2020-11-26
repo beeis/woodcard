@@ -8,7 +8,7 @@ framework:
     session:
     #    # With this config, PHP's native session handling is used
         handler_id: session.handler.native_file
-        save_path:  '%env(SESSION_SAVE_PATH)%'
+        save_path:  '%kernel.project_dir%/var/sessions/%kernel.environment%'
 
     templating:
         engines: ['twig']

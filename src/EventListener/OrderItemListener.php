@@ -45,6 +45,8 @@ class OrderItemListener implements EventSubscriber
             return;
         }
 
+        return;
+
         try {
             $activity = $this->activityManager->handleChanges($orderItem, ['new' => []]);
             if (null === $activity) {

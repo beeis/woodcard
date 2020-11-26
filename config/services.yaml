@@ -8,6 +8,7 @@ parameters:
     vendor.aws.region: 'eu-central-1'
     vendor.aws.version: 'latest'
 
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -79,6 +80,32 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    app.client.amo_crm.oauth_config:
+        class: App\Client\AmoCRM\OAuthConfig
+        arguments:
+            - '%env(AMOCRM_ID)%'
+            - '%env(AMOCRM_SECRET_KEY)%'
+            - '%env(AMOCRM_REDIRECT_DOMAIN)%'
+
+    app.client.amo_crm.oauth_service:
+        class: App\Client\AmoCRM\OAuthService
+        arguments:
+            - '@session'
+
+    app.manager.amo_crm_manager:
+        class: App\Manager\AmoCRM\AmoCRMManager
+        public: true
+        arguments:
+            - '@app.client.amo_crm.oauth_config'
+            - '@app.client.amo_crm.oauth_service'
+
+    app.manager.amo_order_manager:
+        class: App\Manager\AmoCRM\AmoOrderManager
+        public: true
+        arguments:
+            - '@app.manager.amo_crm_manager'
+
+
     ### Vendor Services ###
     vendor.guzzle.client:
         class: GuzzleHttp\Client
@@ -100,3 +127,11 @@ services:
                 credentials: '@vendor.aws.credentials'
                 region: '%vendor.aws.region%'
                 version: '%vendor.aws.version%'
+
+    session:
+        public: true
+        class: Symfony\Component\HttpFoundation\Session\Session
+        arguments: [ '@session.storage' ]
+
+    session.namespacedattributebag:
+        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
