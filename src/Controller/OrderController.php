@@ -65,6 +65,10 @@ class OrderController extends Controller
      */
     public function indexNew(): Response
     {
+        return new JsonResponse([
+            'data' => [],
+        ]);
+
         $em = $this->getDoctrine()->getManager();
 
         /** @var OrderItem[] $orderItems */

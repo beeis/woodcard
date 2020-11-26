@@ -104,6 +104,8 @@ services:
         public: true
         arguments:
             - '@app.manager.amo_crm_manager'
+            - '@doctrine.orm.entity_manager'
+            - '@app.manager.file_manager'
 
 
     ### Vendor Services ###

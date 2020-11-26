@@ -13,11 +13,14 @@ use AmoCRM\Models\CustomFieldsValues\ValueCollections\MultitextCustomFieldValueC
 use AmoCRM\Models\CustomFieldsValues\ValueModels\MultitextCustomFieldValueModel;
 use AmoCRM\Models\LeadModel;
 use AmoCRM\OAuth2\Client\Provider\AmoCRMException;
+use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Manager\CRMManager;
 use App\Manager\FileManagerInterface;
 use App\Manager\OrderManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class AmoOrderManager implements OrderManagerInterface
 {
@@ -43,7 +46,7 @@ class AmoOrderManager implements OrderManagerInterface
         $this->fileManager = $fileManager;
     }
 
-    public function create(array $options): array
+    public function create(array $options): Order
     {
         $leadsService = $this->amoCRMManager->client->leads();
 
@@ -63,18 +66,46 @@ class AmoOrderManager implements OrderManagerInterface
             $leadsService->link($lead, $links);
             $leadsService->link($lead, $links);
         } catch (\Exception $exception) {
-            return [
-                'status' => 'error',
-                'message' => 'Спробуйте знову або напишіть нам у вабйер.'
-            ];
+            throw new BadRequestHttpException('Спробуйте знову або напишіть нам у вабйер.');
         }
 
-        return $lead->toArray();
+        $order = new Order();
+        $order->setName($options['name']);
+        $order->setPhone($options['phone']);
+        $order->setNumber((string) $lead->getId());
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+
+        return $order;
     }
 
     public function createItems(int $orderId, array $files): array
     {
         return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createOrderItems(Order $order, array $files, string $comment = null): array
+    {
+        $items = [];
+        foreach ($files as $file) {
+            $filename = $this->fileManager->uploadPhoto($file, (int)$order->getNumber());
+            if (null === $filename) {
+                continue;
+            }
+            $items[] = $filename;
+            $orderItem = new OrderItem();
+            $orderItem->setPhoto($filename);
+            $orderItem->setOrderId((string)$order->getNumber());
+            $orderItem->setOrder($order);
+            $orderItem->setComment($comment);
+            $this->entityManager->persist($orderItem);
+        }
+        $this->entityManager->flush();
+
+        return $items;
     }
 
     public function list(): array
