@@ -28,7 +28,7 @@ export default class Orders extends Component {
   }
 
   _refreshItems = () => {
-    axios.get(`${apiPoint}/admin/orders/${this.props.match.params.id}`).then((data) => {
+    axios.get(`${apiPoint}/admin/orders/${this.props.match.params.id}/new`).then((data) => {
       this.setState({
         orderInfo: data.data.order.data,
         items: data.data.items
@@ -78,7 +78,7 @@ export default class Orders extends Component {
     if (this.state.newItemFile) {
       let formData = new FormData();
       formData.append("file", this.state.newItemFile);
-      axios.post(`${apiPoint}/admin/orders/${this.props.match.params.id}`, formData).then((response) => {
+      axios.post(`${apiPoint}/admin/orders/${this.props.match.params.id}/new`, formData).then((response) => {
         if(this.state.newItemComment) {
           axios.post(`${apiPoint}/admin/order_item/${response.data.id}/comment`, {
             "comment": this.state.newItemComment
@@ -147,6 +147,11 @@ export default class Orders extends Component {
         <div className="row">
           <div className={"order-name"}>
             Имя Заказчика: {this.state.orderInfo.bayer_name}
+          </div>
+        </div>
+        <div className="row">
+          <div className={"order-name"}>
+            Номер телефона: {this.state.orderInfo.phone}
           </div>
         </div>
         <div className="row order-items-row">

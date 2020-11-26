@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use AmoCRM\Models\ContactModel;
+use App\Entity\Order;
 use App\Entity\OrderItem;
+use App\Manager\AmoCRM\AmoCRMManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,11 +34,26 @@ class MainController extends Controller
      *
      * @return Response
      */
-    public function order(int $order): Response
+    public function order(int $orderNumber): Response
     {
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
-        $items = $orderItemRepository->findActiveItems($order);
-        $order = $this->get('app.manager.order_manager')->get($order);
+
+        try {
+            $order = $this->get('app.manager.order_manager')->get($orderNumber);
+        } catch (\Exception $exception) {
+            $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+            /** @var Order $orderEntity */
+            $orderEntity = $orderRepository->findOneBy(['number' => $orderNumber]);
+            $order = [
+                'data' => [
+                    'total' => '-',
+                    'order_id' => $orderEntity ? $orderEntity->getNumber() : $orderNumber,
+                    'bayer_name' =>  $orderEntity ? $orderEntity->getName() : '-',
+                ]
+            ];
+        }
+
+        $items = $orderItemRepository->findActiveItems($orderNumber);
 
         return $this->render(
             'main/order.html.twig',

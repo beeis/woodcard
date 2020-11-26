@@ -101,11 +101,13 @@ $(document).ready(function() {
     	var price_old = $('input:radio[name="size"]:checked').data('price-old');
     	var price = $('input:radio[name="size"]:checked').data('price');
     	var product_id = $('input:radio[name="size"]:checked').data('product');
+    	var comment = $('input:radio[name="size"]:checked').data('comment');
 
     	$('.price .old').text(price_old+' грн');
     	$('.price .current').text(price+' грн');
 		$('input[name="product_id"]').val(product_id);
-		$('input[name="product_price"]').val(price);
+		$('input[name="price"]').val(price);
+		$('input[name="comment"]').val(comment);
 	}
 	showPrice();
 

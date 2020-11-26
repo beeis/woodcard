@@ -84,6 +84,14 @@ class OrderItem
     private $orderId;
 
     /**
+     * @var Order|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     * @ORM\JoinColumn(name="order_fid", nullable=true)
+     */
+    private $order;
+
+    /**
      * duplicate order item
      */
     public function __clone()
@@ -248,5 +256,21 @@ class OrderItem
     public function setInscription(?string $inscription): void
     {
         $this->inscription = $inscription;
+    }
+
+    /**
+     * @return Order|null
+     */
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param Order|null $order
+     */
+    public function setOrder(?Order $order): void
+    {
+        $this->order = $order;
     }
 }

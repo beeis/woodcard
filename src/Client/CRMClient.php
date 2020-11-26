@@ -50,6 +50,8 @@ class CRMClient implements CRMClientInterface
                 'POST',
                 sprintf('api/%s', $uri),
                 [
+                    RequestOptions::CONNECT_TIMEOUT => 10,
+                    RequestOptions::TIMEOUT => 10,
                     RequestOptions::FORM_PARAMS => array_merge(
                         [
                             'key' => $this->apiKey

@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\OrderItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Class OrderItemController
@@ -25,6 +22,8 @@ class OrderItemController extends Controller
      * @param int $order
      *
      * @return Response
+     *
+     * @deprecated
      */
     public function index(int $order): Response
     {
@@ -43,6 +42,58 @@ class OrderItemController extends Controller
         return new JsonResponse(
             [
                 'order' => $order,
+                'items' => $itemsResult,
+            ]
+        );
+    }
+    /**
+     * @param int $order
+     *
+     * @return Response
+     */
+    public function indexNew(int $orderId): Response
+    {
+        $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+
+        /** @var Order $order */
+        $order = $orderRepository->findOneBy(['number' => $orderId]);
+
+
+
+        $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        $items = $orderItemRepository->findBy(['orderId' => $orderId]);
+        $itemsResult = [];
+
+        foreach ($items as $item) {
+            $itemsResult[] = $this->viewOrderItem($item);
+        }
+
+        if (null === $order) {
+            try {
+                $orderCrm = $this->get('app.manager.order_manager')->get($orderId);
+            } catch (\Exception $exception) {
+                throw $this->createNotFoundException();
+            }
+            if (false === isset($orderCrm['data']['order_id'])) {
+                throw $this->createNotFoundException();
+            }
+            $order = new Order();
+            $order->setNumber($orderCrm['data']['order_id']);
+            $order->setName($orderCrm['data']['bayer_name']);
+            $order->setPhone($orderCrm['data']['phone']);
+            $this->getDoctrine()->getManager()->persist($order);
+
+            /** @var OrderItem $item */
+            foreach ($items as $item) {
+                $item->setOrder($order);
+                $this->getDoctrine()->getManager()->persist($item);
+            }
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        return new JsonResponse(
+            [
+                'order' => $this->viewOrder($order, $orderId),
                 'items' => $itemsResult,
             ]
         );
@@ -66,6 +117,27 @@ class OrderItemController extends Controller
 
         $orderItem = new OrderItem();
         $orderItem->setOrderId($order['data']['order_id']);
+        $orderItem->setComment($request->request->get('comment'));
+        $filename = $this->get('app.manager.file_manager')
+            ->uploadPhoto($request->files->get('file'), (int) $order['data']['order_id']);
+        $orderItem->setPhoto($filename);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($orderItem);
+        $em->flush();
+
+        return new JsonResponse($this->viewOrderItem($orderItem));
+    }
+
+    public function createNew(Request $request, int $order): Response
+    {
+        $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+        /** @var Order $orderEntity */
+        $orderEntity = $orderRepository->findOneBy(['number' => $order]);
+
+        $orderItem = new OrderItem();
+        $orderItem->setOrderId($orderEntity->getNumber());
+        $orderItem->setOrder($orderEntity);
         $orderItem->setComment($request->request->get('comment'));
         $filename = $this->get('app.manager.file_manager')
             ->uploadPhoto($request->files->get('file'), (int) $order['data']['order_id']);
@@ -229,13 +301,9 @@ class OrderItemController extends Controller
     public function downloadPrint(int $orderItem): Response
     {
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
+        /** @var OrderItem $orderItem */
         $orderItem = $orderItemRepository->find($orderItem);
         if (null === $orderItem) {
-            throw $this->createNotFoundException();
-        }
-
-        $order = $this->get('app.manager.order_manager')->get((int) $orderItem->getOrderId());
-        if (false === isset($order['data']['order_id'])) {
             throw $this->createNotFoundException();
         }
 
@@ -244,11 +312,14 @@ class OrderItemController extends Controller
         }
         $file = $this->get('app.storage.file_storage')->get($orderItem->getPrint());
 
+        $order = $orderItem->getOrder();
+        $name = null === $order ? 'no name' : $order->getName();
+
         $filename = sprintf(
             '%s-%s-%s.%s',
             $orderItem->getOrderId(),
             $orderItem->getId(),
-            $order['data']['bayer_name'],
+            $name,
             'jpg'
         );
 
@@ -287,6 +358,22 @@ class OrderItemController extends Controller
                 ->getUpdatedAt()
                 ->setTimezone(new \DateTimeZone('Europe/Kiev'))
                 ->format('H:i:s d-m-Y'),
+        ];
+    }
+
+    /**
+     * @param OrderItem $orderItem
+     *
+     * @return array
+     */
+    private function viewOrder(?Order $order, $orderId): array
+    {
+        return [
+            'data' => [
+                'order_id' =>  $order ? $order->getNumber() : $orderId,
+                'bayer_name' => $order ? $order->getName() : '- -',
+                'phone' => $order ? $order->getPhone() : '- -',
+            ],
         ];
     }
 }

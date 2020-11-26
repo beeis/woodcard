@@ -45,8 +45,13 @@ class OrderItemListener implements EventSubscriber
             return;
         }
 
+        return;
+
         try {
             $activity = $this->activityManager->handleChanges($orderItem, ['new' => []]);
+            if (null === $activity) {
+                return;
+            }
             $eventArgs->getEntityManager()->persist($activity);
             $eventArgs->getEntityManager()->flush();
         } catch (\Exception $exception) {
@@ -71,6 +76,9 @@ class OrderItemListener implements EventSubscriber
                 return;
             }
             $activity = $this->activityManager->handleChanges($orderItem, $uow->getEntityChangeSet($orderItem));
+            if (null === $activity) {
+                return;
+            }
             $em->persist($activity);
             $metaData = $em->getClassMetadata(Activity::class);
             $uow->computeChangeSet($metaData, $activity);

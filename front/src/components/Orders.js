@@ -8,7 +8,9 @@ export default class Orders extends Component {
     super();
     this.state = {
       orders: {},
-      goId: ''
+      goId: '',
+      name: '',
+      phone: ''
     }
   }
 
@@ -16,8 +18,26 @@ export default class Orders extends Component {
     this.props.history.push('/order/'+id);
   };
 
+  _createOrder = () => {
+      let {name, phone} = this.state;
+      let formData = new FormData();
+      formData.append("name", name);
+      formData.append("phone", phone);
+
+      axios.post(`${apiPoint}/order`, formData, {
+          headers: {
+              'content-type': 'multipart/form-data',
+              'X-Requested-With': 'XMLHttpRequest'
+          }
+      }).then((response) => {
+        this._openOrder(response.data.order_id)
+      }).catch(() => {
+          console.log('Something went wrong!');
+      });
+  }
+
   componentDidMount() {
-    axios.get(`${apiPoint}/admin/orders`).then((data) => {
+    axios.get(`${apiPoint}/admin/orders/new`).then((data) => {
       this.setState({
         orders: data.data.data
       });
@@ -27,6 +47,20 @@ export default class Orders extends Component {
   render () {
     return (
       <div className="container-fluid orders-container">
+          <div className="row add-new-order">
+          <div className="col-md-8 orders-border">
+          <div className="row orders-header">
+          Создать Заказ
+      </div>
+          <div>Имя</div>
+          <input type="text" className={"form-control"}
+      value={this.state.name} onChange={(e) => {this.setState({name: e.target.value})}}/>
+          <div>Телефон</div>
+          <input type="text" className={"form-control"}
+      value={this.state.phone} onChange={(e) => {this.setState({phone: e.target.value})}}/>
+          <button type={"button"} className={"btn btn-primary"} onClick={this._createOrder}>Создать</button>
+      </div>
+        </div>
         <div className="row orders-header">
           Список Заказов
         </div>
@@ -51,6 +85,9 @@ export default class Orders extends Component {
                       <th>#</th>
                       <th>Статус</th>
                       <th>Имя Заказчика</th>
+                      <th>Телефон</th>
+                      <th>Добавлено</th>
+                      <th>Фото</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -59,6 +96,9 @@ export default class Orders extends Component {
                       <td>{order.order_id}</td>
                       <td>{order.ttn_status}</td>
                       <td>{order.bayer_name}</td>
+                      <td>{order.phone}</td>
+                      <td>{order.created_at}</td>
+                      <td>{order.has_item}</td>
                     </tr>
                   )}
                   </tbody>

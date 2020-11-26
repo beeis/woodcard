@@ -287,14 +287,14 @@
                         </div>
                         <div class="order_block">
                             <div class="select-status">Обирайте розмір, завантажуйте фотографію - та очікуйте дзвінка нашого оператора.</div>
-                            <form class="main-order-form order_form" action="/order-with-item" method="post" enctype="multipart/form-data">
+                            <form class="main-order-form order_form" action="/order" method="post" enctype="multipart/form-data">
                                 <div class="quantitys">
                                     <div class="quantity">
-                                        <input checked class="radio-one" data-product="5" data-price-old="399" data-price="299" type="radio" value="l" name="size">
+                                        <input checked class="radio-one" data-product="685669" data-price-old="399" data-comment="Серце L 20 см 299грн"  data-price="299" type="radio" value="l" name="size">
                                         <label>Серце L 20 см</label>
                                     </div>
                                     <div class="quantity">
-                                        <input class="radio-two" data-product="12" data-price-old="499" data-price="399" type="radio" value="xxl" name="size">
+                                        <input class="radio-two" data-product="685671" data-price-old="499" data-comment="Серце XXL 26 см 399грн" data-price="399" type="radio" value="xxl" name="size">
                                         <label>Серце XXL 26 см</label>
                                     </div>
                                 </div>
@@ -320,7 +320,8 @@
                                 <button class="button">Замовити</button>
 
                                 <input name="product_id" type="hidden" value="5">
-                                <input name="product_price" type="hidden" value="1">
+                                <input name="price" type="hidden" value="1">
+                                <input name="comment" type="hidden" value="">
                                 <input name="utm_source" type="hidden" value="{{ utm_source }}">
                                 <input name="utm_medium" type="hidden" value="{{ utm_medium }}">
                                 <input name="utm_term" type="hidden" value="{{ utm_term }}">
