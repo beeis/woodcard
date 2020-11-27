@@ -1,18 +1,9 @@
 {
-    "amocrm/amocrm-api-library": {
-        "version": "0.3.17"
-    },
-    "amocrm/oauth2-amocrm": {
-        "version": "2.0.6"
-    },
     "aws/aws-sdk-php": {
         "version": "3.48.13"
     },
     "behat/transliterator": {
         "version": "v1.2.0"
-    },
-    "brick/math": {
-        "version": "0.9.1"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -68,9 +59,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "fig/http-message-util": {
-        "version": "1.1.4"
-    },
     "friendsofsymfony/user-bundle": {
         "version": "2.1.x-dev"
     },
@@ -85,12 +73,6 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.4.2"
-    },
-    "illuminate/contracts": {
-        "version": "v7.29.3"
-    },
-    "illuminate/support": {
-        "version": "v7.10.3"
     },
     "imagine/imagine": {
         "version": "v0.6.3"
@@ -107,12 +89,6 @@
     "knplabs/knp-gaufrette-bundle": {
         "version": "v0.5.0"
     },
-    "lcobucci/jwt": {
-        "version": "3.3.3"
-    },
-    "league/oauth2-client": {
-        "version": "2.5.0"
-    },
     "liip/imagine-bundle": {
         "version": "1.8",
         "recipe": {
@@ -128,17 +104,11 @@
     "mtdowling/jmespath.php": {
         "version": "2.4.0"
     },
-    "nesbot/carbon": {
-        "version": "2.41.5"
-    },
     "nikic/php-parser": {
         "version": "v4.2.0"
     },
     "paragonie/random_compat": {
         "version": "v2.0.11"
-    },
-    "php": {
-        "version": "7.4"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -157,12 +127,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
-    },
-    "ramsey/collection": {
-        "version": "1.1.1"
-    },
-    "ramsey/uuid": {
-        "version": "4.1.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
@@ -400,8 +364,5 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
-    },
-    "voku/portable-ascii": {
-        "version": "1.5.6"
     }
 }
