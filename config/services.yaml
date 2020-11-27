@@ -90,7 +90,8 @@ services:
     app.client.amo_crm.oauth_service:
         class: App\Client\AmoCRM\OAuthService
         arguments:
-            - '@session'
+            - '@filesystem'
+            - '%kernel.project_dir%/var/token'
 
     app.manager.amo_crm_manager:
         class: App\Manager\AmoCRM\AmoCRMManager

@@ -115,7 +115,37 @@ class AmoOrderManager implements OrderManagerInterface
 
     public function get(int $id): array
     {
-        return [];
+        $leadsService = $this->amoCRMManager->client->leads();
+        $contactsService = $this->amoCRMManager->client->contacts();
+
+        /** @var LeadModel $leadModel */
+        $leadModel = $leadsService->getOne($id);
+        $links = $leadsService->getLinks($leadModel);
+        $link = $links->getBy('toEntityType', 'contacts');
+        if (null === $link) {
+            return [
+                'data' => [
+                    'order_id' => $leadModel->getId(),
+                    'bayer_name' => $leadModel->getName(),
+                    'phone' => ""
+                ]
+            ];
+        }
+
+        $contactModel = $contactsService->getOne($link->getToEntityId());
+
+        $phone = "";
+        if (false === $contactModel->getCustomFieldsValues()->getBy('fieldCode', 'PHONE')->getValues()->isEmpty()) {
+            $phone = $contactModel->getCustomFieldsValues()->getBy('fieldCode', 'PHONE')->getValues()->first()->getValue();
+        }
+
+        return [
+            'data' => [
+                'order_id' => (string) $leadModel->getId(),
+                'bayer_name' => $leadModel->getName(),
+                'phone' => $phone
+            ]
+        ];
     }
 
     private function getContactModel(string $name, string $phoneNumber): ContactModel

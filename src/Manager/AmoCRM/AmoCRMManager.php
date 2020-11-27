@@ -6,8 +6,6 @@ use AmoCRM\AmoCRM\Client\AmoCRMApiClientFactory;
 use AmoCRM\Client\AmoCRMApiClient;
 use App\Client\AmoCRM\OAuthConfig;
 use App\Client\AmoCRM\OAuthService;
-use App\Client\CRMClientInterface;
-use App\Manager\CRMManagerInterface;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
 class AmoCRMManager

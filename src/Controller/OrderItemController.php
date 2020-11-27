@@ -70,7 +70,7 @@ class OrderItemController extends Controller
 
         if (null === $order) {
             try {
-                $orderCrm = $this->get('app.manager.order_manager')->get($orderId);
+                $orderCrm = $this->get('app.manager.amo_order_manager')->get($orderId);
             } catch (\Exception $exception) {
                 throw $this->createNotFoundException();
             }
