@@ -182,7 +182,7 @@ class MainController extends Controller implements LoggerAwareInterface
 
         $leadId = isset($request->request->get('leads')['update']['id']) ? $request->request->get('leads')['update']['id'] :  null;
         $linksChanged = isset($request->request->get('leads')['update']['link_changed']) ? true : false;
-
+        $this->logger->critical('2.0-[WEBHOOK]', ['$leadId' => $leadId, '$linksChanged' => $linksChanged]);
         if (null !== $leadId && false !== $linksChanged) {
             $this->logger->critical('[WEBHOOK]-2.0', [$leadId]);
             $this->amoCRMManager->webhookProductsSync((int) $leadId);
