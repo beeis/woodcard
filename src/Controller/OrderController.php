@@ -4,19 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use AmoCRM\Collections\ContactsCollection;
-use AmoCRM\Collections\CustomFields\CustomFieldsCollection;
-use AmoCRM\Collections\CustomFieldsValuesCollection;
-use AmoCRM\Collections\LinksCollection;
-use AmoCRM\Exceptions\AmoCRMApiNoContentException;
-use AmoCRM\Filters\ContactsFilter;
-use AmoCRM\Models\ContactModel;
-use AmoCRM\Models\CustomFields\CustomFieldModel;
-use AmoCRM\Models\CustomFieldsValues\MultitextCustomFieldValuesModel;
-use AmoCRM\Models\CustomFieldsValues\ValueCollections\MultitextCustomFieldValueCollection;
-use AmoCRM\Models\CustomFieldsValues\ValueModels\MultitextCustomFieldValueModel;
-use AmoCRM\Models\LeadModel;
-use App\Manager\AmoCRM\AmoCRMManager;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Manager\OrderManagerInterface;

@@ -8,7 +8,10 @@ use AmoCRM\Models\ContactModel;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Manager\AmoCRM\AmoCRMManager;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,8 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package App\Controller
  */
-class MainController extends Controller
+class MainController extends Controller implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @return Response
      */
@@ -154,5 +159,12 @@ class MainController extends Controller
     public function policy(): Response
     {
         return $this->render('main/policy.html.twig');
+    }
+
+    public function webhook(Request $request): JsonResponse
+    {
+        $this->logger->critical('[WEBHOOK]', json_decode($request->getContent(), true));
+
+        return new JsonResponse();
     }
 }
