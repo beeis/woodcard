@@ -181,7 +181,9 @@ class MainController extends Controller implements LoggerAwareInterface
         $this->logger->critical('2-[WEBHOOK]', $request->request->all() ?? []);
 
         $leadId = $request->request->get('leads')['update']['id'] ?? null;
-        if (null !== $leadId) {
+        $linksChanged = $request->request->get('leads')['update']['link_changed'] ?? false;
+
+        if (null !== $leadId && false !== $linksChanged) {
             $this->amoCRMManager->webhookProductsSync((int) $leadId);
         }
 

@@ -13,9 +13,13 @@ use AmoCRM\Models\LinkModel;
 use App\Client\AmoCRM\OAuthConfig;
 use App\Client\AmoCRM\OAuthService;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
-class AmoCRMManager
+class AmoCRMManager implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     const PRODUCT_CATALOG_ID = 5167;
 
     /** @var AmoCRMApiClient */
@@ -112,6 +116,7 @@ class AmoCRMManager
             $leadModel->setCustomFieldsValues(new CustomFieldsValuesCollection());
         }
         $leadModel->getCustomFieldsValues()->add($productFiled);
-        $leadsService->updateOne($leadModel);
+        $leadModelResult = $leadsService->updateOne($leadModel);
+        $this->logger->critical('[WEBHOOK]-3', $leadModelResult->getCustomFieldsValues()->toArray());
     }
 }
