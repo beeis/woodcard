@@ -178,13 +178,11 @@ class MainController extends Controller implements LoggerAwareInterface
 
     public function webhook(Request $request): JsonResponse
     {
-        $this->logger->critical('2-[WEBHOOK]', $request->request->all() ?? []);
+        $this->logger->info('2-[WEBHOOK]', $request->request->all() ?? []);
 
         $leadId = isset($request->request->get('leads')['update'][0]['id']) ? $request->request->get('leads')['update'][0]['id'] :  null;
         $linksChanged = isset($request->request->get('leads')['update'][0]['link_changed']) ? true : false;
-        $this->logger->critical('2.0-[WEBHOOK]', ['$leadId' => $leadId, '$linksChanged' => $linksChanged]);
         if (null !== $leadId && false !== $linksChanged) {
-            $this->logger->critical('[WEBHOOK]-2.0', [$leadId]);
             $this->amoCRMManager->webhookProductsSync((int) $leadId);
         }
 

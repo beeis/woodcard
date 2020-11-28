@@ -80,7 +80,6 @@ class AmoCRMManager implements LoggerAwareInterface
 
     public function webhookProductsSync(int $lead): void
     {
-        $this->logger->critical('[WEBHOOK]-2.1', [$lead]);
         $leadsService = $this->client->leads();
         $catalogElementsService = $this->client->catalogElements(self::PRODUCT_CATALOG_ID);
 
@@ -102,7 +101,6 @@ class AmoCRMManager implements LoggerAwareInterface
             $products[$i] = sprintf('%s*%d', $sku, $link->getMetadata()['quantity']);
             ++$i;
         }
-        $this->logger->critical('[WEBHOOK]-2.2', $products);
 
         $productFiled = new TextCustomFieldValuesModel();
         $productFiled->setFieldId(334617);
@@ -118,8 +116,6 @@ class AmoCRMManager implements LoggerAwareInterface
             $leadModel->setCustomFieldsValues(new CustomFieldsValuesCollection());
         }
         $leadModel->getCustomFieldsValues()->add($productFiled);
-        $this->logger->critical('[WEBHOOK]-2.2', $leadModel->getCustomFieldsValues()->toArray());
-        $leadModelResult = $leadsService->updateOne($leadModel);
-        $this->logger->critical('[WEBHOOK]-3', $leadModelResult->getCustomFieldsValues()->toArray());
+        $leadsService->updateOne($leadModel);
     }
 }
