@@ -163,7 +163,8 @@ class MainController extends Controller implements LoggerAwareInterface
 
     public function webhook(Request $request): JsonResponse
     {
-        $this->logger->critical('[WEBHOOK]', json_decode($request->getContent(), true));
+        $this->logger->critical('1-[WEBHOOK]', json_decode($request->getContent() ?? "", true));
+        $this->logger->critical('2-[WEBHOOK]', $request->request->all());
 
         return new JsonResponse();
     }
