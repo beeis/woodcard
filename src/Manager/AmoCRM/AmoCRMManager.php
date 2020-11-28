@@ -108,6 +108,9 @@ class AmoCRMManager
                 )
         );
 
+        if (null === $leadModel->getCustomFieldsValues()) {
+            $leadModel->setCustomFieldsValues(new CustomFieldsValuesCollection());
+        }
         $leadModel->getCustomFieldsValues()->add($productFiled);
         $leadsService->updateOne($leadModel);
     }
