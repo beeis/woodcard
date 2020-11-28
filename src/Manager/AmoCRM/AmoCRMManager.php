@@ -7,8 +7,11 @@ use AmoCRM\Client\AmoCRMApiClient;
 use AmoCRM\Collections\CustomFieldsValuesCollection;
 use AmoCRM\Filters\LinksFilter;
 use AmoCRM\Models\CustomFieldsValues\TextCustomFieldValuesModel;
+use AmoCRM\Models\CustomFieldsValues\UrlCustomFieldValuesModel;
 use AmoCRM\Models\CustomFieldsValues\ValueCollections\TextCustomFieldValueCollection;
+use AmoCRM\Models\CustomFieldsValues\ValueCollections\UrlCustomFieldValueCollection;
 use AmoCRM\Models\CustomFieldsValues\ValueModels\TextCustomFieldValueModel;
+use AmoCRM\Models\CustomFieldsValues\ValueModels\UrlCustomFieldValueModel;
 use AmoCRM\Models\LinkModel;
 use App\Client\AmoCRM\OAuthConfig;
 use App\Client\AmoCRM\OAuthService;
@@ -21,6 +24,9 @@ class AmoCRMManager implements LoggerAwareInterface
     use LoggerAwareTrait;
 
     const PRODUCT_CATALOG_ID = 5167;
+    const PRODUCT_CUSTOM_FIELD = 334617;
+    const MINICRM_CUSTOM_FIELD = 334639;
+    const MINICRM_LINK = 'http://lp.woodcard.com.ua/admin#/order/';
 
     /** @var AmoCRMApiClient */
     public $client;
@@ -102,8 +108,12 @@ class AmoCRMManager implements LoggerAwareInterface
             ++$i;
         }
 
+        if (null === $leadModel->getCustomFieldsValues()) {
+            $leadModel->setCustomFieldsValues(new CustomFieldsValuesCollection());
+        }
+
         $productFiled = new TextCustomFieldValuesModel();
-        $productFiled->setFieldId(334617);
+        $productFiled->setFieldId(self::PRODUCT_CUSTOM_FIELD);
         $productFiled->setValues(
             (new TextCustomFieldValueCollection())
                 ->add(
@@ -111,11 +121,19 @@ class AmoCRMManager implements LoggerAwareInterface
                         ->setValue(implode(';', $products))
                 )
         );
-
-        if (null === $leadModel->getCustomFieldsValues()) {
-            $leadModel->setCustomFieldsValues(new CustomFieldsValuesCollection());
-        }
         $leadModel->getCustomFieldsValues()->add($productFiled);
+
+        $minicrmFiled = new UrlCustomFieldValuesModel();
+        $minicrmFiled->setFieldId(self::MINICRM_CUSTOM_FIELD);
+        $minicrmFiled->setValues(
+            (new UrlCustomFieldValueCollection())
+                ->add(
+                    (new UrlCustomFieldValueModel())
+                        ->setValue(self::MINICRM_LINK.$leadModel->getId())
+                )
+        );
+        $leadModel->getCustomFieldsValues()->add($minicrmFiled);
+
         $leadsService->updateOne($leadModel);
     }
 }
