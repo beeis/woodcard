@@ -8,9 +8,12 @@ use AmoCRM\Models\ContactModel;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Manager\AmoCRM\AmoCRMManager;
+use App\Manager\AmoCRM\AmoOrderManager;
+use App\Manager\OrderManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +26,18 @@ use Symfony\Component\HttpFoundation\Response;
 class MainController extends Controller implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
+
+    /** @var AmoCRMManager */
+    private $amoCRMManager;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        parent::setContainer($container);
+        $this->amoCRMManager = $this->get('app.manager.amo_crm_manager');
+    }
 
     /**
      * @return Response
@@ -163,8 +178,12 @@ class MainController extends Controller implements LoggerAwareInterface
 
     public function webhook(Request $request): JsonResponse
     {
-        $this->logger->critical('1-[WEBHOOK]', json_decode($request->getContent(), true) ?? []);
         $this->logger->critical('2-[WEBHOOK]', $request->request->all() ?? []);
+
+        $leadId = $request->request->get('leads')['update']['id'] ?? null;
+        if (null !== $leadId) {
+            $this->amoCRMManager->webhookProductsSync((int) $leadId);
+        }
 
         return new JsonResponse();
     }

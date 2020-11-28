@@ -4,12 +4,20 @@ namespace App\Manager\AmoCRM;
 
 use AmoCRM\AmoCRM\Client\AmoCRMApiClientFactory;
 use AmoCRM\Client\AmoCRMApiClient;
+use AmoCRM\Collections\CustomFieldsValuesCollection;
+use AmoCRM\Filters\LinksFilter;
+use AmoCRM\Models\CustomFieldsValues\TextCustomFieldValuesModel;
+use AmoCRM\Models\CustomFieldsValues\ValueCollections\TextCustomFieldValueCollection;
+use AmoCRM\Models\CustomFieldsValues\ValueModels\TextCustomFieldValueModel;
+use AmoCRM\Models\LinkModel;
 use App\Client\AmoCRM\OAuthConfig;
 use App\Client\AmoCRM\OAuthService;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
 class AmoCRMManager
 {
+    const PRODUCT_CATALOG_ID = 5167;
+
     /** @var AmoCRMApiClient */
     public $client;
 
@@ -64,5 +72,43 @@ class AmoCRMManager
         }
 
         return $this->client->getOAuthClient()->getResourceOwner($accessToken);
+    }
+
+    public function webhookProductsSync(int $lead): void
+    {
+        $leadsService = $this->client->leads();
+        $catalogElementsService = $this->client->catalogElements(self::PRODUCT_CATALOG_ID);
+
+        $leadModel = $leadsService->getOne($lead);
+
+        $filters = new LinksFilter();
+        $filters->setToEntityType('catalog_elements');
+        $filters->setToCatalogId(self::PRODUCT_CATALOG_ID);
+
+        $links = $leadsService->getLinks($leadModel, $filters);
+
+        $products = [];
+        $i = 0;
+        /** @var LinkModel $link */
+        foreach ($links->all() as $link) {
+            $product = $catalogElementsService->getOne($link->getToEntityId());
+            $skuField = $product->getCustomFieldsValues()->getBy('fieldCode', 'SKU');
+            $sku = $skuField->getValues()->first()->getValue();
+            $products[$i] = sprintf('%s*%d', $sku, $link->getMetadata()['quantity']);
+            ++$i;
+        }
+
+        $productFiled = new TextCustomFieldValuesModel();
+        $productFiled->setFieldId(334617);
+        $productFiled->setValues(
+            (new TextCustomFieldValueCollection())
+                ->add(
+                    (new TextCustomFieldValueModel())
+                        ->setValue(implode(';', $products))
+                )
+        );
+
+        $leadModel->getCustomFieldsValues()->add($productFiled);
+        $leadsService->updateOne($leadModel);
     }
 }
