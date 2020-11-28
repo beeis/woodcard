@@ -56,7 +56,6 @@ class AmoOrderManager implements OrderManagerInterface
         $lead = new LeadModel();
         $lead->setPipelineId(self::PIPELINE_ID);
         $lead->setName($options['name']);
-        $lead->setPrice($options['products']['1']['price']);
 
         try {
             $lead = $leadsService->addOne($lead);
