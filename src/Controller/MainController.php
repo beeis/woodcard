@@ -58,9 +58,7 @@ class MainController extends Controller implements LoggerAwareInterface
     {
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
 
-        try {
-            $order = $this->get('app.manager.order_manager')->get($orderNumber);
-        } catch (\Exception $exception) {
+
             $orderRepository = $this->getDoctrine()->getRepository(Order::class);
             /** @var Order $orderEntity */
             $orderEntity = $orderRepository->findOneBy(['number' => $orderNumber]);
@@ -71,7 +69,7 @@ class MainController extends Controller implements LoggerAwareInterface
                     'bayer_name' =>  $orderEntity ? $orderEntity->getName() : '-',
                 ]
             ];
-        }
+
 
         $items = $orderItemRepository->findActiveItems($orderNumber);
 

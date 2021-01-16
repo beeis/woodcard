@@ -25,8 +25,8 @@ class OrderItemRepository extends EntityRepository
         $qb
             ->where('orderItem.orderId = :orderId')
             ->andWhere($qb->expr()->isNotNull('orderItem.model'))
-            ->andWhere('orderItem.active = true')
-            ->setParameter('orderId', $orderId);
+            ->andWhere('orderItem.active = :active')
+            ->setParameters(['orderId' => $orderId, 'active' => true]);
 
         return $qb->getQuery()->getResult();
     }
