@@ -1577,6 +1577,14 @@ footer a {
 	background-position: -40px -28px;
 	right: -10px;
 }
+
+.catalog .cat-gal2 .owl-prev {
+	left: 5px;
+}
+
+.catalog .cat-gal2 .owl-next {
+	right: 10px;
+}
 .catalog .button-m{
 	display: block;
     width: 220px;
