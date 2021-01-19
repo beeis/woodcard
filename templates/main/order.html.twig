@@ -25,9 +25,7 @@
     </div>
 </header>
 <section class="slider-2">
-    <h2 class="title-red">Макети Ваших валентинок WoodCard</h2>
-    <p><b>ЯКІСТЬ МАКЕТА ЗНИЖЕНА ДЛЯ ПЕРЕГЛЯДУ</b>, валентинка виготовляється з макетів максимальної якості</p>
-    <p><b>ЧЕРВОНА РАМКА НЕ ПЕРЕНОСИТЬСЯ НА ВИРІБ</b>, а слугує контуром для макету</p>
+    <h2 class="title-red">Макети Ваших WoodCard</h2>
     </br>
     <p>ВСІ ПИТАННЯ ПИШІТЬ НАМ У VIBER <a href="tel:+380990633919">+38(099)0633919</a></p>
 
@@ -54,13 +52,14 @@
 <section class="help">
     <h2 class="title-red">Як затвердити макет?</h2>
     <div class="comment-one-description-text">
-            Для затвердження макету здійсніть, будь ласка,  оплату через Приват24,
-        термінал або кассу Приват Банку на нашу карту Приват Банку: <u>4731185614628763 (Артюх Д.А.)</u><br>
-            Для оплат з інших терміналів, платіжних систем та банків оплачуйте на карту <u>5169360001295801</u> (Артюх Д.А.)
-            Артюх Д.А.</br>
-            Сума до сплати: {{ order.total }} грн</br>
-            Коментар: {{ order.order_id }} {{ order.bayer_name }}</br>
-            <b>Обов’язково</b> повідомте нам про сплату за номером  <a href="tel:+380990633919">(099)063-39-19</a> (дзвінок, Viber, SMS)</br>
+        Для затвердження макету здійсніть, будь ласка, оплату на карту нашого ФОП:
+        <a href="javascript:void(0);" id="cardNumber">5169 3305 1594 0671</a><br>
+        (ФОП Грушецький Віталій Віталійович, Приват Банк)<br><br>
+
+            Сума до сплати: {{ order.total }} грн</br></br>
+        Якщо попросить призначення платежу, напишіть:
+        "За товар згідно замовлення {{ order.order_id }}"</br></br>
+            <b>Обов’язково</b> повідомте нам про сплату за номером  <a href="tel:+380990633919">(099)063-39-19</a> (дзвінок, Viber, SMS)</br></br>
             З любов’ю, WoodCard.</br>
         </p>
     </div>
@@ -89,4 +88,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
 <script src="/heart-landing/plugins/inputmask/jquery.inputmask.bundle.min.js"></script>
 <script src="/heart-landing/js/order-slider.js"></script>
+<script>
+    function copyText() {
+        /* Get the text field */
+        $("#copy").show().val(text)[0].select();
+        var copyText = document.getElementById("cardNumber");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
 </html>

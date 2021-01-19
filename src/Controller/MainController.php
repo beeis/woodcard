@@ -58,18 +58,18 @@ class MainController extends Controller implements LoggerAwareInterface
     {
         $orderItemRepository = $this->getDoctrine()->getRepository(OrderItem::class);
 
+        $orderCrm = $this->get('app.manager.amo_order_manager')->get($orderNumber);
 
-            $orderRepository = $this->getDoctrine()->getRepository(Order::class);
-            /** @var Order $orderEntity */
-            $orderEntity = $orderRepository->findOneBy(['number' => $orderNumber]);
-            $order = [
-                'data' => [
-                    'total' => '-',
-                    'order_id' => $orderEntity ? $orderEntity->getNumber() : $orderNumber,
-                    'bayer_name' =>  $orderEntity ? $orderEntity->getName() : '-',
-                ]
-            ];
-
+        $orderRepository = $this->getDoctrine()->getRepository(Order::class);
+        /** @var Order $orderEntity */
+        $orderEntity = $orderRepository->findOneBy(['number' => $orderNumber]);
+        $order = [
+            'data' => [
+                'total' => $orderCrm['data']['price'],
+                'order_id' => $orderEntity ? $orderEntity->getNumber() : $orderCrm['data']['order_id'],
+                'bayer_name' =>  $orderEntity ? $orderEntity->getName() : $orderCrm['data']['bayer_name'],
+            ]
+        ];
 
         $items = $orderItemRepository->findActiveItems($orderNumber);
 

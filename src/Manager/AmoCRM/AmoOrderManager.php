@@ -126,7 +126,8 @@ class AmoOrderManager implements OrderManagerInterface
                 'data' => [
                     'order_id' => $leadModel->getId(),
                     'bayer_name' => $leadModel->getName(),
-                    'phone' => ""
+                    'phone' => "",
+                    'price'=> '-',
                 ]
             ];
         }
@@ -142,7 +143,8 @@ class AmoOrderManager implements OrderManagerInterface
             'data' => [
                 'order_id' => (string) $leadModel->getId(),
                 'bayer_name' => $leadModel->getName(),
-                'phone' => $phone
+                'phone' => $phone,
+                'price'=> $leadModel->getPrice(),
             ]
         ];
     }
