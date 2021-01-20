@@ -26,7 +26,9 @@ class AmoCRMManager implements LoggerAwareInterface
     const PRODUCT_CATALOG_ID = 5167;
     const PRODUCT_CUSTOM_FIELD = 334617;
     const MINICRM_CUSTOM_FIELD = 334639;
+    const ORDER_LINK_CUSTOM_FIELD = 341409;
     const MINICRM_LINK = 'http://lp.woodcard.com.ua/admin#/order/';
+    const ORDER_LINK = 'http://lp.woodcard.com.ua/o/';
 
     /** @var AmoCRMApiClient */
     public $client;
@@ -133,6 +135,17 @@ class AmoCRMManager implements LoggerAwareInterface
                 )
         );
         $leadModel->getCustomFieldsValues()->add($minicrmFiled);
+
+        $orderLinkField = new UrlCustomFieldValuesModel();
+        $orderLinkField->setFieldId(self::ORDER_LINK_CUSTOM_FIELD);
+        $orderLinkField->setValues(
+            (new UrlCustomFieldValueCollection())
+                ->add(
+                    (new UrlCustomFieldValueModel())
+                        ->setValue(self::ORDER_LINK.$leadModel->getId())
+                )
+        );
+        $leadModel->getCustomFieldsValues()->add($orderLinkField);
 
         $leadsService->updateOne($leadModel);
     }
