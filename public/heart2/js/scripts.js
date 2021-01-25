@@ -138,7 +138,7 @@ $('input[name="metrika-foto"]').change(function () {
 });
 
 
-	$('input[name="phone"]').inputmask({ "mask": "+38(099) 9999999" });
+	$('input[name="phone"]').inputmask({ "mask": "+38(999) 9999999" });
 
 	$('form').on('submit', function () {
 		$('.heart-spinner-wrap').show();
